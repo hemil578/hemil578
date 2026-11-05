@@ -23,14 +23,15 @@ SHOTS:
     3.5–4.2 the real buyrshop.com product page rises; the penguin flies into its gallery photo and lands (match). 4.85 price punch-in ($32.99). 5.45–6.3 the page whip-scrolls
     (motion blur) to ADD TO CART; cursor enters 6.35, taps 7.25 (tap SFX), cart badge 0→1; 7.4–7.85 the teal button grows to fill the frame. Hands off: the teal.
   3 Box 7.85–9.1: on teal sweep the Buyr box drops in on 7.85 (thud, squash 0.85), flaps fold shut on 8.45 (tape wipes), FREE US SHIPPING label slaps on 9.06. Hands off: the box top.
-  4 Route 9.1–13.56: camera rises to top-down; the same box (from above) lifts and flies a drawn route across the city, warehouse pin → home pin; "SHIPS IN 1–2 DAYS" 10.25,
-    "TRACKED" 11.45, "TO YOUR DOOR" 12.65; speed ramps toward 13.0; riser from 13.24. Hands off: the box descends to the pin.
+  4 Route 9.1–13.56: camera rises to top-down; the same box (from above) lifts and flies a drawn route across the city, warehouse pin → home pin; "FREE US SHIPPING" 9.85, "TRACKED DELIVERY / 7–14 BUSINESS DAYS" 12.05 (facts from buyrshop.com/pages/shipping-policy:
+    free US shipping, tracked, delivered in 7–14 business days from a partner warehouse overseas; never imply fast delivery); speed ramps toward 13.0; riser from 13.24. Hands off: the box descends to the pin.
   5 Door 13.56–14.44: front view, box lands on the mat (13.56 thud), shakes harder into the drop.
-  6 Burst 14.44–19.85: flash + boom; flaps blow off; 16 products fire out on half-beats into an exploded orbit (depth by scale 0.55–1.0), each landing names itself
-    ("+ Gear Cube $26.99") in the top band; 16.25 "50+ VIRAL FINDS", 18.05 "FROM $9.99". The orbit turns slowly.
+  6 Unboxing 14.44–19.85: camera close on the big open box; flaps burst open on the drop. Six products RISE OUT of the box one per beat
+    (15.05 … 18.05), each 560 px with its real name + price, then get tossed to the sides; 18.05–19.2 the other ten fountain out on
+    eighth notes; "50+ VIRAL FINDS" 18.05; 19.55 everything collapses toward the centre.
   7 End 19.85–24.63: everything collapses into the centre (sparkle), the logo card is carried out of the collapse, "Trending Finds." / "Shipped Free to Your Door." wipe in,
     buyrshop.com button lands 21.05, "Free US shipping on every order" 21.65; holds to the end, pulses on beats.
-BANNED:  dark void with floating items, glow/bloom/particles, gradient meshes, glass cards, three-cards-in-a-row, docked corner logo, everything centred-and-fading,
+BANNED:  delivery-speed claims beyond the site's own words, dark void with floating items, glow/bloom/particles, gradient meshes, glass cards, three-cards-in-a-row, docked corner logo, everything centred-and-fading,
          text that drifts after landing, any product shown twice, any image wider than the frame, invented UI (only the real buyrshop.com page).
 QA:      f0 (thumbnail has the penguin + words), f60 (swipe), f95 (penguin out of phone), f130 (landed in page), f215 (cursor over ADD TO CART), f240 (tap),
          f255 (box landed), f275 (label), f330 (route mid), f410 (door), f440 (burst), f520 (orbit), f600 (collapse), f700 (end card).
