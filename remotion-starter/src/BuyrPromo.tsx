@@ -12,18 +12,31 @@ const WHITE = "#FFFFFF", SLATE = "#94A3B8";
 const FPS = 30;
 const s2f = (s: number) => Math.round(s * FPS);
 
-// Voice lines (start, duration in seconds) from public/buyr/voice.json
+// Voice lines (start, duration in seconds) from public/buyr/voice_beat.json, placed on the music's beat cuts
 const LINES: [string, number, number][] = [
   ["Seen it on TikTok? We've got it.", 0.3, 2.58],
-  ["Shadow lamps that light up your wall.", 3.23, 2.38],
-  ["Super cozy seal slippers.", 5.95, 2.25],
-  ["A galaxy, right on your ceiling.", 8.55, 2.42],
-  ["And fun gifts they'll actually love.", 11.33, 2.42],
-  ["Free tracked shipping across the US, and orders ship in 1–2 days.", 14.1, 4.58],
-  ["Trending finds, shipped free. Shop now at buyrshop.com", 19.03, 4.33],
+  ["Shadow lamps that light up your wall.", 3.2, 2.38],
+  ["Super cozy seal slippers.", 6.0, 2.25],
+  ["A galaxy, right on your ceiling.", 8.6, 2.42],
+  ["And fun gifts they'll actually love.", 11.4, 2.42],
+  ["Free tracked shipping across the US, and orders ship in 1–2 days.", 14.6, 4.58],
+  ["Trending finds, shipped free. Shop now at buyrshop.com", 19.55, 4.33],
 ];
 
-export const BUYR_DURATION = s2f(25.5);
+export const BUYR_DURATION = s2f(24.63); // length of the music track
+
+// Strong hits in public/buyr/track.mp3 (~100 BPM), measured with an onset detector.
+const HITS = [0.05, 0.65, 1.25, 1.86, 2.9, 3.34, 7.85, 8.45, 9.06, 13.56, 14.44,
+  15.05, 15.65, 16.25, 16.86, 17.46, 18.05, 18.65, 19.25, 19.85, 20.45, 21.06, 21.66, 22.26, 22.86, 23.45];
+const DROP = 14.44;
+
+/** 0..1 envelope that spikes on each hit and decays over ~0.25 s. */
+const useBeat = () => {
+  const t = useCurrentFrame() / FPS;
+  let v = 0;
+  for (const h of HITS) { const d = t - h; if (d >= 0 && d < 0.3) v = Math.max(v, Math.exp(-d * 14)); }
+  return v;
+};
 
 const useSpring = (delay: number, damping = 14) => {
   const frame = useCurrentFrame();
@@ -267,28 +280,47 @@ const CornerLogo: React.FC = () => (
 
 /* ---------- Timeline ---------- */
 const SCENES: { from: number; to: number; el: React.ReactNode }[] = [
-  { from: 0, to: 3.15, el: <Hook /> },
-  { from: 3.15, to: 5.9, el: <Product img="lamp.png" label="Shadow Lamps" price="$29.99" dir={1} /> },
-  { from: 5.9, to: 8.5, el: <Product img="slippers.png" label="Seal Plush Slippers" price="$39.99" dir={-1} /> },
-  { from: 8.5, to: 11.27, el: <Product img="projector.png" label="Galaxy Projector" price="$39.99" dir={1} /> },
-  { from: 11.27, to: 14.03, el: <Product img="switch.png" label="Fun Gifts" price="$22.99" dir={-1} /> },
-  { from: 14.03, to: 18.93, el: <Benefits /> },
-  { from: 18.93, to: 25.5, el: <CTA /> },
+  // Cuts sit on the track's beat grid (first hit 0.05 s, 0.6 s per beat); "Why Buyr?" lands on the drop.
+  { from: 0, to: 3.05, el: <Hook /> },
+  { from: 3.05, to: 5.85, el: <Product img="lamp.png" label="Shadow Lamps" price="$29.99" dir={1} /> },
+  { from: 5.85, to: 8.45, el: <Product img="slippers.png" label="Seal Plush Slippers" price="$39.99" dir={-1} /> },
+  { from: 8.45, to: 11.25, el: <Product img="projector.png" label="Galaxy Projector" price="$39.99" dir={1} /> },
+  { from: 11.25, to: DROP, el: <Product img="switch.png" label="Fun Gifts" price="$22.99" dir={-1} /> },
+  { from: DROP, to: 19.25, el: <Benefits /> },
+  { from: 19.25, to: 24.63, el: <CTA /> },
 ];
 
 // Music: louder in the gaps, ducked under the voice.
 const musicVolume = (f: number) => {
   const t = f / FPS;
   const speaking = LINES.some(([, st, d]) => t > st - 0.15 && t < st + d + 0.1);
-  const base = speaking ? 0.16 : 0.32;
+  const base = speaking ? 0.32 : 0.9;
   const fadeOut = interpolate(f, [BUYR_DURATION - 30, BUYR_DURATION], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return base * fadeOut;
 };
 
+const BeatFlash: React.FC = () => {
+  const b = useBeat();
+  const t = useCurrentFrame() / FPS;
+  const drop = t >= DROP && t < DROP + 0.4 ? Math.exp(-(t - DROP) * 8) : 0;
+  return (
+    <AbsoluteFill style={{
+      pointerEvents: "none",
+      boxShadow: `inset 0 0 ${120 + 160 * b}px ${TEAL}${Math.round(b * 120).toString(16).padStart(2, "0")}`,
+      background: drop > 0 ? `rgba(255,255,255,${0.55 * drop})` : undefined,
+    }} />
+  );
+};
+
 export const BuyrPromo: React.FC = () => {
+  const b = useBeat();
+  const t = useCurrentFrame() / FPS;
+  const shake = t >= DROP && t < DROP + 0.5 ? (1 - (t - DROP) / 0.5) * 18 : 0;
+  const sx = Math.sin(t * 90) * shake, sy = Math.cos(t * 77) * shake;
   return (
     <AbsoluteFill style={{ fontFamily, backgroundColor: DEEP }}>
       <Background />
+      <AbsoluteFill style={{ transform: `translate(${sx}px, ${sy}px) scale(${1 + 0.025 * b})` }}>
       {SCENES.map(({ from, to, el }, i) => (
         <Sequence key={i} from={s2f(from)} durationInFrames={s2f(to) - s2f(from)}>
           {el}
@@ -296,9 +328,11 @@ export const BuyrPromo: React.FC = () => {
           {i > 0 && <Wipe />}
         </Sequence>
       ))}
+      </AbsoluteFill>
+      <BeatFlash />
       <Captions />
-      <Audio src={staticFile("buyr/voice.wav")} />
-      <Audio src={staticFile("buyr/music.wav")} volume={musicVolume} />
+      <Audio src={staticFile("buyr/voice_beat.wav")} />
+      <Audio src={staticFile("buyr/track.mp3")} volume={musicVolume} />
     </AbsoluteFill>
   );
 };
