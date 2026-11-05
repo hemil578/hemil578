@@ -1,0 +1,100 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
+    #bu-floor { position: absolute; left: 0; right: 0; top: 1360px; bottom: 0; background: linear-gradient(180deg, #19d6b6, #43e1c6); }
+    #bu-shake { position: absolute; inset: 0; }
+    #bu-box { position: absolute; left: 340px; top: 1390px; width: 400px; height: 330px; }
+    #bu-box-body { position: absolute; inset: 0; border-radius: 12px; background: linear-gradient(180deg, #22355a, #1b2a44); border: 5px solid #2c4372; display: flex; align-items: center; justify-content: center; }
+    #bu-box-mouth { position: absolute; left: -5px; right: -5px; top: -28px; height: 56px; border-radius: 10px; background: #0a1222; }
+    #bu-sticker { width: 220px; padding: 14px 20px; background: #fff; border-radius: 16px; }
+    #bu-sticker img { width: 100%; display: block; }
+    .bu-flap { position: absolute; top: 1362px; width: 200px; height: 70px; border-radius: 8px; background: #2b4170; border: 5px solid #2c4372; }
+    #bu-flap-l { left: 340px; }
+    #bu-flap-r { left: 540px; }
+    .bu-item { position: absolute; left: 0; top: 0; width: 280px; height: 280px; }
+    .bu-item img { position: absolute; left: 0; top: 0; width: 280px; height: 280px; object-fit: contain; filter: drop-shadow(0 18px 18px rgba(15,23,42,0.28)); }
+    .bu-chip { position: absolute; left: 50%; top: 270px; transform: translateX(-50%); white-space: nowrap; padding: 8px 18px; border-radius: 14px; background: #ffffff;
+      color: #0f172a; font-weight: 700; font-size: 34px; }
+    .bu-chip b { color: #007a6d; font-weight: 800; }
+    #bu-flash { position: absolute; inset: 0; background: #ffffff; }
+    .bu-line { position: absolute; left: 0; right: 0; top: 180px; text-align: center; font-weight: 800; font-size: 132px; line-height: 0.98; letter-spacing: -0.02em;
+      color: #ffffff; -webkit-text-stroke: 7px #0f172a; paint-order: stroke fill; }
+    .bu-line span { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="burst" data-width="1080" data-height="1920">
+    <div id="bu-floor"></div>
+    <div id="bu-shake">
+      <div id="bu-box"><div id="bu-box-mouth"></div><div id="bu-box-body"><div id="bu-sticker"><img src="assets/logo.png" alt="Buyr" /></div></div></div>
+      <div id="bu-flap-l" class="bu-flap"></div><div id="bu-flap-r" class="bu-flap"></div>
+      <div id="bu-it0" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/magnetic-jointed-frog_2.png" alt="Magnetic Frog" /><div class="bu-chip">Magnetic Frog <b>$19.99</b></div></div>
+      <div id="bu-it1" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/lazy-prism-glasses_2.png" alt="Lazy Prism Glasses" /><div class="bu-chip">Lazy Prism Glasses <b>$24.99</b></div></div>
+      <div id="bu-it2" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/old-man-ski-mask_1.png" alt="Old Man Ski Mask" /><div class="bu-chip">Old Man Ski Mask <b>$9.99</b></div></div>
+      <div id="bu-it3" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/seal-plush-slippers_2.png" alt="Seal Slippers" /><div class="bu-chip">Seal Slippers <b>$39.99</b></div></div>
+      <div id="bu-it4" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/light-up-keyboard-game_1.png" alt="Speed Tap Keyboard" /><div class="bu-chip">Speed Tap Keyboard <b>$22.99</b></div></div>
+      <div id="bu-it5" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/gear-cube_1.png" alt="Gear Cube" /><div class="bu-chip">Gear Cube <b>$26.99</b></div></div>
+      <div id="bu-it6" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/big-feet-slippers_1.png" alt="Big Feet Slippers" /><div class="bu-chip">Big Feet Slippers <b>$29.99</b></div></div>
+      <div id="bu-it7" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/strawberry-ceramic-berry-bowl_1.png" alt="Berry Bowl" /><div class="bu-chip">Berry Bowl <b>$35.99</b></div></div>
+      <div id="bu-it8" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/slow-rise-butter-squishy_2.png" alt="Butter Squishy" /><div class="bu-chip">Butter Squishy <b>$19.99</b></div></div>
+      <div id="bu-it9" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/tiktok-scroll-remote_1.png" alt="Scroll Remote" /><div class="bu-chip">Scroll Remote <b>$22.99</b></div></div>
+      <div id="bu-it10" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/abs-projector-prank_1.png" alt="Abs Projector" /><div class="bu-chip">Abs Projector <b>$22.99</b></div></div>
+      <div id="bu-it11" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/tongue-pull-skull-keychain_1.png" alt="Skull Keychain" /><div class="bu-chip">Skull Keychain <b>$23.99</b></div></div>
+      <div id="bu-it12" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/gengar-switch-cover_1.png" alt="Switch Cover" /><div class="bu-chip">Switch Cover <b>$22.99</b></div></div>
+      <div id="bu-it13" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/syringe-pen_1.png" alt="Syringe Pens" /><div class="bu-chip">Syringe Pens <b>$23.99</b></div></div>
+      <div id="bu-it14" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/pet-hair-remover-glove_3.png" alt="Pet Hair Glove" /><div class="bu-chip">Pet Hair Glove <b>$19.99</b></div></div>
+      <div id="bu-it15" class="bu-item" data-layout-allow-overflow data-layout-allow-overlap><img src="assets/cut/car-battery-disconnect-switch_1.png" alt="Battery Switch" /><div class="bu-chip">Battery Switch <b>$19.99</b></div></div>
+    </div>
+    <div id="bu-w1" class="bu-line clip" data-start="0.05" data-duration="1.76"><span id="bu-w1-in">OPEN IT!</span></div>
+    <div id="bu-w2" class="bu-line clip" data-start="1.81" data-duration="1.8"><span id="bu-w2-in">50+ VIRAL<br />FINDS</span></div>
+    <div id="bu-w3" class="bu-line clip" data-start="3.61" data-duration="1.5"><span id="bu-w3-in">FROM $9.99</span></div>
+    <div id="bu-flash"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const N = 16, LAUNCH = 0.3, FLY = 0.34, OMEGA = 0.22, CX = 540, CY = 830, RX = 390, RY = 470, MOUTH = [540, 1400], COLLAPSE = 5.08, END = 5.41;
+    const items = Array.from({ length: N }, (_, i) => document.querySelector("#bu-it" + i));
+    // golden-angle spread so neighbours in launch order land far apart around the ring
+    const base = Array.from({ length: N }, (_, i) => (i * 2.39996) % (Math.PI * 2));
+    const ease = (x) => 1 - Math.pow(1 - x, 3);
+    const st = { t: 0 };
+    const render = () => {
+      const t = st.t;
+      // the one landed item nearest the front carries the name + price chip
+      let best = -1, bestD = -1;
+      for (let i = 0; i < N; i++) { if (t >= i * LAUNCH + FLY) { const d = (Math.sin(base[i] + OMEGA * t) + 1) / 2; if (d > bestD) { bestD = d; best = i; } } }
+      items.forEach((el, i) => {
+        const t0 = i * LAUNCH;
+        if (t < t0) { gsap.set(el, { opacity: 0, x: MOUTH[0] - 140, y: MOUTH[1] - 140, scale: 0.2 }); return; }
+        const a = base[i] + OMEGA * t;
+        const depth = (Math.sin(a) + 1) / 2;               // 0 back … 1 front
+        const sx = CX + Math.cos(a) * RX, sy = CY + Math.sin(a) * RY * 0.62 + (depth - 0.5) * 140;
+        const sc = 0.6 + 0.5 * depth;
+        const f = Math.min(1, (t - t0) / FLY), e = ease(f);
+        let x = MOUTH[0] + (sx - MOUTH[0]) * e, y = MOUTH[1] + (sy - MOUTH[1]) * e - Math.sin(Math.PI * f) * 260;
+        let s = 0.25 + (sc - 0.25) * e, rot = (1 - e) * (i % 2 ? 300 : -300);
+        if (t > COLLAPSE) { const c = Math.min(1, (t - COLLAPSE) / (END - COLLAPSE)); const ce = c * c * c;
+          x = x + (540 - x) * ce; y = y + (900 - y) * ce; s = s * (1 - ce * 0.92); rot = rot + ce * 180; }
+        gsap.set(el, { x: x - 140, y: y - 140, scale: s, rotation: rot, opacity: 1, zIndex: Math.round(10 + depth * 100) });
+        // name + price only on the items swinging through the front; counter-scaled so the type stays 34 px
+        const front = i === best ? 1 : 0;
+        gsap.set(el.querySelector(".bu-chip"), { opacity: f < 1 || t > COLLAPSE ? 0 : front, scale: 1 / Math.max(0.3, s), transformOrigin: "50% 0%" });
+      });
+    };
+    tl.to(st, { t: END, duration: END, ease: "none", onUpdate: render }, 0);
+    // 14.44: flash, boom, flaps blown off, camera kick
+    tl.fromTo("#bu-flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
+    tl.fromTo("#bu-flap-l", { x: 0, y: 0, rotation: 0 }, { x: -520, y: -900, rotation: -260, duration: 0.6, ease: "power2.out" }, 0);
+    tl.fromTo("#bu-flap-r", { x: 0, y: 0, rotation: 0 }, { x: 520, y: -950, rotation: 280, duration: 0.6, ease: "power2.out" }, 0);
+    for (let i = 0; i < 8; i++) tl.to("#bu-shake", { x: (i % 2 ? -1 : 1) * (16 - i * 2), y: (i % 2 ? 1 : -1) * (10 - i), duration: 0.045, ease: "none" }, i * 0.045);
+    tl.to("#bu-shake", { x: 0, y: 0, duration: 0.05 }, 0.36);
+    // the box recoils on every launch beat (every other half-beat)
+    for (let k = 0; k < 8; k++) tl.fromTo("#bu-box", { scaleY: 0.92 }, { scaleY: 1, duration: 0.18, ease: "back.out(3)", transformOrigin: "50% 100%", immediateRender: false }, k * 0.6);
+    tl.to("#bu-box", { y: 520, duration: 0.33, ease: "power3.in" }, COLLAPSE);
+    // words, one per bar
+    tl.fromTo("#bu-w1-in", { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.13, ease: "back.out(2.2)" }, 0.05);
+    tl.fromTo("#bu-w2-in", { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.13, ease: "back.out(2.2)" }, 1.81);
+    tl.fromTo("#bu-w3-in", { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.13, ease: "back.out(2.2)" }, 3.61);
+    tl.call(render, null, 0);
+    render();
+    window.__timelines["burst"] = tl;
+  </script>
+</template>

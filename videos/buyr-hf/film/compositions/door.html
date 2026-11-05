@@ -1,0 +1,49 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #f4efe6; }
+    #dr-wall { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, #f4efe6 0 58px, #e9e1d3 58px 62px); }
+    #dr-frame { position: absolute; left: 250px; top: 300px; width: 580px; height: 1180px; background: #ffffff; border-radius: 10px; box-shadow: inset 0 0 0 14px #e9e1d3; }
+    #dr-door { position: absolute; left: 290px; top: 340px; width: 500px; height: 1140px; background: #7fa38a; border-radius: 6px; }
+    .dr-panel { position: absolute; left: 60px; width: 380px; border: 10px solid #6e917a; border-radius: 8px; }
+    #dr-p1 { top: 70px; height: 420px; }
+    #dr-p2 { top: 560px; height: 480px; }
+    #dr-knob { position: absolute; left: 410px; top: 590px; width: 46px; height: 46px; border-radius: 23px; background: #d9a441; box-shadow: inset -6px -6px 0 #b8862c; }
+    #dr-step { position: absolute; left: 160px; right: 160px; top: 1480px; height: 70px; background: #d8cdbb; border-radius: 8px; }
+    #dr-ground { position: absolute; left: 0; right: 0; top: 1550px; bottom: 0; background: #c9bda7; }
+    #dr-mat { position: absolute; left: 300px; top: 1458px; width: 480px; height: 50px; border-radius: 10px; background: #8b6b4a; }
+    #dr-shake { position: absolute; inset: 0; }
+    #dr-box { position: absolute; left: 340px; top: 1110px; width: 400px; height: 360px; }
+    #dr-box-body { position: absolute; inset: 0; border-radius: 12px; background: linear-gradient(180deg, #22355a, #1b2a44); border: 5px solid #2c4372; display: flex; align-items: center; justify-content: center; }
+    #dr-tape { position: absolute; left: 155px; top: -4px; width: 90px; height: 120px; background: rgba(0,201,167,0.92); }
+    #dr-sticker { width: 220px; padding: 14px 20px; background: #fff; border-radius: 16px; }
+    #dr-sticker img { width: 100%; display: block; }
+    #dr-label { position: absolute; right: -24px; top: 200px; padding: 10px 16px; background: #ffd23f; border: 5px solid #0f172a; border-radius: 10px;
+      font-family: "Archivo Black", sans-serif; font-size: 40px; line-height: 0.95; color: #0f172a; text-align: center; transform: rotate(8deg); }
+    #dr-boxshadow { position: absolute; left: 330px; top: 1450px; width: 420px; height: 40px; border-radius: 50%; background: rgba(15,23,42,0.3); filter: blur(10px); }
+  </style>
+  <div id="root" data-composition-id="door" data-width="1080" data-height="1920">
+    <div id="dr-wall"></div>
+    <div id="dr-frame"></div>
+    <div id="dr-door"><div id="dr-p1" class="dr-panel"></div><div id="dr-p2" class="dr-panel"></div><div id="dr-knob"></div></div>
+    <div id="dr-step"></div><div id="dr-ground"></div><div id="dr-mat"></div>
+    <div id="dr-boxshadow"></div>
+    <div id="dr-shake">
+      <div id="dr-box"><div id="dr-box-body"><div id="dr-tape"></div><div id="dr-sticker"><img src="assets/logo.png" alt="Buyr" /></div><div id="dr-label">FREE US<br />SHIPPING</div></div></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // the box drops onto the mat on the 13.56 hit
+    tl.fromTo("#dr-box", { y: -1300 }, { y: 0, duration: 0.08, ease: "power2.in" }, 0);
+    tl.fromTo("#dr-boxshadow", { scale: 0.4, opacity: 0.2 }, { scale: 1, opacity: 1, duration: 0.08, ease: "power2.in" }, 0);
+    tl.fromTo("#dr-box-body", { scaleY: 1 }, { scaleY: 0.86, duration: 0.05, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "50% 100%" }, 0.08);
+    // shaking harder and harder into the drop (deterministic zig-zag, amplitude ramps)
+    const N = 16;
+    for (let i = 0; i < N; i++) {
+      const t0 = 0.3 + i * (0.56 / N), amp = 3 + i * 1.6;
+      tl.to("#dr-shake", { x: (i % 2 ? -1 : 1) * amp, rotation: (i % 2 ? -1 : 1) * amp * 0.12, duration: 0.56 / N, ease: "none", transformOrigin: "540px 1470px" }, t0);
+    }
+    tl.to("#dr-box", { scaleX: 1.06, scaleY: 1.08, duration: 0.5, ease: "power2.in", transformOrigin: "50% 100%" }, 0.38);
+    window.__timelines["door"] = tl;
+  </script>
+</template>

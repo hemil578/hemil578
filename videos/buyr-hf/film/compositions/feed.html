@@ -1,0 +1,72 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
+    #feed-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 520px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 100%); }
+    #feed-cam { position: absolute; inset: 0; }
+    #feed-phone { position: absolute; left: 170px; top: 470px; width: 740px; height: 1316px; border-radius: 76px; background: #0b0b0d; padding: 18px;
+      box-shadow: 0 46px 60px rgba(15,23,42,0.35); }
+    #feed-screen { position: relative; width: 704px; height: 1280px; border-radius: 60px; overflow: hidden; background: #000; }
+    .feed-slot { position: absolute; left: 0; top: 0; width: 704px; height: 1280px; }
+    .feed-slot video { position: absolute; left: 0; top: 0; width: 704px; height: 1280px; object-fit: cover; }
+    #feed-notch { position: absolute; left: 282px; top: 20px; width: 140px; height: 40px; border-radius: 20px; background: #000; }
+    #feed-scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 100%); }
+    #feed-ui { position: absolute; left: 34px; bottom: 54px; right: 140px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    #feed-handle { font-weight: 800; font-size: 34px; }
+    #feed-cap { font-weight: 600; font-size: 30px; margin-top: 6px; }
+    #feed-rail { position: absolute; right: 26px; bottom: 220px; width: 84px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: #fff; font-weight: 800; font-size: 26px; }
+    #feed-heart-big { position: absolute; left: 252px; top: 470px; width: 200px; height: 190px; }
+    .feed-line { position: absolute; left: 0; right: 0; text-align: center; font-weight: 800; font-size: 128px; line-height: 1; letter-spacing: -0.02em; }
+    .feed-line span { display: inline-block; }
+    #feed-l1 { top: 150px; color: #0f172a; }
+    #feed-l2 { top: 290px; color: #ffffff; -webkit-text-stroke: 6px #0f172a; paint-order: stroke fill; }
+  </style>
+  <div id="root" data-composition-id="feed" data-width="1080" data-height="1920">
+    <div id="feed-floor"></div>
+    <div id="feed-cam" data-layout-allow-overflow>
+      <div id="feed-phone">
+        <div id="feed-screen">
+          <div id="feed-slot-a" class="feed-slot">
+            <video id="feed-draw" class="clip" src="assets/feed-draw.mp4" data-start="0" data-duration="2.15" muted playsinline data-track-index="1"></video>
+          </div>
+          <div id="feed-slot-b" class="feed-slot">
+            <video id="feed-glow" class="clip" src="assets/feed-glow.mp4" data-start="1.8" data-duration="1.1" muted playsinline data-track-index="2"></video>
+          </div>
+          <div id="feed-scrim"></div>
+          <div id="feed-ui">
+            <div id="feed-handle">@buyr.store</div>
+            <div id="feed-cap">Draw on it. It glows. #tiktokmademebuyit</div>
+          </div>
+          <div id="feed-rail">
+            <svg id="feed-rail-heart" width="76" height="70" viewBox="0 0 24 22"><path id="feed-rail-heart-path" d="M12 21s-8-5.2-10.3-10A5.6 5.6 0 0 1 12 4.6 5.6 5.6 0 0 1 22.3 11C20 15.8 12 21 12 21z" fill="#ffffff"/></svg>
+          </div>
+          <svg id="feed-heart-big" viewBox="0 0 24 22"><path d="M12 21s-8-5.2-10.3-10A5.6 5.6 0 0 1 12 4.6 5.6 5.6 0 0 1 22.3 11C20 15.8 12 21 12 21z" fill="#FE2C55"/></svg>
+          <div id="feed-notch"></div>
+        </div>
+      </div>
+    </div>
+    <div id="feed-l1" class="feed-line clip" data-start="0" data-duration="2.9"><span id="feed-l1-in">SAW IT</span></div>
+    <div id="feed-l2" class="feed-line clip" data-start="0.65" data-duration="2.25"><span id="feed-l2-in">ON TIKTOK?</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // f0 is the thumbnail: phone + "SAW IT" already on screen, landing with a small settle
+    tl.fromTo("#feed-l1-in", { scale: 1.12 }, { scale: 1, duration: 0.2, ease: "back.out(2)" }, 0);
+    tl.fromTo("#feed-phone", { y: 60, rotation: -2 }, { y: 0, rotation: 0, duration: 0.5, ease: "power3.out" }, 0);
+    // 0.65 hit: second line stamps in
+    tl.fromTo("#feed-l2-in", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, ease: "back.out(2.2)" }, 0.65);
+    // 1.25 hit: camera punches in on the phone
+    tl.fromTo("#feed-cam", { scale: 1 }, { scale: 1.08, duration: 0.18, ease: "power3.out", transformOrigin: "540px 1100px" }, 1.25);
+    // 1.86 hit: swipe up to the next clip (the glow)
+    tl.fromTo("#feed-slot-a", { y: 0 }, { y: -1280, duration: 0.22, ease: "power3.inOut" }, 1.8);
+    tl.fromTo("#feed-slot-b", { y: 1280 }, { y: 0, duration: 0.22, ease: "power3.inOut" }, 1.8);
+    // 2.45 double tap: big heart pops, rail heart turns red
+    tl.fromTo("#feed-heart-big", { scale: 0, opacity: 0, rotation: -12 }, { scale: 1.15, opacity: 1, rotation: 0, duration: 0.14, ease: "back.out(2.5)" }, 2.45);
+    tl.to("#feed-heart-big", { scale: 1.6, opacity: 0, duration: 0.25, ease: "power2.in" }, 2.66);
+    tl.fromTo("#feed-rail-heart", { scale: 1 }, { scale: 1.3, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.out" }, 2.47);
+    tl.set("#feed-rail-heart-path", { attr: { fill: "#FE2C55" } }, 2.47);
+    // set initial states
+    tl.set("#feed-heart-big", { opacity: 0, scale: 0 }, 0);
+    tl.set("#feed-slot-b", { y: 1280 }, 0);
+    window.__timelines["feed"] = tl;
+  </script>
+</template>

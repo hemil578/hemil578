@@ -1,0 +1,85 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
+    #bx-floor { position: absolute; left: 0; right: 0; top: 1180px; bottom: 0; background: linear-gradient(180deg, #19d6b6 0%, #3fe0c4 100%); }
+    #bx-shadow { position: absolute; left: 250px; top: 1330px; width: 580px; height: 120px; border-radius: 50%; background: rgba(15,23,42,0.35); filter: blur(22px); }
+    #bx-drop { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #bx-squash { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+    #bx-stage { position: absolute; left: 320px; top: 830px; width: 440px; height: 440px; perspective: 1700px; }
+    #bx-cube { position: absolute; inset: 0; transform-style: preserve-3d; }
+    .bx-face { position: absolute; left: 0; top: 0; width: 440px; height: 440px; backface-visibility: hidden; }
+    #bx-front { background: linear-gradient(180deg, #22355a 0%, #1b2a44 100%); border: 4px solid #2c4372; display: flex; align-items: center; justify-content: center; }
+    #bx-right { background: linear-gradient(180deg, #172540 0%, #111c32 100%); border: 4px solid #22355a; }
+    #bx-left { background: #111c32; }
+    #bx-back { background: #111c32; }
+    #bx-bottom { background: #0b1324; }
+    #bx-inside { background: #0a1222; }
+    .bx-flap { position: absolute; left: 0; width: 440px; height: 220px; background: linear-gradient(180deg, #2b4170, #22355a); border: 4px solid #2c4372; backface-visibility: visible; }
+    #bx-flap-a { top: 0; }
+    #bx-flap-b { top: 220px; }
+    #bx-top { position: absolute; left: 0; top: 0; width: 440px; height: 440px; transform-style: preserve-3d; }
+    #bx-tape { position: absolute; left: 175px; top: -2px; width: 90px; height: 150px; background: rgba(0,201,167,0.92); }
+    #bx-sticker { width: 250px; padding: 18px 24px; background: #fff; border-radius: 20px; transform: rotate(-2deg); }
+    #bx-sticker img { width: 100%; display: block; }
+    #bx-label { opacity: 0; position: absolute; right: -36px; top: 236px; padding: 14px 22px; background: #ffd23f; color: #0f172a; border: 6px solid #0f172a; border-radius: 14px;
+      font-family: "Archivo Black", sans-serif; font-size: 52px; line-height: 0.95; text-align: center; }
+    .bx-line { position: absolute; left: 0; right: 0; top: 230px; text-align: center; font-weight: 800; font-size: 160px; line-height: 1; letter-spacing: -0.02em; color: #0f172a; }
+    .bx-line span { display: inline-block; }
+  </style>
+  <div id="root" data-composition-id="box" data-width="1080" data-height="1920">
+    <div id="bx-floor"></div>
+    <div id="bx-shadow"></div>
+    <div id="bx-drop"><div id="bx-squash">
+      <div id="bx-stage">
+        <div id="bx-cube">
+          <div id="bx-bottom" class="bx-face"></div>
+          <div id="bx-back" class="bx-face"></div>
+          <div id="bx-left" class="bx-face"></div>
+          <div id="bx-inside" class="bx-face"></div>
+          <div id="bx-right" class="bx-face"></div>
+          <div id="bx-front" class="bx-face">
+            <div id="bx-sticker"><img src="assets/logo.png" alt="Buyr" /></div>
+            <div id="bx-label">FREE US<br />SHIPPING</div>
+          </div>
+          <div id="bx-top">
+            <div id="bx-flap-a" class="bx-flap"></div>
+            <div id="bx-flap-b" class="bx-flap"><div id="bx-tape"></div></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div id="bx-packed" class="bx-line clip" data-start="0.6" data-duration="0.65"><span id="bx-packed-in">PACKED.</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const H = 220; // half the box size
+    // build the cube (static 3D transforms are set through GSAP so nothing conflicts)
+    tl.set("#bx-cube", { rotationX: -24, rotationY: -34 }, 0);
+    tl.set("#bx-front", { z: H }, 0);
+    tl.set("#bx-back", { rotationY: 180, z: -H }, 0);
+    tl.set("#bx-right", { rotationY: 90, x: H, z: 0 }, 0);
+    tl.set("#bx-left", { rotationY: -90, x: -H }, 0);
+    tl.set("#bx-bottom", { rotationX: -90, y: H }, 0);
+    tl.set("#bx-inside", { rotationX: 90, y: -H + 40 }, 0);
+    tl.set("#bx-top", { rotationX: 90, y: -H }, 0);
+    // flaps: open (standing up and out) at the start
+    tl.set("#bx-flap-a", { transformOrigin: "50% 0%", rotationX: 125 }, 0);
+    tl.set("#bx-flap-b", { transformOrigin: "50% 100%", rotationX: -125 }, 0);
+    tl.set("#bx-tape", { scaleY: 0, transformOrigin: "50% 0%" }, 0);
+
+    // 7.85: the box drops in from the button and squashes on the floor
+    tl.fromTo("#bx-drop", { y: -1500 }, { y: 0, duration: 0.14, ease: "power2.in" }, 0);
+    tl.fromTo("#bx-shadow", { scale: 0.3, opacity: 0.2 }, { scale: 1, opacity: 1, duration: 0.14, ease: "power2.in" }, 0);
+    tl.fromTo("#bx-squash", { scaleY: 1, scaleX: 1 }, { scaleY: 0.86, scaleX: 1.08, duration: 0.06, ease: "power2.out", transformOrigin: "540px 1490px" }, 0.14);
+    tl.to("#bx-squash", { scaleY: 1, scaleX: 1, duration: 0.3, ease: "back.out(2.2)" }, 0.2);
+    // 8.45: flaps fold shut, tape runs across
+    tl.to("#bx-flap-a", { rotationX: 0, duration: 0.16, ease: "power3.in" }, 0.5);
+    tl.to("#bx-flap-b", { rotationX: 0, duration: 0.16, ease: "power3.in" }, 0.56);
+    tl.to("#bx-tape", { scaleY: 1, duration: 0.14, ease: "power2.out" }, 0.66);
+    tl.fromTo("#bx-packed-in", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.13, ease: "back.out(2.2)" }, 0.6);
+    // 9.06: label slaps on
+    tl.fromTo("#bx-label", { opacity: 0, scale: 2.4, rotation: 18 }, { opacity: 1, scale: 1, rotation: 8, duration: 0.1, ease: "power4.in" }, 1.11);
+    tl.fromTo("#bx-stage", { x: 0 }, { x: 10, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 1.21);
+    window.__timelines["box"] = tl;
+  </script>
+</template>

@@ -1,0 +1,80 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #f4efe6; font-family: "Poppins", sans-serif; }
+    #rt-world { position: absolute; left: 0; top: 0; width: 3200px; height: 5400px; transform-origin: 0 0; }
+    #rt-map { position: absolute; left: 0; top: 0; width: 3200px; height: 5400px; }
+    #rt-svg { position: absolute; left: 0; top: 0; width: 3200px; height: 5400px; overflow: visible; }
+    .rt-pin { position: absolute; width: 150px; height: 150px; border-radius: 75px; display: flex; align-items: center; justify-content: center; border: 10px solid #ffffff; box-shadow: 0 12px 0 rgba(15,23,42,0.18); }
+    #rt-pin-a { left: 725px; top: 3925px; background: #0f172a; }
+    #rt-pin-b { left: 2325px; top: 885px; background: #00c9a7; }
+    #rt-shadow { position: absolute; left: 420px; top: 930px; width: 240px; height: 240px; border-radius: 22px; background: rgba(15,23,42,0.28); filter: blur(14px); }
+    #rt-box { position: absolute; left: 420px; top: 930px; width: 240px; height: 240px; }
+    #rt-box-body { position: absolute; inset: 0; border-radius: 16px; background: linear-gradient(135deg, #2b4170, #1b2a44); border: 5px solid #2c4372; }
+    #rt-box-seam { position: absolute; left: 0; right: 0; top: 116px; height: 8px; background: #0f172a; opacity: 0.6; }
+    #rt-box-tape { position: absolute; left: 0; right: 0; top: 96px; height: 48px; background: rgba(0,201,167,0.92); }
+    #rt-box-label { position: absolute; right: 14px; bottom: 14px; width: 82px; height: 60px; border-radius: 8px; background: #ffd23f; border: 4px solid #0f172a; }
+    .rt-stamp { position: absolute; left: 0; right: 0; top: 200px; text-align: center; }
+    .rt-stamp span { display: inline-block; padding: 18px 34px; background: #ffd23f; color: #0f172a; border: 7px solid #0f172a; border-radius: 22px;
+      font-family: "Archivo Black", sans-serif; font-size: 96px; line-height: 1.02; text-align: center; }
+  </style>
+  <div id="root" data-composition-id="route" data-width="1080" data-height="1920">
+    <div id="rt-world" data-layout-allow-overflow>
+      <img id="rt-map" src="assets/map.png" alt="Illustrated city" />
+      <svg id="rt-svg" viewBox="0 0 3200 5400">
+        <path id="rt-path-bg" d="M800 4000 L800 3360 L1440 3360 L1440 2080 L2080 2080 L2080 1280 L2400 1280 L2400 960" fill="none" stroke="#0f172a" stroke-opacity="0.12" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 46" />
+        <path id="rt-path" d="M800 4000 L800 3360 L1440 3360 L1440 2080 L2080 2080 L2080 1280 L2400 1280 L2400 960" fill="none" stroke="#00c9a7" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <div id="rt-pin-a" class="rt-pin">
+        <svg width="70" height="70" viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v9l-9 5-9-5z M3 8l9 5 9-5 M12 13v9" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+      <div id="rt-pin-b" class="rt-pin">
+        <svg width="74" height="74" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6h-6v6H3z" fill="#fff"/></svg>
+      </div>
+    </div>
+    <div id="rt-shadow"></div>
+    <div id="rt-box"><div id="rt-box-body"><div id="rt-box-seam"></div><div id="rt-box-tape"></div><div id="rt-box-label"></div></div></div>
+    <div id="rt-s1" class="rt-stamp clip" data-start="0.75" data-duration="2.2"><span id="rt-s1-in">SHIPS IN<br />1–2 DAYS</span></div>
+    <div id="rt-s2" class="rt-stamp clip" data-start="2.95" data-duration="1.51"><span id="rt-s2-in">TRACKED TO<br />YOUR DOOR</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const PTS = [[800,4000],[800,3360],[1440,3360],[1440,2080],[2080,2080],[2080,1280],[2400,1280],[2400,960]];
+    const seg = []; let total = 0;
+    for (let i = 1; i < PTS.length; i++) { const dx = PTS[i][0]-PTS[i-1][0], dy = PTS[i][1]-PTS[i-1][1]; const L = Math.hypot(dx, dy); seg.push({ a: PTS[i-1], dx, dy, L, s: total }); total += L; }
+    const at = (p) => { const d = Math.min(total, Math.max(0, p * total)); let g = seg[seg.length - 1];
+      for (const s of seg) { if (d <= s.s + s.L) { g = s; break; } } const k = (d - g.s) / g.L;
+      return { x: g.a[0] + g.dx * k, y: g.a[1] + g.dy * k, ang: Math.atan2(g.dy, g.dx) * 180 / Math.PI + 90 }; };
+    const pathLen = document.querySelector("#rt-path").getTotalLength();
+    gsap.set("#rt-path", { attr: { "stroke-dasharray": pathLen, "stroke-dashoffset": pathLen } });
+
+    // one state drives camera, box, shadow and the drawn route
+    const st = { p: 0, cam: 1.7, lift: 0, box: 1.7 };
+    const BOXC = [540, 1050];
+    const render = () => {
+      const q = at(st.p);
+      // heading from a short look-ahead/behind chord: turns round off instead of snapping (pure function of p)
+      const a = at(st.p - 0.025), b = at(st.p + 0.025);
+      const target = (b.x === a.x && b.y === a.y) ? q.ang : Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI + 90;
+      const s = st.cam;
+      gsap.set("#rt-world", { x: BOXC[0] - q.x * s, y: BOXC[1] - q.y * s, scale: s });
+      gsap.set("#rt-box", { scale: st.box, rotation: target });
+      gsap.set("#rt-shadow", { x: 26 + st.lift * 70, y: 34 + st.lift * 90, scale: st.box * (1 - st.lift * 0.15), rotation: target, opacity: 0.9 - st.lift * 0.35 });
+      gsap.set("#rt-path", { attr: { "stroke-dashoffset": pathLen * (1 - st.p) } });
+    };
+    tl.to(st, { cam: 0.9, box: 1.0, duration: 0.6, ease: "expo.inOut", onUpdate: render }, 0);
+    tl.to(st, { lift: 1, duration: 0.5, ease: "power2.out", onUpdate: render }, 0.3);
+    // the flight: slow lift-off, accelerating into the steepest part of the build (13.0 s)
+    tl.to(st, { p: 1, duration: 3.4, ease: "power2.in", onUpdate: render }, 0.6);
+    // arrival: camera dives toward the home pin, box drops toward the door
+    tl.to(st, { cam: 2.2, duration: 0.46, ease: "expo.in", onUpdate: render }, 4.0);
+    tl.to(st, { lift: 0, box: 0.8, duration: 0.4, ease: "power2.in", onUpdate: render }, 4.0);
+    tl.call(render, null, 0);
+    // stamps
+    for (const id of ["#rt-s1-in", "#rt-s2-in"]) {
+      const t0 = { "#rt-s1-in": 0.75, "#rt-s2-in": 2.95 }[id];
+      tl.fromTo(id, { scale: 1.8, rotation: -6, opacity: 0 }, { scale: 1, rotation: -3, opacity: 1, duration: 0.12, ease: "power4.in" }, t0);
+    }
+    render();
+    window.__timelines["route"] = tl;
+  </script>
+</template>

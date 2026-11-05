@@ -47,6 +47,9 @@ npx remotion render src/index.ts HelloClaude out/hello-claude.mp4 --browser-exec
 
 ## Buyr promo (buyrshop.com)
 
+**Latest: `videos/buyr-hf/buyr-saw-want-got.mp4`.** A HyperFrames story film, "Saw it. Want it. Got it.": the real glow-penguin video in a phone feed → the penguin bursts out of the phone onto the real buyrshop.com product page → price punch-in → scroll → tap ADD TO CART → the button becomes the Buyr box → packed and labelled → flies a route across a city → lands at the door → on the drop, 16 more products fire out into an orbit with names and prices → they collapse into the end card. Project: `videos/buyr-hf/film/` (SPEC.md, STORYLINES.md, one scene per file in `compositions/`). Render: `cd videos/buyr-hf/film && npx hyperframes render -q delivery`.
+
+
 **Main version: `videos/buyr/buyr-story.mp4`.** A 24.6 s story edit cut to the track: scroll a TikTok-style feed → add to cart → pack the box → lid closes on the riser → FREE SHIPPING label and the box races off on the drop → unbox to logo and CTA. Each of the 25 products appears exactly once, and the cart count and total use real store prices. Source: `remotion-starter/src/BuyrStory.tsx` (composition `BuyrStory`).
 
 **Previous: `videos/buyr/buyr-beat-edit.mp4`.** A 24.6 s music-video edit cut to `remotion-starter/public/buyr/track.mp3` (100 BPM, drop at 14.4 s), with no voiceover. It cuts on every beat, and on every half-beat after the drop. It mixes full-screen product photos with camera moves and background-removed product cut-outs (rembg) slamming onto colours, plus kinetic words, flashes, shake, film grain, a riser into the drop, and an orbiting-products end card. Source: `remotion-starter/src/BuyrBeatEdit.tsx`; photos in `public/buyr/shots/` (from the store's products.json) and cut-outs in `public/buyr/cut/`.
