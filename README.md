@@ -35,7 +35,7 @@ npx remotion render src/index.ts HelloClaude out/hello-claude.mp4 --browser-exec
 
 ## Buyr promo (buyrshop.com)
 
-`videos/buyr/buyr-promo-v1.mp4`: 25.5 s vertical (9:16) promo for Reels/TikTok/Shorts. Source: `remotion-starter/src/BuyrPromo.tsx`, assets in `remotion-starter/public/buyr/` (product images and logo from buyrshop.com, Kokoro voiceover, original code-generated music).
+`videos/buyr/buyr-promo-final.mp4`: 25.5 s vertical (9:16) promo for Reels/TikTok/Shorts. Source: `remotion-starter/src/BuyrPromo.tsx`, assets in `remotion-starter/public/buyr/` (product images and logo from buyrshop.com, Kokoro voiceover, original code-generated music).
 
 ```bash
 cd remotion-starter
