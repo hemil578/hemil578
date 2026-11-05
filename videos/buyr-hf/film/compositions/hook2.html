@@ -1,0 +1,66 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #ffd23f; }
+    #hk-cam { position: absolute; inset: 0; }
+    #hk-ground { position: absolute; left: 0; top: -1920px; width: 1080px; height: 3840px; background: #ffd23f; }
+    #hk-ground2 { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #00c9a7; }
+    .hk-dots { position: absolute; left: 0; top: -1920px; width: 1080px; height: 3840px; background-image: radial-gradient(rgba(15,23,42,0.13) 5px, transparent 6px); background-size: 34px 34px; }
+    #hk-frame { position: absolute; left: 150px; top: 520px; width: 780px; height: 1000px; border: 18px solid #ffffff; border-radius: 40px; overflow: hidden; background: #000;
+      box-shadow: 22px 22px 0 #0f172a; }
+    #hk-frame video { position: absolute; left: 0; top: 0; width: 744px; height: 964px; object-fit: cover; }
+    .hk-word { position: absolute; left: 0; right: 0; text-align: center; font-family: "League Gothic", sans-serif; line-height: 0.9; color: #ffffff;
+      -webkit-text-stroke: 12px #0f172a; paint-order: stroke fill; text-shadow: 10px 10px 0 #0f172a; }
+    .hk-word span { display: inline-block; }
+    #hk-w1 { top: 140px; font-size: 230px; }
+    #hk-w2 { top: 330px; font-size: 230px; }
+    #hk-w3 { top: 1230px; font-size: 250px; color: #ffd23f; }
+    #hk-heart { position: absolute; left: 420px; top: 860px; width: 240px; height: 220px; }
+    #hk-peng { position: absolute; left: 0; top: 0; width: 480px; height: 640px; }
+  </style>
+  <div id="root" data-composition-id="hook2" data-width="1080" data-height="1920">
+    <div id="hk-cam" data-layout-allow-overflow>
+      <div id="hk-ground" data-layout-ignore></div>
+      <div id="hk-ground2" class="clip" data-start="1.86" data-duration="1.48" data-layout-ignore></div>
+      <div class="hk-dots" data-layout-ignore></div>
+      <div id="hk-frame">
+        <video id="hk-v1" class="clip" src="assets/feed-draw.mp4" data-start="0" data-duration="1.86" muted playsinline data-track-index="1"></video>
+        <video id="hk-v2" class="clip" src="assets/feed-glow.mp4" data-start="1.86" data-duration="1.48" muted playsinline data-track-index="2"></video>
+      </div>
+      <svg id="hk-heart" viewBox="0 0 24 22"><path d="M12 21s-8-5.2-10.3-10A5.6 5.6 0 0 1 12 4.6 5.6 5.6 0 0 1 22.3 11C20 15.8 12 21 12 21z" fill="#FE2C55" stroke="#ffffff" stroke-width="1.3"/></svg>
+    </div>
+    <div id="hk-w1" class="hk-word clip" data-start="0" data-duration="1.86"><span id="hk-w1-in">SAW IT</span></div>
+    <div id="hk-w2" class="hk-word clip" data-start="0.65" data-duration="1.21"><span id="hk-w2-in">ON TIKTOK?</span></div>
+    <div id="hk-w3" class="hk-word clip" data-start="1.86" data-duration="1.1" data-layout-allow-overlap><span id="hk-w3-in">WANT IT?</span></div>
+    <img id="hk-peng" src="assets/stk/penguin-glow-cut.png" alt="Glow Penguin Plush" />
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const letters = (sel) => { const el = document.querySelector(sel);
+      el.innerHTML = Array.from(el.textContent).map((c) => '<span class="kl" style="display:inline-block">' + (c === " " ? "&nbsp;" : c) + "</span>").join("");
+      return el.querySelectorAll(".kl"); };
+    const slam = (sel, t0, rot) => {
+      tl.fromTo(letters(sel), { y: 140, rotation: rot * 3, scale: 1.4, opacity: 0 }, { y: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.22, ease: "back.out(3)", stagger: 0.025 }, t0);
+      tl.fromTo(sel, { rotation: rot }, { rotation: rot, duration: 0.01 }, t0);
+    };
+    // the video sticker slaps on with the first hit
+    tl.fromTo("#hk-frame", { scale: 1.25, rotation: 6 }, { scale: 1, rotation: -4, duration: 0.25, ease: "back.out(2.5)" }, 0);
+    slam("#hk-w1-in", 0.03, -4);
+    slam("#hk-w2-in", 0.65, 3);
+    // 1.25: punch in on the sticker
+    tl.to("#hk-frame", { scale: 1.07, rotation: -2, duration: 0.15, ease: "power3.out" }, 1.25);
+    // 1.86: colour flips to teal, glow clip, WANT IT?
+    tl.to("#hk-frame", { scale: 1, rotation: 4, duration: 0.18, ease: "back.out(2.5)" }, 1.86);
+    slam("#hk-w3-in", 1.86, -5);
+    // 2.45: double-tap heart
+    tl.fromTo("#hk-heart", { scale: 0, rotation: -15 }, { scale: 1.2, rotation: 0, duration: 0.14, ease: "back.out(3)" }, 2.45);
+    tl.to("#hk-heart", { scale: 1.8, opacity: 0, duration: 0.22, ease: "power2.in" }, 2.66);
+    tl.set("#hk-heart", { scale: 0 }, 0);
+    // 2.9: the penguin pops out of the sticker as its own sticker, then rockets UP; the camera follows it
+    tl.set("#hk-peng", { x: 300, y: 700, scale: 0.4, opacity: 0 }, 0);
+    tl.to("#hk-peng", { opacity: 1, duration: 0.01 }, 2.9);
+    tl.to("#hk-peng", { x: 300, y: 560, scale: 1.25, rotation: -10, duration: 0.18, ease: "back.out(2.2)" }, 2.9);
+    tl.to("#hk-peng", { y: -900, rotation: 8, duration: 0.3, ease: "power3.in" }, 3.06);
+    tl.to("#hk-cam", { y: 1920, duration: 0.3, ease: "power3.in" }, 3.06);
+    window.__timelines["hook2"] = tl;
+  </script>
+</template>
