@@ -35,6 +35,8 @@ npx remotion render src/index.ts HelloClaude out/hello-claude.mp4 --browser-exec
 
 ## Buyr promo (buyrshop.com)
 
+`videos/buyr/buyr-promo-music-only.mp4`: music-only version (no voiceover; `VOICE = false` in BuyrPromo.tsx).
+
 `videos/buyr/buyr-promo-music.mp4`: 24.6 s vertical (9:16) promo for Reels/TikTok/Shorts, cut to the beat of the supplied music track (`remotion-starter/public/buyr/track.mp3`, ~100 BPM, drop at 14.4 s). Source: `remotion-starter/src/BuyrPromo.tsx`; assets in `remotion-starter/public/buyr/` (product images and logo from buyrshop.com, Kokoro voiceover re-timed to the beat cuts).
 
 `videos/buyr/buyr-promo-final.mp4`: earlier 25.5 s version with code-generated music.

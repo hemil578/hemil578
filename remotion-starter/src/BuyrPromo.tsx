@@ -23,6 +23,9 @@ const LINES: [string, number, number][] = [
   ["Trending finds, shipped free. Shop now at buyrshop.com", 19.55, 4.33],
 ];
 
+/** Voiceover + captions. Off: music-only version (on-screen text carries the message). */
+const VOICE = false;
+
 export const BUYR_DURATION = s2f(24.63); // length of the music track
 
 // Strong hits in public/buyr/track.mp3 (~100 BPM), measured with an onset detector.
@@ -294,7 +297,7 @@ const SCENES: { from: number; to: number; el: React.ReactNode }[] = [
 const musicVolume = (f: number) => {
   const t = f / FPS;
   const speaking = LINES.some(([, st, d]) => t > st - 0.15 && t < st + d + 0.1);
-  const base = speaking ? 0.32 : 0.9;
+  const base = !VOICE ? 1 : speaking ? 0.32 : 0.9;
   const fadeOut = interpolate(f, [BUYR_DURATION - 30, BUYR_DURATION], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return base * fadeOut;
 };
@@ -330,8 +333,8 @@ export const BuyrPromo: React.FC = () => {
       ))}
       </AbsoluteFill>
       <BeatFlash />
-      <Captions />
-      <Audio src={staticFile("buyr/voice_beat.wav")} />
+      {VOICE && <Captions />}
+      {VOICE && <Audio src={staticFile("buyr/voice_beat.wav")} />}
       <Audio src={staticFile("buyr/track.mp3")} volume={musicVolume} />
     </AbsoluteFill>
   );
