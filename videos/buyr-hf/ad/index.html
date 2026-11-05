@@ -78,11 +78,11 @@
       <div id="w-c21" class="slot" style="z-index:41"><video id="v-c21" class="clip" src="assets/clips/c21.mp4" data-start="18.675" data-duration="0.7" muted playsinline data-track-index="1"></video></div>
       <div id="w-c22" class="slot" style="z-index:42"><video id="v-c22" class="clip" src="assets/clips/c22.mp4" data-start="19.275" data-duration="0.7" muted playsinline data-track-index="1"></video></div>
       </div>
-      <div id="logo-wrap" class="clip" data-start="2.475" data-duration="0.6" style="position:absolute;inset:0;z-index:210"><div id="logo-sticker"><img src="assets/logo.png" alt="Buyr" /></div></div>
+      <div id="logo-wrap" class="clip" data-start="2.475" data-duration="1.2" style="position:absolute;inset:0;z-index:210"><div id="logo-sticker"><img src="assets/logo.png" alt="Buyr" /></div></div>
     <div id="t1" class="line top clip" data-start="0" data-duration="1.875"><span id="t1-in">YOU DON'T NEED THIS.</span></div>
     <div id="t2" class="line top clip" data-start="0.675" data-duration="1.2" style="top:475px"><span id="t2-in">…YOU <em>WANT</em> IT.</span></div>
     <div id="t3" class="line top clip" data-start="1.875" data-duration="0.6"><span id="t3-in">ADMIT IT.</span></div>
-    <div id="t4" class="line top clip" data-start="2.475" data-duration="0.6"><span id="t4-in">HAS THEM ALL</span></div>
+    <div id="t4" class="line top clip" data-start="2.475" data-duration="1.2"><span id="t4-in">HAS THEM ALL</span></div>
     <div id="r1" class="line mid clip" data-start="7.875" data-duration="0.6"><span id="r1-in">WAIT—</span></div>
     <div id="r2" class="line mid clip" data-start="8.475" data-duration="0.6"><span id="r2-in">WHAT—</span></div>
     <div id="r3" class="line mid clip" data-start="9.075" data-duration="0.6"><span id="r3-in">LOL</span></div>
@@ -91,14 +91,9 @@
     <div id="o3" class="line top clip" data-start="16.875" data-duration="1.2"><span id="o3-in">FROM <em>$9.99</em></span></div>
     <div id="o4" class="line top clip" data-start="18.075" data-duration="1.8"><span id="o4-in">TRACKED DELIVERY</span></div>
     <div id="chip-c06" class="chip clip" data-start="3.075" data-duration="1.2"><span id="chip-c06-in">Butter Squishy <b>$19.99</b></span></div>
-    <div id="chip-c07" class="chip clip" data-start="4.275" data-duration="1.2"><span id="chip-c07-in">Light-Up Flower Pot <b>$49.99</b></span></div>
+    <div id="chip-c07" class="chip clip" data-start="4.275" data-duration="1.2"><span id="chip-c07-in">Flower Pot <b>$49.99</b></span></div>
     <div id="chip-c08" class="chip clip" data-start="5.475" data-duration="1.2"><span id="chip-c08-in">Dog Raincoat <b>$26.99</b></span></div>
-    <div id="chip-c09" class="chip clip" data-start="6.675" data-duration="1.2"><span id="chip-c09-in">Lazy Prism Glasses <b>$24.99</b></span></div>
-    <div id="chip-c13" class="chip clip" data-start="9.675" data-duration="0.6"><span id="chip-c13-in">Gear Cube <b>$26.99</b></span></div>
-    <div id="chip-c14" class="chip clip" data-start="10.275" data-duration="0.6"><span id="chip-c14-in">Keycap Clicker <b>$20.99</b></span></div>
-    <div id="chip-c15" class="chip clip" data-start="10.875" data-duration="0.6"><span id="chip-c15-in">Berry Bowl <b>$35.99</b></span></div>
-    <div id="chip-c16" class="chip clip" data-start="11.475" data-duration="0.6"><span id="chip-c16-in">Egg Poacher <b>$20.99</b></span></div>
-    <div id="chip-c17" class="chip clip" data-start="12.075" data-duration="0.6"><span id="chip-c17-in">Magnetic Frog <b>$19.99</b></span></div>
+    <div id="chip-c09" class="chip clip" data-start="6.675" data-duration="1.2"><span id="chip-c09-in">Prism Glasses <b>$24.99</b></span></div>
     <div id="n3" class="count clip" data-start="12.675" data-duration="0.6"><span id="n3-in">3</span></div>
     <div id="n2" class="count clip" data-start="13.275" data-duration="0.6"><span id="n2-in">2</span></div>
     <div id="n1" class="count clip" data-start="13.875" data-duration="0.6"><span id="n1-in">1</span></div>
@@ -148,7 +143,7 @@
       const rise = (sel, t0) => tl.fromTo(sel, { y: 70, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.18, ease: "back.out(2.2)", immediateRender: false }, t0);
       []
       for (const [id, t0] of [['t2', 0.675], ['t3', 1.875], ['t4', 2.475], ['r1', 7.875], ['r2', 8.475], ['r3', 9.075], ['o1', 14.475], ['o2', 15.675], ['o3', 16.875], ['o4', 18.075]]) rise("#" + id + "-in", t0);
-      for (const [id, t0] of [['chip-c06', 3.075], ['chip-c07', 4.275], ['chip-c08', 5.475], ['chip-c09', 6.675], ['chip-c13', 9.675], ['chip-c14', 10.275], ['chip-c15', 10.875], ['chip-c16', 11.475], ['chip-c17', 12.075]]) rise("#" + id + "-in", t0);
+      for (const [id, t0] of [['chip-c06', 3.075], ['chip-c07', 4.275], ['chip-c08', 5.475], ['chip-c09', 6.675]]) rise("#" + id + "-in", t0);
       // frame 0 is the thumbnail: the hook is fully visible from the first frame and only settles
       tl.fromTo("#t1-in", { scale: 1.08 }, { scale: 1, duration: 0.2, ease: "back.out(2)", immediateRender: false }, 0);
       // the three reaction words slam bigger
