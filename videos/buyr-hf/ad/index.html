@@ -33,7 +33,7 @@
       #end-logo { position: absolute; left: 270px; top: 300px; width: 540px; padding: 36px 50px; background: #ffffff; border-radius: 44px; box-shadow: 16px 16px 0 #0f172a; }
       #end-logo img { width: 100%; display: block; }
       #end-line { position: absolute; left: 0; right: 0; top: 640px; text-align: center; }
-      #end-line span { display: inline-block; font-weight: 800; font-size: 150px; line-height: 1; color: #0f172a; letter-spacing: -0.02em; }
+      #end-line span { display: inline-block; font-weight: 800; font-size: 134px; line-height: 1; color: #0f172a; letter-spacing: -0.02em; }
       #end-btn { position: absolute; left: 0; right: 0; top: 880px; text-align: center; }
       #end-btn span { display: inline-block; padding: 30px 72px; border-radius: 999px; background: #0f172a; color: #ffffff; font-weight: 800; font-size: 82px; }
       #end-small { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; color: #0f172a; font-weight: 700; font-size: 44px; line-height: 1.35; }
@@ -73,14 +73,12 @@
       <div id="w-c27" class="slot" style="z-index:36"><video id="v-c27" class="clip" src="assets/clips/c27.mp4" data-start="16.25" data-duration="0.72" muted playsinline data-track-index="1"></video></div>
       <div id="w-c28" class="slot" style="z-index:37"><video id="v-c28" class="clip" src="assets/clips/c28.mp4" data-start="16.85" data-duration="0.72" muted playsinline data-track-index="1"></video></div>
       <div id="w-c29" class="slot" style="z-index:38"><video id="v-c29" class="clip" src="assets/clips/c29.mp4" data-start="17.45" data-duration="0.72" muted playsinline data-track-index="1"></video></div>
-      <div id="w-c30" class="slot" style="z-index:39"><video id="v-c30" class="clip" src="assets/clips/c30.mp4" data-start="18.05" data-duration="0.72" muted playsinline data-track-index="1"></video></div>
+      <div id="w-c30" class="slot" style="z-index:39"><video id="v-c30" class="clip" src="assets/clips/c30.mp4" data-start="18.05" data-duration="1.32" muted playsinline data-track-index="1"></video></div>
       </div>
-    <div id="cf1" class="cfield clip" data-start="18.65" data-duration="0.3" style="background:#00c9a7"></div>
-    <div id="cf2" class="cfield clip" data-start="18.95" data-duration="0.3" style="background:#0f172a"></div>
     <div id="cf3" class="cfield clip" data-start="19.25" data-duration="0.3" style="background:#ffd23f"></div>
     <div id="cf4" class="cfield clip" data-start="19.55" data-duration="0.3" style="background:#00c9a7"></div>
       <div id="logo-wrap" class="clip" data-start="2.9" data-duration="0.44" style="position:absolute;inset:0;z-index:210"><div id="logo-sticker"><img src="assets/logo.png" alt="Buyr" /></div></div>
-    <div id="t1" class="line top clip" data-start="0.05" data-duration="1.81"><span id="t1-in">YOU DON'T NEED THIS.</span></div>
+    <div id="t1" class="line top clip" data-start="0" data-duration="1.86"><span id="t1-in">YOU DON'T NEED THIS.</span></div>
     <div id="t2" class="line top clip" data-start="0.65" data-duration="1.21" style="top:475px"><span id="t2-in">…YOU <em>WANT</em> IT.</span></div>
     <div id="t3" class="line top clip" data-start="1.86" data-duration="1.04"><span id="t3-in">ADMIT IT.</span></div>
     <div id="t4" class="line top clip" data-start="2.9" data-duration="0.44"><span id="t4-in">HAS THEM ALL</span></div>
@@ -126,7 +124,7 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-      const CLIPS = [["w-c01",0.0,0.65,0,0],["w-c02",0.65,1.25,0,0],["w-c03",1.25,1.86,0,0],["w-c04",1.86,2.9,0,0],["w-c05",2.9,3.34,0,0],["w-c06",3.34,4.55,1,0],["w-c07",4.55,5.75,0,0],["w-c08",5.75,6.95,0,0],["w-c09",6.95,7.85,0,0],["w-c10",7.85,8.45,0,1],["w-c11",8.45,9.06,0,1],["w-c12",9.06,9.65,0,1],["w-c13",9.65,10.25,1,0],["w-c14",10.25,10.85,1,0],["w-c15",10.85,11.45,1,0],["w-c16",11.45,12.05,1,0],["w-c17",12.05,12.65,1,0],["w-c18",12.65,12.95,0,0],["w-c19",12.95,13.25,0,0],["w-c20",13.25,13.55,0,0],["w-c21",13.55,13.85,0,0],["w-c22",13.85,14.15,0,0],["w-c23",14.15,14.44,0,0],["w-c24",14.44,15.05,1,0],["w-c25",15.05,15.65,0,0],["w-c26",15.65,16.25,0,0],["w-c27",16.25,16.85,0,0],["w-c28",16.85,17.45,0,0],["w-c29",17.45,18.05,0,0],["w-c30",18.05,18.65,0,0]];
+      const CLIPS = [["w-c01",0.0,0.65,0,0],["w-c02",0.65,1.25,0,0],["w-c03",1.25,1.86,0,0],["w-c04",1.86,2.9,0,0],["w-c05",2.9,3.34,0,0],["w-c06",3.34,4.55,1,0],["w-c07",4.55,5.75,0,0],["w-c08",5.75,6.95,0,0],["w-c09",6.95,7.85,0,0],["w-c10",7.85,8.45,0,1],["w-c11",8.45,9.06,0,1],["w-c12",9.06,9.65,0,1],["w-c13",9.65,10.25,1,0],["w-c14",10.25,10.85,1,0],["w-c15",10.85,11.45,1,0],["w-c16",11.45,12.05,1,0],["w-c17",12.05,12.65,1,0],["w-c18",12.65,12.95,0,0],["w-c19",12.95,13.25,0,0],["w-c20",13.25,13.55,0,0],["w-c21",13.55,13.85,0,0],["w-c22",13.85,14.15,0,0],["w-c23",14.15,14.44,0,0],["w-c24",14.44,15.05,1,0],["w-c25",15.05,15.65,0,0],["w-c26",15.65,16.25,0,0],["w-c27",16.25,16.85,0,0],["w-c28",16.85,17.45,0,0],["w-c29",17.45,18.05,0,0],["w-c30",18.05,19.25,0,0]];
       // ambient: every clip slowly pushes in; entrances are hard cuts, rising whips, or snap zooms
       for (const [id, s, e, whip, snap] of CLIPS) {
         const sel = "#" + id;
@@ -148,8 +146,10 @@
       // text: one entrance everywhere, rising from below (energetic, 180 ms, overshoot)
       const rise = (sel, t0) => tl.fromTo(sel, { y: 70, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.18, ease: "back.out(2.2)", immediateRender: false }, t0);
       []
-      for (const [id, t0] of [['t1', 0.05], ['t2', 0.65], ['t3', 1.86], ['t4', 2.9], ['r1', 7.85], ['r2', 8.45], ['r3', 9.06], ['o1', 14.44], ['o2', 15.65], ['o3', 16.85], ['o4', 18.05]]) rise("#" + id + "-in", t0);
+      for (const [id, t0] of [['t2', 0.65], ['t3', 1.86], ['t4', 2.9], ['r1', 7.85], ['r2', 8.45], ['r3', 9.06], ['o1', 14.44], ['o2', 15.65], ['o3', 16.85], ['o4', 18.05]]) rise("#" + id + "-in", t0);
       for (const [id, t0] of [['chip-c06', 3.4], ['chip-c07', 4.61], ['chip-c08', 5.81], ['chip-c09', 7.01], ['chip-c13', 9.71], ['chip-c14', 10.31], ['chip-c15', 10.91], ['chip-c16', 11.51], ['chip-c17', 12.11]]) rise("#" + id + "-in", t0);
+      // frame 0 is the thumbnail: the hook is fully visible from the first frame and only settles
+      tl.fromTo("#t1-in", { scale: 1.08 }, { scale: 1, duration: 0.2, ease: "back.out(2)", immediateRender: false }, 0);
       // the three reaction words slam bigger
       for (const id of ["r1", "r2", "r3"]) tl.fromTo("#" + id + "-in", { rotation: -6 }, { rotation: -3, duration: 0.18, ease: "back.out(2)", immediateRender: false }, { r1: 7.85, r2: 8.45, r3: 9.06 }[id]);
       // the logo sticker slaps in at 2.9
@@ -159,6 +159,7 @@
       // end card: spins in over the colour frames, then lines rise; button pulses on every beat to the end
       tl.fromTo("#end", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(80% at 50% 50%)", duration: 0.3, ease: "expo.out" }, 19.55);
       tl.fromTo("#end-logo", { scale: 0.3, rotation: -20 }, { scale: 1, rotation: -2, duration: 0.3, ease: "back.out(2)" }, 19.85);
+      tl.set(["#end-line-in", "#end-btn-in", "#end-small-in"], { opacity: 0 }, 0);
       rise("#end-line-in", 20.15); rise("#end-btn-in", 20.45); rise("#end-small-in", 21.05);
       for (let k = 0; k < 7; k++) tl.fromTo("#end-btn-in", { scale: 1 }, { scale: 1.06, duration: 0.09, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, 21.05 + k * 0.6);
       tl.fromTo("#end-rays", { rotation: 0 }, { rotation: 40, duration: 5.08, ease: "none" }, 19.55);
