@@ -41,7 +41,7 @@
 | **14.44** | **DROP** | Flash → price stickers slamming onto products, 2 per beat | **MOST UNDER $30** → **FREE US SHIPPING** → **TRACKED** |
 | 19.9–24.6 | peak | Logo, gift-box end card | **ORDER EARLY FOR THE HOLIDAYS** · buyrshop.com |
 
-**Why it should work:** it speaks to an urgent seasonal need (gifts), and the proof comes from real reactions in your footage. "Order early" is honest: delivery takes 7–14 business days. *Note: "most under $30" is true. 39 of the 50 products are under $30, and I'll re-check before using it.*
+**Why it should work:** it speaks to an urgent seasonal need (gifts), and the proof comes from real reactions in your footage. "Order early" is honest: delivery takes 7–14 business days. *Note: "most under $30" is true. 43 of your 50 products are under $30, checked against the store.*
 
 ---
 
