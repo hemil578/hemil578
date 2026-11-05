@@ -12,7 +12,15 @@ fi
 
 # Python tools (uv avoids a Debian setuptools bug that breaks plain pip here)
 command -v uv >/dev/null || pip3 install -q uv
-uv pip install --system -q manim moviepy faster-whisper edge-tts yt-dlp piper-tts
+uv pip install --system -q manim moviepy faster-whisper edge-tts yt-dlp piper-tts \
+  "kokoro>=0.9.4" soundfile rembg onnxruntime \
+  --extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match
+
+# Remotion starter project (Node packages)
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+if [ -f "$REPO_ROOT/remotion-starter/package.json" ]; then
+  (cd "$REPO_ROOT/remotion-starter" && npm install --no-audit --no-fund --loglevel=error)
+fi
 
 # Offline voice for Piper TTS
 VOICE_DIR="$HOME/.local/share/piper"
@@ -22,4 +30,4 @@ for f in en_US-ryan-high.onnx en_US-ryan-high.onnx.json; do
     "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/$f"
 done
 
-echo "Video tools ready: $(manim --version | head -1), ffmpeg, moviepy, faster-whisper, yt-dlp, piper"
+echo "Video tools ready: $(manim --version | head -1), ffmpeg, moviepy, faster-whisper, yt-dlp, piper, kokoro, rembg, remotion"
