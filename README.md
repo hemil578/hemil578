@@ -22,6 +22,18 @@ Installs Manim, MoviePy, faster-whisper, yt-dlp, Piper and Kokoro (free offline 
 | `playwright-recording` | same toolkit (MIT) | Record browser/app demo videos |
 | `elevenlabs` | same toolkit (MIT) | AI voiceovers, sound effects and music. **Optional, needs an ElevenLabs account/key**; use Kokoro or Piper for free |
 
+### Motion design (added later)
+
+| Skill | Source | What it does |
+|---|---|---|
+| `hyperframes`, `hyperframes-cli`, `hyperframes-registry`, `media-use`, `reverse-any-video`, `style-sampling` | [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes) (Apache-2.0) | HTML + GSAP video engine, ~450 ready-made blocks (transitions, kinetic type, 3D titles, overlays), beat detection, free local music/SFX/cut-outs, rebuild any reference video |
+| `hyperframes-motion-reel` | [Sunwood-ai-labs/hyperframes-motion-reel-skill](https://github.com/Sunwood-ai-labs/hyperframes-motion-reel-skill) (MIT) | Showreel-grade, beat-synced motion graphics |
+| `breakdown`, `graph`, `map-route`, `minimalistic-graphics`, `stick-figure`, `zach-d-films` | [artemnovitckii/claude-animation-skills](https://github.com/artemnovitckii/claude-animation-skills) (MIT) | Reel styles: 3D exploded view, number graph, 3D map route, line art, stick-figure and 3D cartoon explainers |
+| `motion-design` | [LottieFiles/motion-design-skill](https://github.com/LottieFiles/motion-design-skill) (MIT) | Timing, easing, choreography and animation principles |
+| `gsap-web`, `lottie-animation`, `svg-animation` | [iart-ai/web-animation-skills](https://github.com/iart-ai/web-animation-skills) (MIT) | GSAP timelines, Lottie playback, SVG draw-on, morphing and motion paths |
+
+HyperFrames cloud features (HeyGen) are optional and need a key; everything above renders locally for free. Telemetry is disabled with `DO_NOT_TRACK=1`.
+
 Remotion is free for individuals and small teams; larger companies need a license (see `remotion-license`).
 
 ## Remotion starter

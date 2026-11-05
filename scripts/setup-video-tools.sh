@@ -22,6 +22,11 @@ if [ -f "$REPO_ROOT/remotion-starter/package.json" ]; then
   (cd "$REPO_ROOT/remotion-starter" && npm install --no-audit --no-fund --loglevel=error)
 fi
 
+# HyperFrames CLI (HTML + GSAP video engine used by the hyperframes-* skills). Telemetry off.
+export DO_NOT_TRACK=1
+npm install -g --no-audit --no-fund --loglevel=error hyperframes@0.9.15
+grep -q DO_NOT_TRACK "$HOME/.bashrc" 2>/dev/null || echo 'export DO_NOT_TRACK=1' >> "$HOME/.bashrc"
+
 # Offline voice for Piper TTS
 VOICE_DIR="$HOME/.local/share/piper"
 mkdir -p "$VOICE_DIR"
@@ -30,4 +35,4 @@ for f in en_US-ryan-high.onnx en_US-ryan-high.onnx.json; do
     "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/ryan/high/$f"
 done
 
-echo "Video tools ready: $(manim --version | head -1), ffmpeg, moviepy, faster-whisper, yt-dlp, piper, kokoro, rembg, remotion"
+echo "Video tools ready: $(manim --version | head -1), ffmpeg, moviepy, faster-whisper, yt-dlp, piper, kokoro, rembg, remotion, hyperframes"
