@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:02,459
+Every video starts with an idea.
+
+2
+00:00:02,609 --> 00:00:04,951
+Claude turns that idea into code.
+
+3
+00:00:05,101 --> 00:00:07,780
+The code is rendered, frame by frame.
+
+4
+00:00:07,930 --> 00:00:09,982
+And out comes a finished video.

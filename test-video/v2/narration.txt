@@ -1,0 +1,5 @@
+subtitles:
+- Every video starts with an idea.
+- Claude turns that idea into code.
+- The code is rendered, frame by frame.
+- And out comes a finished video.

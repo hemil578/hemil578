@@ -1,10 +1,35 @@
 # Video creation workspace
 
-Claude Code skills for making and editing videos, loaded automatically in every session that opens this repo.
+Claude Code skills and tools for making and editing videos. The skills in `.claude/skills/` load automatically in every Claude Code session that opens this repo.
+
+## Setup (once per fresh cloud session)
+
+```bash
+bash scripts/setup-video-tools.sh
+```
+
+Installs Manim, MoviePy, faster-whisper, yt-dlp, edge-tts, Piper (offline voice) and SoX. ffmpeg, ImageMagick, Node and Chromium are already on the cloud image.
+
+## Skills
 
 | Skill | Source | What it does |
 |---|---|---|
-| `ffmpeg-skill` | [kajisho5/ffmpeg-skill](https://github.com/kajisho5/ffmpeg-skill) (MIT) | Edit existing video/audio with local FFmpeg: cut, join, reframe, captions, overlays, loudness, exports |
-| `remotion-*` (13 skills) | [remotion-dev/skills](https://github.com/remotion-dev/skills) | Create videos from code with Remotion (React): animations, captions, maps, 3D, rendering |
+| `ffmpeg-skill` | [kajisho5/ffmpeg-skill](https://github.com/kajisho5/ffmpeg-skill) (MIT) | Edit existing video/audio with FFmpeg: cut, join, reframe, captions, overlays, loudness, exports |
+| `remotion-*` (13) | [remotion-dev/skills](https://github.com/remotion-dev/skills) | Create videos from code with Remotion (React): animations, captions, maps, 3D, rendering |
+| `manim-skill` | [Yusuke710/manim-skill](https://github.com/Yusuke710/manim-skill) | 3Blue1Brown-style animated explainers with narration and subtitles |
+| `watch` | [bradautomates/claude-video](https://github.com/bradautomates/claude-video) (MIT) | Watch a video: frames + transcript so Claude can understand it |
+| `moviepy` | [digitalsamba/claude-code-video-toolkit](https://github.com/digitalsamba/claude-code-video-toolkit) (MIT) | Python video composition: text overlays, lower thirds, short ad spots |
+| `playwright-recording` | same toolkit (MIT) | Record browser/app demo videos |
+| `elevenlabs` | same toolkit (MIT) | AI voiceovers, sound effects and music (needs an ElevenLabs key) |
 
 Remotion is free for individuals and small teams; larger companies need a license (see `remotion-license`).
+
+## Test videos
+
+- `test-video/hello.mp4`: 5 s title card (ffmpeg-skill)
+- `test-video/v2/how-claude-makes-video.mp4`: 10 s Manim explainer with offline Piper voiceover and burned-in captions
+
+## Known limits in the cloud session
+
+- edge-tts (Microsoft voices) uses WebSockets, which the session proxy blocks; use Piper or ElevenLabs instead.
+- No GPU: long or 4K renders are slow.
