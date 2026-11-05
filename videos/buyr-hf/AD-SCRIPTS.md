@@ -1,6 +1,6 @@
 # Buyr: 3 ad scripts (pick one)
 
-> Made with the ads-creative-development, ads-video and ads-hooks skills. Footage: the real product demo videos from buyrshop.com product pages (37 products have one).
+> Made with the ads-creative-development and ads-video skills (hooks written by hand; ads-hooks not used yet). Footage: the real product demo videos from buyrshop.com product pages (37 products have one).
 > Format: TikTok / Reels / Shorts, 9:16, 24.6 s, **music only** (your track), on-screen text instead of voice, captions large and inside the safe zone.
 > Track map: hits at 0.05 · 0.65 · 1.25 · 1.86 · 2.9 · 3.34 → calm build 3.3–7.8 → hits 7.85 · 8.45 · 9.06 → rising build 9.1–14.4 (steepest at 13.0) → **DROP 14.44** → full energy, peak 22.5 → end 24.6.
 > Facts used (from the site only): real prices, "Free US shipping on every order", "tracked delivery". No delivery-speed claims, and no claims about returns.
