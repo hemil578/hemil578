@@ -162,6 +162,14 @@
       rise("#end-line-in", 20.15); rise("#end-btn-in", 20.45); rise("#end-small-in", 21.05);
       for (let k = 0; k < 7; k++) tl.fromTo("#end-btn-in", { scale: 1 }, { scale: 1.06, duration: 0.09, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, 21.05 + k * 0.6);
       tl.fromTo("#end-rays", { rotation: 0 }, { rotation: 40, duration: 5.08, ease: "none" }, 19.55);
+      // Visibility guard: hide every timed overlay outside its own window from the timeline itself,
+      // so it renders the same in BeginFrame and in screenshot-capture mode.
+      document.querySelectorAll("#root > .clip:not(video):not(audio)").forEach((el) => {
+        const s = parseFloat(el.dataset.start), d = parseFloat(el.dataset.duration);
+        tl.set(el, { opacity: 0 }, 0);
+        tl.set(el, { opacity: 1 }, s);
+        tl.set(el, { opacity: 0 }, s + d);
+      });
       window.__timelines["main"] = tl;
     </script>
   </body>
