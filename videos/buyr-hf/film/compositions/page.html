@@ -43,6 +43,11 @@
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
+    // split a headline into letters (bottom-up-letters pattern) so it can be staggered
+    const letters = (sel) => { const el = document.querySelector(sel); const txt = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = txt.map((line) => Array.from(line).map((c) => '<span class="kl" style="display:inline-block">' + (c === " " ? "&nbsp;" : c) + "</span>").join("")).join("<br />");
+      return el.querySelectorAll(".kl"); };
+    const slam = (sel, t0) => tl.fromTo(letters(sel), { y: 110, rotation: 12, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.32, ease: "back.out(2.4)", stagger: 0.022 }, t0);
     const PAGE_IN = 0.6, LAND = 1.3, PRICE = 1.95, SCROLL = 2.6, TAP = 4.35, GROW = 4.48, END = 4.95;
     const SCROLL_Y = -2930; // ADD TO CART lands at y 1159 on screen
 
@@ -57,7 +62,7 @@
     tl.to("#pg-peng", { x: 540 - 220, y: 900 - 322, scale: 1.35, rotation: -10, duration: 0.3, ease: "back.out(1.6)" }, 0);
     tl.to("#pg-cam", { y: 1800, rotation: 14, duration: 0.55, ease: "power3.in" }, 0.05);
     // 3.34 hit: WANT IT?
-    tl.fromTo("#pg-want-in", { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, ease: "back.out(2.2)" }, 0.44);
+    slam("#pg-want-in", 0.44);
     // the real product page rises
     tl.to("#pg-pagewrap", { y: 0, duration: 0.45, ease: "power3.out" }, PAGE_IN);
     // the penguin flies into its own photo on the page and lands

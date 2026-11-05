@@ -1,7 +1,7 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
-    #bx-floor { position: absolute; left: 0; right: 0; top: 1180px; bottom: 0; background: linear-gradient(180deg, #19d6b6 0%, #3fe0c4 100%); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: transparent; font-family: "Poppins", sans-serif; }
+    #bx-floor { position: absolute; left: 0; right: 0; top: 1180px; bottom: 0; background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.22)); }
     #bx-shadow { position: absolute; left: 250px; top: 1330px; width: 580px; height: 120px; border-radius: 50%; background: rgba(15,23,42,0.35); filter: blur(22px); }
     #bx-drop { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
     #bx-squash { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
@@ -52,6 +52,11 @@
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
+    // split a headline into letters (bottom-up-letters pattern) so it can be staggered
+    const letters = (sel) => { const el = document.querySelector(sel); const txt = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = txt.map((line) => Array.from(line).map((c) => '<span class="kl" style="display:inline-block">' + (c === " " ? "&nbsp;" : c) + "</span>").join("")).join("<br />");
+      return el.querySelectorAll(".kl"); };
+    const slam = (sel, t0) => tl.fromTo(letters(sel), { y: 110, rotation: 12, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.32, ease: "back.out(2.4)", stagger: 0.022 }, t0);
     const H = 220; // half the box size
     // build the cube (static 3D transforms are set through GSAP so nothing conflicts)
     tl.set("#bx-cube", { rotationX: -24, rotationY: -34 }, 0);
@@ -76,7 +81,7 @@
     tl.to("#bx-flap-a", { rotationX: 0, duration: 0.16, ease: "power3.in" }, 0.5);
     tl.to("#bx-flap-b", { rotationX: 0, duration: 0.16, ease: "power3.in" }, 0.56);
     tl.to("#bx-tape", { scaleY: 1, duration: 0.14, ease: "power2.out" }, 0.66);
-    tl.fromTo("#bx-packed-in", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.13, ease: "back.out(2.2)" }, 0.6);
+    slam("#bx-packed-in", 0.6);
     // 9.06: label slaps on
     tl.fromTo("#bx-label", { opacity: 0, scale: 2.4, rotation: 18 }, { opacity: 1, scale: 1, rotation: 8, duration: 0.1, ease: "power4.in" }, 1.11);
     tl.fromTo("#bx-stage", { x: 0 }, { x: 10, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 1.21);

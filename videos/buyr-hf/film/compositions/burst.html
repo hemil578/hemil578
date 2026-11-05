@@ -1,7 +1,7 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
-    #ub-floor { position: absolute; left: 0; right: 0; top: 1600px; bottom: 0; background: linear-gradient(180deg, #19d6b6, #43e1c6); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: transparent; font-family: "Poppins", sans-serif; }
+    #ub-floor { position: absolute; left: 0; right: 0; top: 1600px; bottom: 0; background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.22)); }
     #ub-cam { position: absolute; inset: 0; }
     #ub-shadow { position: absolute; left: 140px; top: 1660px; width: 800px; height: 110px; border-radius: 50%; background: rgba(15,23,42,0.35); filter: blur(20px); }
     #ub-backflap { z-index: 9; position: absolute; left: 230px; top: 880px; width: 620px; height: 150px; border-radius: 10px 10px 0 0; background: linear-gradient(180deg, #2b4170, #1f3050); border: 5px solid #2c4372; }
@@ -20,8 +20,12 @@
     #ub-flap-l { left: 190px; border-radius: 14px 4px 0 0; }
     #ub-flap-r { left: 540px; border-radius: 4px 14px 0 0; }
     #ub-flash { position: absolute; inset: 0; background: #ffffff; }
+    #ub-rays { position: absolute; left: 90px; top: 250px; width: 900px; height: 900px; border-radius: 50%; z-index: 40;
+      background: repeating-conic-gradient(from 0deg, rgba(255,210,63,0.9) 0deg 7deg, rgba(255,210,63,0) 7deg 20deg);
+      -webkit-mask-image: radial-gradient(circle, transparent 18%, #000 30%, #000 52%, transparent 70%); mask-image: radial-gradient(circle, transparent 18%, #000 30%, #000 52%, transparent 70%); }
+    .ub-cf { position: absolute; left: 0; top: 0; border-radius: 4px; z-index: 160; }
     .ub-tag { position: absolute; left: 0; right: 0; top: 300px; text-align: center; }
-    .ub-tag span { display: inline-block; padding: 16px 34px; border-radius: 22px; background: #ffffff; color: #0f172a; font-weight: 800; font-size: 54px; box-shadow: 0 10px 0 rgba(15,23,42,0.15); }
+    .ub-tag > span { display: inline-block; padding: 16px 34px; border-radius: 22px; background: #ffffff; color: #0f172a; font-weight: 800; font-size: 54px; box-shadow: 0 10px 0 rgba(15,23,42,0.15); }
     .ub-tag b { color: #007a6d; }
     .ub-line { position: absolute; left: 0; right: 0; text-align: center; font-weight: 800; line-height: 0.98; letter-spacing: -0.02em; color: #ffffff; -webkit-text-stroke: 7px #0f172a; paint-order: stroke fill; }
     .ub-line span { display: inline-block; }
@@ -33,6 +37,7 @@
       <div id="ub-shadow"></div>
       <div id="ub-backflap"></div>
       <div id="ub-back"></div>
+      <div id="ub-rays" data-layout-ignore></div>
       <div id="ub-p0" class="ub-prod"><img src="assets/cut/seal-plush-slippers_2.png" alt="Seal Slippers" /></div>
       <div id="ub-p1" class="ub-prod"><img src="assets/cut/magnetic-jointed-frog_2.png" alt="Magnetic Frog" /></div>
       <div id="ub-p2" class="ub-prod"><img src="assets/cut/lazy-prism-glasses_2.png" alt="Lazy Prism Glasses" /></div>
@@ -53,18 +58,67 @@
       <div id="ub-frontflap"><div id="ub-tape"></div></div>
       <div id="ub-flap-l" class="ub-flap"></div>
       <div id="ub-flap-r" class="ub-flap"></div>
+      <div id="ub-cf0" class="ub-cf" style="background:#ffd23f;width:18px;height:26px"></div>
+      <div id="ub-cf1" class="ub-cf" style="background:#ffffff;width:18px;height:38px"></div>
+      <div id="ub-cf2" class="ub-cf" style="background:#0f172a;width:14px;height:26px"></div>
+      <div id="ub-cf3" class="ub-cf" style="background:#ff5da2;width:22px;height:26px"></div>
+      <div id="ub-cf4" class="ub-cf" style="background:#00a896;width:18px;height:38px"></div>
+      <div id="ub-cf5" class="ub-cf" style="background:#ffd23f;width:14px;height:38px"></div>
+      <div id="ub-cf6" class="ub-cf" style="background:#ffffff;width:14px;height:26px"></div>
+      <div id="ub-cf7" class="ub-cf" style="background:#0f172a;width:14px;height:32px"></div>
+      <div id="ub-cf8" class="ub-cf" style="background:#ff5da2;width:18px;height:26px"></div>
+      <div id="ub-cf9" class="ub-cf" style="background:#00a896;width:14px;height:26px"></div>
+      <div id="ub-cf10" class="ub-cf" style="background:#ffd23f;width:22px;height:32px"></div>
+      <div id="ub-cf11" class="ub-cf" style="background:#ffffff;width:14px;height:38px"></div>
+      <div id="ub-cf12" class="ub-cf" style="background:#0f172a;width:14px;height:26px"></div>
+      <div id="ub-cf13" class="ub-cf" style="background:#ff5da2;width:22px;height:38px"></div>
+      <div id="ub-cf14" class="ub-cf" style="background:#00a896;width:22px;height:26px"></div>
+      <div id="ub-cf15" class="ub-cf" style="background:#ffd23f;width:22px;height:38px"></div>
+      <div id="ub-cf16" class="ub-cf" style="background:#ffffff;width:18px;height:26px"></div>
+      <div id="ub-cf17" class="ub-cf" style="background:#0f172a;width:14px;height:26px"></div>
+      <div id="ub-cf18" class="ub-cf" style="background:#ff5da2;width:22px;height:26px"></div>
+      <div id="ub-cf19" class="ub-cf" style="background:#00a896;width:18px;height:32px"></div>
+      <div id="ub-cf20" class="ub-cf" style="background:#ffd23f;width:14px;height:38px"></div>
+      <div id="ub-cf21" class="ub-cf" style="background:#ffffff;width:14px;height:38px"></div>
+      <div id="ub-cf22" class="ub-cf" style="background:#0f172a;width:18px;height:38px"></div>
+      <div id="ub-cf23" class="ub-cf" style="background:#ff5da2;width:22px;height:26px"></div>
+      <div id="ub-cf24" class="ub-cf" style="background:#00a896;width:14px;height:38px"></div>
+      <div id="ub-cf25" class="ub-cf" style="background:#ffd23f;width:22px;height:38px"></div>
+      <div id="ub-cf26" class="ub-cf" style="background:#ffffff;width:14px;height:32px"></div>
+      <div id="ub-cf27" class="ub-cf" style="background:#0f172a;width:14px;height:38px"></div>
+      <div id="ub-cf28" class="ub-cf" style="background:#ff5da2;width:22px;height:26px"></div>
+      <div id="ub-cf29" class="ub-cf" style="background:#00a896;width:22px;height:26px"></div>
+      <div id="ub-cf30" class="ub-cf" style="background:#ffd23f;width:22px;height:26px"></div>
+      <div id="ub-cf31" class="ub-cf" style="background:#ffffff;width:18px;height:38px"></div>
+      <div id="ub-cf32" class="ub-cf" style="background:#0f172a;width:22px;height:32px"></div>
+      <div id="ub-cf33" class="ub-cf" style="background:#ff5da2;width:18px;height:32px"></div>
+      <div id="ub-cf34" class="ub-cf" style="background:#00a896;width:22px;height:32px"></div>
+      <div id="ub-cf35" class="ub-cf" style="background:#ffd23f;width:18px;height:32px"></div>
+      <div id="ub-cf36" class="ub-cf" style="background:#ffffff;width:14px;height:26px"></div>
+      <div id="ub-cf37" class="ub-cf" style="background:#0f172a;width:22px;height:26px"></div>
+      <div id="ub-cf38" class="ub-cf" style="background:#ff5da2;width:14px;height:38px"></div>
+      <div id="ub-cf39" class="ub-cf" style="background:#00a896;width:18px;height:38px"></div>
+      <div id="ub-cf40" class="ub-cf" style="background:#ffd23f;width:18px;height:32px"></div>
+      <div id="ub-cf41" class="ub-cf" style="background:#ffffff;width:22px;height:32px"></div>
+      <div id="ub-cf42" class="ub-cf" style="background:#0f172a;width:18px;height:38px"></div>
+      <div id="ub-cf43" class="ub-cf" style="background:#ff5da2;width:14px;height:26px"></div>
     </div>
     <div id="ub-open" class="ub-line clip" data-start="0" data-duration="0.5"><span id="ub-open-in">OPEN IT!</span></div>
-    <div id="ub-tag0" class="ub-tag clip" data-start="0.43" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag0-in">Seal Slippers <b>$39.99</b></span></div>
-    <div id="ub-tag1" class="ub-tag clip" data-start="1.03" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag1-in">Magnetic Frog <b>$19.99</b></span></div>
-    <div id="ub-tag2" class="ub-tag clip" data-start="1.63" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag2-in">Lazy Prism Glasses <b>$24.99</b></span></div>
-    <div id="ub-tag3" class="ub-tag clip" data-start="2.23" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag3-in">Speed Tap Keyboard <b>$22.99</b></span></div>
-    <div id="ub-tag4" class="ub-tag clip" data-start="2.83" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag4-in">Old Man Ski Mask <b>$9.99</b></span></div>
-    <div id="ub-tag5" class="ub-tag clip" data-start="3.43" data-duration="0.62" data-layout-allow-overlap><span id="ub-tag5-in">Switch Cover <b>$22.99</b></span></div>
+    <div id="ub-tag0" class="ub-tag clip" data-start="0.43" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag0-in">Seal Slippers <b>$<span class="ub-price" data-to="39.99">39.99</span></b></span></div>
+    <div id="ub-tag1" class="ub-tag clip" data-start="1.03" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag1-in">Magnetic Frog <b>$<span class="ub-price" data-to="19.99">19.99</span></b></span></div>
+    <div id="ub-tag2" class="ub-tag clip" data-start="1.63" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag2-in">Lazy Prism Glasses <b>$<span class="ub-price" data-to="24.99">24.99</span></b></span></div>
+    <div id="ub-tag3" class="ub-tag clip" data-start="2.23" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag3-in">Speed Tap Keyboard <b>$<span class="ub-price" data-to="22.99">22.99</span></b></span></div>
+    <div id="ub-tag4" class="ub-tag clip" data-start="2.83" data-duration="0.60" data-layout-allow-overlap><span id="ub-tag4-in">Old Man Ski Mask <b>$<span class="ub-price" data-to="9.99">9.99</span></b></span></div>
+    <div id="ub-tag5" class="ub-tag clip" data-start="3.43" data-duration="0.62" data-layout-allow-overlap><span id="ub-tag5-in">Switch Cover <b>$<span class="ub-price" data-to="22.99">22.99</span></b></span></div>
     <div id="ub-flash"></div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
+    // split a headline into letters (bottom-up-letters pattern) so it can be staggered
+    const letters = (sel) => { const el = document.querySelector(sel); const txt = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = txt.map((line) => Array.from(line).map((c) => '<span class="kl" style="display:inline-block">' + (c === " " ? "&nbsp;" : c) + "</span>").join("")).join("<br />");
+      return el.querySelectorAll(".kl"); };
+    const slam = (sel, t0) => tl.fromTo(letters(sel), { y: 110, rotation: 12, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.32, ease: "back.out(2.4)", stagger: 0.022 }, t0);
     const N = 16, HERO = 6;
     const RISE = [0.31, 0.9099999999999999, 1.51, 2.11, 2.71, 3.31];               // a hero starts rising 0.3 s before its beat and peaks on it
     const FOUNT = Array.from({ length: N - HERO }, (_, j) => 3.9 + j * 0.12);
@@ -113,7 +167,19 @@
         gsap.set(el, { x: x - 280, y: y - 280, scale: s, rotation: r, opacity: vis, zIndex: z });
       });
     };
-    tl.to(st, { t: END, duration: END, ease: "none", onUpdate: render }, 0);
+    // action rays behind whichever hero is up: they spin, and punch in each time a new product rises
+    const raysAt = (t) => { for (let k = 0; k < HERO; k++) { const a = RISE[k], b = (k + 1 < HERO ? RISE[k + 1] : 3.9); if (t >= a && t < b) return t - a; } return -1; };
+    // confetti: seeded throw from the box mouth with gravity (pure function of t)
+    let seed = 99; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    const CF = Array.from({ length: 44 }, () => ({ vx: (rnd() - 0.5) * 1700, vy: -900 - rnd() * 1300, spin: (rnd() - 0.5) * 1400, delay: rnd() * 0.08 }));
+    const renderFx = () => {
+      const t = st.t, r = raysAt(t);
+      gsap.set("#ub-rays", { rotation: t * 70, scale: r < 0 ? 0 : 0.7 + 0.3 * Math.min(1, r / 0.18), opacity: r < 0 ? 0 : 1 });
+      CF.forEach((c, i) => { const u = t - 0.02 - c.delay;
+        if (u < 0 || u > 1.6) { gsap.set("#ub-cf" + i, { opacity: 0 }); return; }
+        gsap.set("#ub-cf" + i, { opacity: 1, x: 540 + c.vx * u, y: 1150 + c.vy * u + 1600 * u * u, rotation: c.spin * u, scaleX: Math.cos(u * 14 + i) }); });
+    };
+    tl.to(st, { t: END, duration: END, ease: "none", onUpdate: () => { render(); renderFx(); } }, 0);
     // 14.44 drop: flash, the box jolts, flaps burst open
     tl.fromTo("#ub-flash", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
     tl.fromTo("#ub-cam", { scale: 1.12, y: -40 }, { scale: 1, y: 0, duration: 0.5, ease: "expo.out", transformOrigin: "540px 1300px" }, 0);
@@ -125,10 +191,12 @@
     for (const k of [...RISE, ...FOUNT]) tl.fromTo("#ub-front", { scaleY: 0.95 }, { scaleY: 1, duration: 0.16, ease: "back.out(3)", transformOrigin: "50% 100%", immediateRender: false }, k);
     tl.to(["#ub-front", "#ub-frontflap", "#ub-flap-l", "#ub-flap-r", "#ub-back", "#ub-backflap", "#ub-shadow"], { y: 700, duration: 0.3, ease: "power3.in" }, COLLAPSE);
     // words and tags
-    tl.fromTo("#ub-open-in", { scale: 1.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.12, ease: "back.out(2.2)" }, 0);
+    slam("#ub-open-in", 0);
+    document.querySelectorAll(".ub-price").forEach((el, k) => { const to = parseFloat(el.dataset.to), o = { v: 0 };
+      tl.fromTo(o, { v: 0 }, { v: to, duration: 0.3, ease: "power2.out", onUpdate: () => { el.textContent = o.v.toFixed(2); } }, RISE[k] + 0.12); });
     for (let k = 0; k < HERO; k++) tl.fromTo("#ub-tag" + k + "-in", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.12, ease: "power3.out" }, RISE[k] + 0.12);
-    tl.call(render, null, 0);
-    render();
+    tl.call(() => { render(); renderFx(); }, null, 0);
+    render(); renderFx();
     window.__timelines["burst"] = tl;
   </script>
 </template>

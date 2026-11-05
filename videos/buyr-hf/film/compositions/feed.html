@@ -1,7 +1,7 @@
 <template>
   <style>
-    #root { position: absolute; inset: 0; overflow: hidden; background: #00c9a7; font-family: "Poppins", sans-serif; }
-    #feed-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 520px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 100%); }
+    #root { position: absolute; inset: 0; overflow: hidden; background: transparent; font-family: "Poppins", sans-serif; }
+    #feed-floor { position: absolute; left: 0; right: 0; bottom: 0; height: 520px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.14) 100%); }
     #feed-cam { position: absolute; inset: 0; }
     #feed-phone { position: absolute; left: 170px; top: 470px; width: 740px; height: 1316px; border-radius: 76px; background: #0b0b0d; padding: 18px;
       box-shadow: 0 46px 60px rgba(15,23,42,0.35); }
@@ -49,11 +49,16 @@
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
+    // split a headline into letters (bottom-up-letters pattern) so it can be staggered
+    const letters = (sel) => { const el = document.querySelector(sel); const txt = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = txt.map((line) => Array.from(line).map((c) => '<span class="kl" style="display:inline-block">' + (c === " " ? "&nbsp;" : c) + "</span>").join("")).join("<br />");
+      return el.querySelectorAll(".kl"); };
+    const slam = (sel, t0) => tl.fromTo(letters(sel), { y: 110, rotation: 12, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.32, ease: "back.out(2.4)", stagger: 0.022 }, t0);
     // f0 is the thumbnail: phone + "SAW IT" already on screen, landing with a small settle
-    tl.fromTo("#feed-l1-in", { scale: 1.12 }, { scale: 1, duration: 0.2, ease: "back.out(2)" }, 0);
+    tl.fromTo(letters("#feed-l1-in"), { y: 0, rotation: 0, opacity: 1 }, { y: -10, rotation: 0, duration: 0.6, ease: "sine.inOut", stagger: 0.04, yoyo: true, repeat: 1 }, 0);
     tl.fromTo("#feed-phone", { y: 60, rotation: -2 }, { y: 0, rotation: 0, duration: 0.5, ease: "power3.out" }, 0);
     // 0.65 hit: second line stamps in
-    tl.fromTo("#feed-l2-in", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.14, ease: "back.out(2.2)" }, 0.65);
+    slam("#feed-l2-in", 0.65);
     // 1.25 hit: camera punches in on the phone
     tl.fromTo("#feed-cam", { scale: 1 }, { scale: 1.08, duration: 0.18, ease: "power3.out", transformOrigin: "540px 1100px" }, 1.25);
     // 1.86 hit: swipe up to the next clip (the glow)

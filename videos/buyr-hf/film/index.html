@@ -21,21 +21,26 @@
     <!-- Buyr: "Saw it. Want it. Got it." Cut to assets/track.mp3 (100 BPM, drop 14.44 s). See ../SPEC.md -->
     <div id="root" data-composition-id="main" data-start="0" data-duration="24.63" data-width="1080" data-height="1920">
       <div id="ground"></div>
+      <div id="bgfx" style="z-index: 0" data-composition-id="bgfx" data-composition-src="compositions/bgfx.html" data-start="0" data-duration="24.63"
+        data-track-index="0" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
 
-      <div id="feed" data-composition-id="feed" data-composition-src="compositions/feed.html" data-start="0" data-duration="2.9"
+      <div id="feed" style="z-index: 2" data-composition-id="feed" data-composition-src="compositions/feed.html" data-start="0" data-duration="2.9"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="page" data-composition-id="page" data-composition-src="compositions/page.html" data-start="2.9" data-duration="4.95"
+      <div id="page" style="z-index: 2" data-composition-id="page" data-composition-src="compositions/page.html" data-start="2.9" data-duration="4.95"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="box" data-composition-id="box" data-composition-src="compositions/box.html" data-start="7.85" data-duration="1.25"
+      <div id="box" style="z-index: 2" data-composition-id="box" data-composition-src="compositions/box.html" data-start="7.85" data-duration="1.25"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="route" data-composition-id="route" data-composition-src="compositions/route.html" data-start="9.1" data-duration="4.46"
+      <div id="route" style="z-index: 2" data-composition-id="route" data-composition-src="compositions/route.html" data-start="9.1" data-duration="4.46"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="door" data-composition-id="door" data-composition-src="compositions/door.html" data-start="13.56" data-duration="0.88"
+      <div id="door" style="z-index: 2" data-composition-id="door" data-composition-src="compositions/door.html" data-start="13.56" data-duration="0.88"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="burst" data-composition-id="burst" data-composition-src="compositions/burst.html" data-start="14.44" data-duration="5.41"
+      <div id="burst" style="z-index: 2" data-composition-id="burst" data-composition-src="compositions/burst.html" data-start="14.44" data-duration="5.41"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
-      <div id="endcard" data-composition-id="endcard" data-composition-src="compositions/endcard.html" data-start="19.85" data-duration="4.78"
+      <div id="endcard" style="z-index: 2" data-composition-id="endcard" data-composition-src="compositions/endcard.html" data-start="19.85" data-duration="4.78"
         data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+
+      <div id="fx" style="z-index: 50" data-composition-id="fx" data-composition-src="compositions/fx.html" data-start="0" data-duration="24.63"
+        data-track-index="9" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
 
       <!-- music -->
       <audio id="music" class="clip" src="assets/track.mp3" data-start="0" data-duration="24.63" data-volume="1" data-fade-out="0.6" data-track-index="2"></audio>
