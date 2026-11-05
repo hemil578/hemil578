@@ -47,6 +47,9 @@ npx remotion render src/index.ts HelloClaude out/hello-claude.mp4 --browser-exec
 
 ## Buyr promo (buyrshop.com)
 
+**Newest: `videos/buyr-hf/buyr-ad-you-want-it.mp4`.** The "YOU DON'T NEED THIS. …YOU WANT IT." TikTok ad, made with every ad skill (see `videos/buyr-hf/BEST-SCRIPT.md` and `ADS-HOOKS.md`). It uses 30 real product demo clips from the store, cut to the track, with native text, real prices, the offer on the drop, and a bookend end card. Project: `videos/buyr-hf/ad/`. Note: this render came out tagged HLG/BT.2020, so it was converted back to SDR BT.709 with `zscale ... npl=203` (see the git log).
+
+
 **Latest: `videos/buyr-hf/buyr-saw-want-got.mp4`.** A HyperFrames story film, "Saw it. Want it. Got it.": the real glow-penguin video in a phone feed → the penguin bursts out of the phone onto the real buyrshop.com product page → price punch-in → scroll → tap ADD TO CART → the button becomes the Buyr box → packed and labelled → flies a route across a city → lands at the door → on the drop the box bursts open and products rise out of it one per beat with their names and prices, then the rest fountain out → they collapse into the end card. Project: `videos/buyr-hf/film/` (SPEC.md, STORYLINES.md, one scene per file in `compositions/`). Render: `cd videos/buyr-hf/film && npx hyperframes render -q delivery`.
 
 
