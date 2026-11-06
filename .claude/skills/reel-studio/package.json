@@ -1,0 +1,9 @@
+{
+  "name": "reel-studio",
+  "private": true,
+  "type": "module",
+  "description": "Renders reel.json projects to 9:16 MP4s with Playwright and ffmpeg.",
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

@@ -41,6 +41,9 @@ Installs Manim, MoviePy, faster-whisper, yt-dlp, Piper and Kokoro (free offline 
 | `motion-design-pro`, `motion-design-critique`, `blender-motion`, `aftereffects-motion` | [lobzyjay/motion-design-with-claude](https://github.com/lobzyjay/motion-design-with-claude) (MIT) | Pro motion principles, critique, Blender and After Effects |
 | `threejs-world-generation`, `3d-asset-generation`, `motion-graphics`, `music-to-video`, `gsap-*`, `hyperframes-*` and more (40) | [calesthio/openmontage](https://github.com/calesthio/openmontage) (**GPL-3.0**) | 3D worlds for video, GSAP, music-synced edits, AI video model guides |
 | `creative-director`, `video`, `image` | [smixs/creative-director-skill](https://github.com/smixs/creative-director-skill), [smixs/visual-skills](https://github.com/smixs/visual-skills) by Serge Shima (CC-BY-4.0) | Creative director (concepts, scoring, refinement), video director (storyboards, shot lists, montage, camera direction), image prompts |
+| `social-ad`, `launch-film`, `brand-film`, `motion-film`, `product-walkthrough`, `event-promo`, `explainer-video`, `data-story`, `feature-update`, `testimonial-video`, `tutorial-video` | [Neelshah1810/Claude-Video-Skills](https://github.com/Neelshah1810/Claude-Video-Skills) (MIT) | Motion-graphics films: vertical social ads, launch and brand films |
+| `ad-creative-video`, `iart-launch-video`, `iart-testimonial-video` | [iart-ai/ad-video-skills](https://github.com/iart-ai/ad-video-skills) (MIT) | Ad creative in batches, A/B variants, multi-aspect exports |
+| `reel-studio` | [mahmadmanzoor/reel-studio](https://github.com/mahmadmanzoor/reel-studio) (MIT) | Vertical reel ads with illustrated characters, voice, music, captions (needs `npm install` in its folder) |
 
 Licences are in `.claude/skill-licenses/`.
 
