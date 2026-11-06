@@ -1,0 +1,162 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;800&display=block" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:absolute;inset:0;overflow:hidden;background:#000}
+.sc{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.A{font-family:Anton,sans-serif;text-transform:uppercase;line-height:.88;letter-spacing:.005em}
+.I{font-family:Inter,sans-serif}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* title */
+#t{background:#fff}
+#t .bar{position:absolute;left:-200px;width:1500px;height:90px;background:#0b0b0b;top:1290px;transform:rotate(-6deg)}
+#t .vl{position:absolute;left:300px;top:0;width:4px;height:1920px;background:#0b0b0b}
+#t .hl{position:absolute;left:0;top:1330px;width:1080px;height:4px;background:#0b0b0b}
+#t .w{position:absolute;left:0;right:0;text-align:center;color:#0b0b0b;font-size:340px}
+#t1{top:520px}#t2{top:840px}
+#t .tag{position:absolute;left:80px;top:1470px;font-size:38px;font-weight:800;color:#0b0b0b}
+/* meet */
+#m{background:#d4116f}
+#mimg{top:360px!important}
+#m .frog3d{position:absolute;left:40px;top:330px;font-size:430px;color:#fff;
+ text-shadow:4px 4px 0 #c9c9c9,8px 8px 0 #b0b0b0,12px 12px 0 #979797,16px 16px 0 #7e7e7e,20px 20px 0 #656565,24px 24px 30px rgba(0,0,0,.45)}
+#m .meet{position:absolute;left:70px;top:210px;font-size:70px;color:#fff;font-style:italic;font-weight:800}
+/* disc */
+#d{background:#f4f4f2}
+#ring{position:absolute;left:540px;top:700px;width:0;height:0}
+.pol{position:absolute;width:300px;height:370px;left:-150px;top:-185px;background:#fff;padding:14px 14px 56px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.pol img{width:100%;height:100%;object-fit:cover;display:block}
+#d .lab{position:absolute;left:70px;top:1150px;font-size:150px;color:#0b0b0b}
+#d .bc{position:absolute;left:74px;top:1300px;width:420px;height:90px;background:repeating-linear-gradient(90deg,#0b0b0b 0 6px,transparent 6px 10px,#0b0b0b 10px 12px,transparent 12px 19px)}
+#d .sq{position:absolute;top:200px;width:34px;height:34px}
+/* record */
+#r{background:radial-gradient(circle at 50% 40%,#5a5a5a,#1d1d1d 70%)}
+.fan{position:absolute;width:420px;height:600px;top:260px;left:330px;border:10px solid #fff;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.fan img{width:100%;height:100%;object-fit:cover}
+#vinyl{position:absolute;left:90px;top:900px;width:900px;height:900px;border-radius:50%;
+ background:radial-gradient(circle,#d22 0 70px,#111 71px 74px,#1a1a1a 75px,#0a0a0a 76px 130px,#202020 131px 133px,#0b0b0b 134px 200px,#232323 201px 203px,#0b0b0b 204px 280px,#262626 281px 283px,#0b0b0b 284px 360px,#1f1f1f 361px 363px,#080808 364px 450px)}
+#arc{position:absolute;left:40px;top:850px;width:1000px;height:1000px}
+/* chapters */
+.ch .num{position:absolute;left:50px;top:170px;font-size:560px;color:#fff}
+.ch .pic{position:absolute;left:150px;top:840px;width:780px;height:980px;border-radius:36px;overflow:hidden;border:10px solid #fff;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.ch .pill{position:absolute;left:60px;top:660px;padding:18px 34px;border-radius:70px;background:#fff;font-size:118px;line-height:1}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.55) 4px,transparent 5px);background-size:120px 120px}
+#c1{background:#2b4fae}#c1 .pill{color:#2b4fae}
+#c2{background:#f08a1c}#c2 .pill{color:#d4610a}
+#c3{background:#2fa84f}#c3 .pill{color:#1f7e38}
+/* colours */
+#k{background:#e8571f}
+#k .band{position:absolute;left:0;top:0;width:1080px;height:860px;background:#7a1f45;clip-path:polygon(0 0,100% 0,100% 88%,0 100%)}
+#k .ph{position:absolute;left:0;top:700px;width:1080px;height:1220px;object-fit:cover;visibility:hidden}
+#k .cw{position:absolute;left:70px;font-size:205px;color:#fff}
+#kw1{top:150px}#kw2{top:360px}#kw3{top:570px}
+/* phone */
+#p{background:#121212}
+#p .big{position:absolute;left:0;right:0;text-align:center;top:300px;font-size:250px;color:#fff}
+#p .big b{color:#7CFF4F;font-weight:400}
+#note{position:absolute;left:90px;top:1030px;width:900px;height:220px;border-radius:44px;background:rgba(60,60,64,.95);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#note img{position:absolute;left:34px;top:44px;width:132px;height:132px;border-radius:30px;object-fit:cover}
+#note .n1{position:absolute;left:196px;top:48px;font-size:40px;color:#bbb;font-weight:500}
+#note .n2{position:absolute;left:196px;top:100px;font-size:62px;color:#fff;font-weight:800}
+#note .tm{position:absolute;right:40px;top:48px;font-size:36px;color:#999}
+#plane{position:absolute;left:0;top:0;width:90px;height:90px}
+/* end */
+#e{background:#0b0b0b}
+#e .trio{position:absolute;top:250px;width:300px;height:300px;border-radius:50%;overflow:hidden;border:8px solid #fff}
+#e .trio img{width:100%;height:100%;object-fit:cover}
+#e .price{position:absolute;left:0;right:0;text-align:center;top:640px;font-size:300px;color:#fff}
+#e .all{position:absolute;left:0;right:0;text-align:center;top:960px;font-size:110px;color:#7CFF4F}
+#e .url{position:absolute;left:150px;top:1130px;width:780px;height:150px;border-radius:80px;background:#fff;color:#0b0b0b;font-size:90px;text-align:center;line-height:150px;font-weight:800}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+</style></head><body><div id="stage">
+<div id="t" class="sc"><div class="vl"></div><div class="hl"></div><div class="bar"></div>
+ <div id="t1" class="w A">TOO</div><div id="t2" class="w A">CUTE.</div><div class="tag I">BUYR / FIG. 01</div></div>
+<div id="m" class="sc"><img class="cover" id="mimg" src="img/s1.png"><div class="meet I">meet the</div><div class="frog3d A">FROG</div></div>
+<div id="d" class="sc"><div class="sq" style="left:70px;background:#0b0b0b"></div><div class="sq" style="left:114px;background:#e9c9a8"></div><div class="sq" style="left:158px;background:#c9d9e9"></div>
+ <div id="ring">
+  <div class="pol"><img src="img/s6.png"></div><div class="pol"><img src="img/s3.png"></div><div class="pol"><img src="img/wall.jpg"></div><div class="pol"><img src="img/s2.png"></div><div class="pol"><img src="img/s4.png"></div>
+ </div><div class="lab A">DESK BUDDY</div><div class="bc"></div></div>
+<div id="r" class="sc">
+ <div class="fan" id="f1"><img src="img/s3.png"></div><div class="fan" id="f2"><img src="img/s1.png"></div><div class="fan" id="f3"><img src="img/s2.png"></div>
+ <div id="vinyl"></div>
+ <svg id="arc" viewBox="0 0 1000 1000"><defs><path id="cp" d="M 110 500 A 390 390 0 0 1 890 500"/></defs>
+  <text font-family="Anton" font-size="120" fill="#fff" letter-spacing="6"><textPath href="#cp" startOffset="50%" text-anchor="middle">CLICKY JOINTS</textPath></text></svg>
+</div>
+<div id="c1" class="sc ch"><div class="dots"></div><div class="pic"><img class="cover" src="img/s4.png"></div><div class="num A">01</div><div class="pill A">MAGNETIC</div></div>
+<div id="c2" class="sc ch"><div class="dots"></div><div class="pic"><img class="cover" src="img/s3.png"></div><div class="num A">02</div><div class="pill A">POSEABLE</div></div>
+<div id="c3" class="sc ch"><div class="dots"></div><div class="pic"><img class="cover" style="object-position:50% 20%" src="img/three.jpg"></div><div class="num A">03</div><div class="pill A">3 COLOURS</div></div>
+<div id="k" class="sc"><img class="ph" id="k1" src="img/s2.png"><img class="ph" id="k2" src="img/s3.png"><img class="ph" id="k3" src="img/s1.png">
+ <div class="band"></div><div id="kw1" class="cw A">RED-GOLD</div><div id="kw2" class="cw A">GREEN</div><div id="kw3" class="cw A">BLUE-GREEN</div></div>
+<div id="p" class="sc"><div class="big A">FREE US<br><b>SHIPPING</b></div>
+ <div id="note"><img src="img/s1.png"><div class="n1 I">BUYR</div><div class="n2 I">on every order</div><div class="tm I">now</div></div>
+ <svg id="plane" viewBox="0 0 100 100"><polygon points="0,40 100,0 60,100 45,58" fill="#ff7a1a"/></svg></div>
+<div id="e" class="sc"><div class="trio" style="left:60px"><img src="img/s2.png"></div><div class="trio" style="left:390px"><img src="img/s3.png"></div><div class="trio" style="left:720px"><img src="img/s1.png"></div>
+ <div class="price A">$19.99</div><div class="all A">ALL 3 · $29.99</div><div class="url I">buyrshop.com</div></div>
+<div id="flash"></div>
+</div>
+<script>
+const B=k=>0.075+0.6*k, END=15.0;
+const tl=gsap.timeline({paused:true});
+const show=(id,a,b)=>{tl.set(id,{visibility:'hidden'},0);tl.set(id,{visibility:'visible'},a);if(b<END)tl.set(id,{visibility:'hidden'},b);};
+const slam=(sel,t,from)=>tl.fromTo(sel,Object.assign({opacity:0,scale:1.6,y:60},from||{}),{opacity:1,scale:1,y:0,x:0,duration:.2,ease:'back.out(2.2)'},t);
+const flash=(t,o)=>{tl.set('#flash',{opacity:o||1},t);tl.set('#flash',{opacity:0},t+0.067);};
+// 0 title
+show('#t',0,B(2));
+tl.fromTo('#t .bar',{xPercent:-110},{xPercent:0,duration:.25,ease:'expo.out'},0);
+tl.fromTo('#t .vl',{scaleY:0,transformOrigin:'top'},{scaleY:1,duration:.3,ease:'expo.out'},0.02);
+tl.fromTo('#t .hl',{scaleX:0,transformOrigin:'left'},{scaleX:1,duration:.3,ease:'expo.out'},0.05);
+slam('#t1',B(0)); slam('#t2',B(1)); tl.to('#t .bar',{y:-40,rotation:-9,duration:.3,ease:'power2.out'},B(1));
+// 1 meet the frog
+show('#m',B(2),B(4)); flash(B(2),.8);
+tl.fromTo('#mimg',{scale:1.18},{scale:1.02,duration:1.2,ease:'power2.out'},B(2));
+tl.fromTo('#m .frog3d',{x:900,skewX:-12},{x:0,skewX:0,duration:.22,ease:'expo.out'},B(2));
+tl.fromTo('#m .meet',{opacity:0,y:30},{opacity:1,y:0,duration:.15},B(2)+.05);
+tl.to('#mimg',{scale:1.12,duration:.12,ease:'power3.out'},B(3)); tl.to('#m .frog3d',{y:40,scale:1.06,duration:.12,ease:'power3.out'},B(3));
+// 2 disc
+show('#d',B(4),B(6));
+const pols=gsap.utils.toArray('#ring .pol'); pols.forEach((p,i)=>{const a=i*72; tl.set(p,{rotation:a,transformOrigin:'50% 50%',x:Math.sin(a*Math.PI/180)*300,y:-Math.cos(a*Math.PI/180)*300},0);});
+tl.fromTo('#ring',{rotation:-160,scale:.4},{rotation:0,scale:1,duration:.45,ease:'expo.out'},B(4));
+tl.to('#ring',{rotation:30,duration:.75,ease:'none'},B(4)+.45);
+tl.fromTo('#d .lab',{x:-700},{x:0,duration:.2,ease:'expo.out'},B(4)+.1); tl.fromTo('#d .bc',{scaleX:0,transformOrigin:'left'},{scaleX:1,duration:.2},B(5));
+tl.to('#ring',{scale:1.12,duration:.1,yoyo:true,repeat:1},B(5));
+// 3 record + riser
+show('#r',B(6),B(8)); flash(B(6),.6);
+tl.fromTo('#f1',{rotation:0,x:0},{rotation:-18,x:-250,duration:.25,ease:'back.out(2)'},B(6));
+tl.fromTo('#f3',{rotation:0,x:0},{rotation:18,x:250,duration:.25,ease:'back.out(2)'},B(6));
+tl.fromTo('#vinyl',{rotation:0},{rotation:540,duration:1.2,ease:'power1.in'},B(6));
+tl.fromTo('#arc',{rotation:-90,opacity:0},{rotation:0,opacity:1,duration:.3,ease:'expo.out'},B(6)+.05);
+tl.fromTo('#r',{scale:1},{scale:1.12,duration:1.2,ease:'power2.in'},B(6));
+for(let i=0;i<10;i++){tl.to('#r',{x:(i%2?1:-1)*(4+i*1.6),duration:.06},B(7)+i*.06);} tl.set('#r',{x:0},B(8));
+// DROP chapters
+flash(B(8));
+[['#c1',8],['#c2',10],['#c3',12]].forEach(([id,k])=>{show(id,B(k),k<12?B(k+2)+0.2:B(k+2));
+ tl.fromTo(id,{clipPath:'inset(0 0 0 100%)'},{clipPath:'inset(0 0 0 0%)',duration:.14,ease:'expo.out'},B(k));
+ slam(id+' .num',B(k)+.04,{x:-200,scale:1.3});
+ tl.fromTo(id+' .pic',{y:400,rotation:6},{y:0,rotation:-2,duration:.25,ease:'back.out(1.8)'},B(k));
+ tl.fromTo(id+' .pill',{x:700},{x:0,duration:.2,ease:'expo.out'},B(k)+.12);
+ tl.to(id+' .pic',{scale:1.05,duration:.12,ease:'power3.out'},B(k+1));});
+// colours
+show('#k',B(14),B(18));
+[['#kw1','#k1',14],['#kw2','#k2',15],['#kw3','#k3',16]].forEach(([w,p,k])=>{
+ tl.set(p,{visibility:'visible'},B(k)); if(k<16) tl.set(p,{visibility:'hidden'},B(k+1));
+ tl.fromTo(p,{scale:1.15},{scale:1,duration:.5,ease:'power2.out'},B(k));
+ slam(w,B(k),{x:-300,scale:1.2,y:0}); tl.set(w,{opacity:0},0);});
+tl.to('#k3',{scale:1.1,duration:.12},B(17));
+// phone
+show('#p',B(18),B(21)); flash(B(18),.7);
+tl.fromTo('#p .big',{y:-500,opacity:0},{y:0,opacity:1,duration:.22,ease:'back.out(1.6)'},B(18));
+tl.fromTo('#note',{y:-1300},{y:0,duration:.3,ease:'back.out(1.3)'},B(18)+.25);
+tl.fromTo('#plane',{x:-120,y:1500,rotation:-20},{x:1180,y:180,rotation:10,duration:1.2,ease:'power1.inOut'},B(19));
+tl.to('#p .big',{scale:1.07,duration:.1,yoyo:true,repeat:1},B(20));
+// end
+show('#e',B(21),END); flash(B(21));
+gsap.utils.toArray('#e .trio').forEach((el,i)=>tl.fromTo(el,{scale:0},{scale:1,duration:.2,ease:'back.out(2)'},B(21)+i*.07));
+slam('#e .price',B(21)+.1); slam('#e .all',B(22),{y:40,scale:1.3});
+tl.fromTo('#e .url',{y:300,opacity:0},{y:0,opacity:1,duration:.22,ease:'back.out(1.8)'},B(23));
+tl.to('#e .url',{scale:1.06,duration:.1,yoyo:true,repeat:1},B(24));
+tl.set('#t1,#t2',{opacity:0},0);
+window.seek=t=>{tl.seek(t,false);};
+window.ready=()=>document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r;}))));
+</script></body></html>
