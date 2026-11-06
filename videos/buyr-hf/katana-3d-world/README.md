@@ -1,6 +1,6 @@
 # buyr-ad-you-want-it: 3D world version
 
-Final: `../buyr-ad-you-want-it-3d-world.mp4` (24.64 s, 9:16). Rendered locally with three.js (0 credits).
+Final v2: `../buyr-ad-you-want-it-3d-world-v2.mp4` (camera orbits every hold to a new 3D angle on each beat, bloom glow + depth of field, fly-in opener; skills: title-sequence-3d, threejs-postprocessing, motion-design-pro). v1: `../buyr-ad-you-want-it-3d-world.mp4` (24.64 s, 9:16). Rendered locally with three.js (0 credits).
 - Every clip plays on a floating 3D video panel (white frame, coloured glow) arranged in a spiral in space with stars.
 - A camera flies panel to panel on every beat (whip-pan arc, roll, motion blur); a glowing cyan line connects all panels with a light arrow travelling along it.
 - Motion-tracked 3D arrows, rings and target brackets stick to each product (OpenCV tracks from ../katana-3d/tracks.json); floating price tags.
