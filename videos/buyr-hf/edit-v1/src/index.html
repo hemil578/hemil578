@@ -1,0 +1,146 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:IB;src:url(../assets/fonts/Inter-Black.otf)}@font-face{font-family:IT;src:url(../assets/fonts/Inter-Thin.otf)}
+*{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:1920px;overflow:hidden;background:#000;position:relative;font-family:IB}
+.full{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.l{position:absolute;inset:0}
+#cam{position:absolute;inset:0;overflow:hidden}
+#gl{position:absolute;inset:0;width:1080px;height:1920px}
+.thin{position:absolute;left:0;right:0;text-align:center;font-family:IT;color:#fff;letter-spacing:.02em;text-shadow:0 4px 18px rgba(0,0,0,.6);opacity:0}
+.big{position:absolute;left:0;right:0;top:250px;text-align:center;color:#00c9a7;letter-spacing:-.05em;line-height:1;font-size:300px;opacity:0;text-shadow:0 10px 30px rgba(0,0,0,.35)}
+#sel{position:absolute;z-index:7;border:4px dashed #00c9a7;opacity:0}#sel i{position:absolute;width:30px;height:30px;background:#fff;border:4px solid #00c9a7}
+#chip{position:absolute;z-index:7;background:#00c9a7;color:#0f172a;font-size:48px;padding:8px 18px;border-radius:10px;opacity:0;white-space:nowrap}
+.echo{position:absolute;left:0;right:0;top:840px;text-align:center;font-size:250px;letter-spacing:-.04em;line-height:1}
+#wait{opacity:0}
+.bars{position:absolute;left:0;right:0;height:150px;background:#000}#bars{opacity:0}
+#speed{background:repeating-conic-gradient(from 0deg at 50% 40%,rgba(255,255,255,0) 0 3deg,rgba(255,255,255,.13) 3deg 3.6deg);mix-blend-mode:screen;opacity:0}
+#vig{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 40%,rgba(0,0,0,.65) 100%)}
+#grain{opacity:.1;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>")}
+#flash{background:#fff;opacity:0}
+#card{position:absolute;left:110px;right:110px;top:470px;height:980px;border-radius:56px;background:linear-gradient(160deg,rgba(23,37,64,.92),rgba(8,14,28,.95));border:3px solid rgba(0,201,167,.6);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 60px rgba(0,201,167,.25);opacity:0}
+#card .logo{position:absolute;left:110px;right:110px;top:70px;background:#fff;border-radius:30px;padding:26px 50px}#card .logo img{width:100%;display:block}
+#pill{position:absolute;left:140px;right:140px;top:760px;height:120px;border-radius:60px;background:#00c9a7;color:#0f172a;font-size:64px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 0 #007a66;opacity:0}
+#url{position:absolute;left:0;right:0;top:905px;text-align:center;color:#fff;font-size:50px;letter-spacing:.01em;opacity:0}
+#ripple{position:absolute;left:330px;top:720px;width:200px;height:200px;border-radius:50%;border:8px solid #fff;opacity:0}
+</style></head><body>
+<div id="cam"><img id="bg" class="full"><div id="big" class="big"></div><img id="cut" class="full" style="filter:drop-shadow(0 30px 40px rgba(0,0,0,.65))">
+ <div id="sel"><i style="left:-17px;top:-17px"></i><i style="right:-17px;top:-17px"></i><i style="left:-17px;bottom:-17px"></i><i style="right:-17px;bottom:-17px"></i></div><div id="chip"></div></div>
+<div id="speed" class="l"></div><div id="vig" class="l"></div>
+<div id="wait"><div class="echo" style="color:rgba(0,201,167,.18);transform:translate(48px,48px)">WAIT.</div><div class="echo" style="color:rgba(0,201,167,.32);transform:translate(32px,32px)">WAIT.</div><div class="echo" style="color:rgba(0,201,167,.55);transform:translate(16px,16px)">WAIT.</div><div class="echo" style="color:#fff">WAIT.</div></div>
+<div id="t_dont" class="thin" style="top:250px;font-size:96px">you don't</div>
+<div id="t_you" class="thin" style="top:250px;font-size:96px">…you</div>
+<div id="t_what" class="thin" style="top:1120px;font-size:84px;font-family:IB;letter-spacing:-.01em;text-shadow:0 4px 0 #0f172a,0 0 30px rgba(0,0,0,.9)">what is that?</div>
+<div id="card"><div class="logo"><img src="../assets/logo.png"></div><div id="pill">SHOP NOW</div><div id="url">buyrshop.com</div><div id="ripple"></div></div>
+<canvas id="gl" width="1080" height="1920"></canvas>
+<div id="bars"><div class="bars" style="top:0"></div><div class="bars" style="bottom:0"></div></div>
+<div id="grain" class="l"></div><div id="flash" class="l"></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+// Buyr "YOU WANT IT." edit. music-to-video plan (audiomap.json) + motion-video-director style board.
+// Every frame is a pure function of t (window.seek). Cuts on the measured beats (99.4 BPM).
+import * as THREE from 'three';
+import {FontLoader} from 'three/addons/loaders/FontLoader.js';
+import {TextGeometry} from 'three/addons/geometries/TextGeometry.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const BT = [0.116,0.743,1.347,1.95,2.554,3.135,3.738,4.342,4.946,5.55,6.153,6.757,7.338,7.941,8.522,9.125,9.66,10.194,10.751,11.262,11.865,12.446,13.05,13.653,14.257,14.838,15.441,16.045,16.649,17.252,17.833,18.437,19.04,19.644,20.248,20.852,21.432,22.059,22.639,23.243];
+const END = 24.621;
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), pr = (t, a, d) => cl((t - a) / d);
+const eo = x => 1 - Math.pow(1 - x, 3), eb = x => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const NF = {c01:25,c02:22,c03:22,c04:25,c05:23,c06:23,c06b:23,c07:23,c07b:23,c08:23,c08b:23,c09:23,c09b:23,c10:23,c11:22,c12:22,c13:22,c14:22,c15:22,c16:22,c17:24,c18:23,c19:13,c20:23,c21:23,c22:23,c23:22,c24:23,c25:22,c26:22,c27:23,c28:22,c29:22,c30:25};
+// [start, clip, look]  look: n normal · p product (text behind) · b breakdown (B&W slow) · d drop (colour pop) · e end
+const CL = [[0,'c01','n'],[BT[1],'c02','n'],[BT[2],'c03','n'],[BT[3],'c04','n'],
+ [BT[4],'c05','n'],[BT[5],'c09','n'],[BT[6],'c09b','n'],
+ [BT[7],'c06','p'],[BT[8],'c06b','p'],[BT[9],'c06','p'],[BT[10],'c07b','p'],[BT[11],'c07','p'],[BT[12],'c07b','p'],[BT[13],'c08b','p'],[BT[14],'c08','p'],[BT[15],'c08b','p'],
+ [BT[16],'c13','b'],[BT[19],'c14','b'],[BT[21],'c18','b'],[BT[22],'c19','b'],[BT[23],'c20','b'],
+ [BT[24],'c21','d'],[BT[25],'c22','d'],[BT[26],'c23','d'],[BT[27],'c24','d'],[BT[28],'c25','d'],[BT[29],'c26','d'],[BT[30],'c27','d'],[BT[31],'c28','d'],[BT[32],'c29','d'],[BT[33],'c10','d'],[BT[34],'c11','d'],[BT[35],'c12','d'],
+ [BT[36],'c30','e']];
+const PROD = [[BT[7], BT[10], 'Butter Squishy', '$19.99', 1], [BT[10], BT[13], 'Flower Pot', '$49.99', 0], [BT[13], BT[16], 'Dog Raincoat', '$26.99', 0]];
+const KICKS = [BT[24], 15.19, 16.23];
+let BBOX = {};
+const $ = id => document.getElementById(id);
+const op = (id, v) => { $(id).style.opacity = String(v); };
+const shake = (t, at, amp, dur) => { const k = pr(t, at, dur); if (k <= 0 || k >= 1) return [0, 0]; const a = amp * (1 - k); return [Math.sin(t * 93) * a, Math.cos(t * 71) * a]; };
+const imgs = new Map();
+function load(el, src) { if (el.dataset.src === src) return el.decode().catch(() => {}); el.dataset.src = src; el.src = src; return el.decode().catch(() => {}); }
+
+// ---------- 3D keywords ----------
+const r = new THREE.WebGLRenderer({canvas: $('gl'), alpha: true, antialias: true, preserveDrawingBuffer: true});
+r.setSize(1080, 1920, false); r.toneMapping = THREE.ACESFilmicToneMapping; r.outputColorSpace = THREE.SRGBColorSpace;
+const env = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), .04).texture;
+const S = new THREE.Scene(); S.environment = env;
+S.add(new THREE.HemisphereLight(0xffffff, 0x223344, .9)); const kl = new THREE.DirectionalLight(0xffffff, 2.2); kl.position.set(3, 6, 8); S.add(kl);
+const rim = new THREE.PointLight(0x00f5cc, 60, 30); rim.position.set(-4, 2, -2); S.add(rim);
+const cam = new THREE.PerspectiveCamera(34, 1080 / 1920, .1, 100); cam.position.set(0, 0, 18); cam.lookAt(0, 0, 0);
+const chrome = new THREE.MeshStandardMaterial({color: 0xf4f7fa, metalness: 1, roughness: .14});
+const teal = new THREE.MeshPhysicalMaterial({color: 0x00c9a7, metalness: .3, roughness: .2, clearcoat: 1, emissive: 0x00c9a7, emissiveIntensity: .15});
+const white = new THREE.MeshPhysicalMaterial({color: 0xffffff, roughness: .25, clearcoat: 1});
+// id: [text, material, size, y, show from, show until]
+const K = {
+  need: ['NEED THIS.', chrome, .95, 2.2, BT[0], BT[4]],
+  want: ['WANT IT.', teal, 1.05, 2.3, BT[4], BT[7]],
+  has: ['HAS THEM', chrome, 1.05, 3.4, BT[24], BT[27]], all: ['ALL', teal, 1.9, 1.75, BT[24] + .08, BT[27]],
+  from: ['FROM', chrome, .95, 3.3, BT[28], BT[31]], p999: ['$9.99', teal, 1.6, 1.75, BT[28] + .08, BT[31]],
+  free: ['FREE US', teal, .95, 3.3, BT[32], BT[35]], ship: ['SHIPPING', chrome, .95, 2.05, BT[32] + .08, BT[35]],
+  n3: ['3', chrome, 3.6, -.2, BT[21], BT[22]], n2: ['2', chrome, 3.6, -.2, BT[22], BT[23]], n1: ['1', chrome, 3.6, -.2, BT[23], BT[24]],
+  you: ['YOU', white, .58, .05, BT[37], END + 1], wantit: ['WANT IT.', teal, .58, -.75, BT[37] + .06, END + 1],
+};
+const M3 = {};
+let ready = false;
+Promise.all([new Promise(res => new FontLoader().load('../assets/fonts/inter-black.typeface.json', res)), fetch('../assets/cut_bbox.json').then(x => x.json()).catch(() => ({}))]).then(([font, bb]) => {
+  BBOX = bb;
+  for (const [id, [str, m, size, y]] of Object.entries(K)) {
+    const g = new TextGeometry(str, {font, size, height: size * .42, curveSegments: 8, bevelEnabled: true, bevelThickness: size * .05, bevelSize: size * .03, bevelSegments: 4});
+    g.computeBoundingBox(); const b = g.boundingBox; g.translate(-(b.min.x + b.max.x) / 2, -(b.min.y + b.max.y) / 2, -b.max.z / 2);
+    const me = new THREE.Mesh(g, m); me.position.y = y; S.add(me); M3[id] = me;
+  }
+  document.fonts.ready.then(() => { ready = true; });
+});
+window.ready = () => new Promise(res => { const c = () => ready ? res(true) : setTimeout(c, 50); c(); });
+
+window.seek = async t => {
+  // ----- footage -----
+  let i = 0; for (let j = 0; j < CL.length; j++) if (t >= CL[j][0]) i = j;
+  const [st, clip, look] = CL[i], lt = t - st;
+  const speed = look === 'b' ? .35 : look === 'e' ? .3 : 1;
+  const n = Math.min(NF[clip], Math.floor(lt * 30 * speed) + 1), nn = String(n).padStart(3, '0');
+  const waits = [load($('bg'), `../assets/frames/${clip}/${nn}.jpg`)];
+  if (look === 'p') { $('cut').style.display = ''; waits.push(load($('cut'), `../assets/cuts/${clip}/${nn}.png`)); } else $('cut').style.display = 'none';
+  const punch = look === 'e' ? 1.08 : 1 + .13 * (1 - eo(pr(lt, 0, .3))) + .03 * cl(lt / .6);
+  let [sx, sy] = [0, 0]; for (const kk of KICKS) { const [a, b] = shake(t, kk, 26, .3); sx += a; sy += b; }
+  $('cam').style.transform = `translate(${sx}px,${sy}px) scale(${punch})`;
+  const F = {n: 'contrast(1.1) saturate(1.15)', p: 'contrast(1.08) saturate(1.1) brightness(.62)', b: 'grayscale(1) contrast(1.35) brightness(.75)', d: 'contrast(1.2) saturate(1.45) brightness(1.04)', e: 'blur(18px) brightness(.55) saturate(1.2)'};
+  $('bg').style.filter = F[look];
+  // ----- product: price behind the product + selection box -----
+  const P = PROD.find(p => t >= p[0] && t < p[1]);
+  if (P) { const k = pr(t, P[0], .25); $('big').textContent = P[3]; $('big').style.zIndex = P[4] ? '' : '6'; $('big').style.textShadow = P[4] ? '' : '0 8px 0 #0f172a, 0 20px 40px rgba(0,0,0,.6)'; op('big', eo(k)); $('big').style.transform = `scale(${.7 + .3 * eb(k)})`;
+    const bb = BBOX[clip] || [140, 400, 720, 920]; const x0 = bb[0] * 1.5, y0 = bb[1] * 1.5, x1 = Math.min(1000, bb[2] * 1.5), y1 = Math.min(1440, bb[3] * 1.5);
+    Object.assign($('sel').style, {left: x0 + 'px', top: y0 + 'px', width: (x1 - x0) + 'px', height: (y1 - y0) + 'px'}); op('sel', eo(pr(t, P[0] + .1, .2)));
+    $('chip').textContent = P[2]; Object.assign($('chip').style, P[4] ? {left: x0 + 'px', top: (y0 - 70) + 'px'} : {left: '0px', right: '0px', top: '575px', width: 'max-content', margin: '0 auto'}); op('chip', eo(pr(t, P[0] + .1, .2)));
+  } else { op('big', 0); op('sel', 0); op('chip', 0); }
+  // ----- thin filler words -----
+  op('t_dont', t >= BT[0] && t < BT[4] ? eo(pr(t, BT[0], .25)) : 0);
+  op('t_you', t >= BT[4] && t < BT[7] ? eo(pr(t, BT[4], .2)) : 0);
+  op('t_what', t >= BT[17] && t < BT[21] ? eo(pr(t, BT[17], .3)) : 0);
+  // ----- breakdown: WAIT. echo + letterbox -----
+  const wk = t >= BT[16] && t < BT[19] ? eo(pr(t, BT[16], .2)) : 0; op('wait', wk); $('wait').style.transform = `scale(${1.25 - .25 * wk})`;
+  op('bars', t >= BT[16] && t < BT[24] ? eo(pr(t, BT[16], .25)) : 0);
+  // ----- drop fx -----
+  const inText = (t >= BT[24] && t < BT[27]) || (t >= BT[28] && t < BT[31]) || (t >= BT[32] && t < BT[35]);
+  op('speed', inText ? .9 : 0);
+  let fl = 0; if (t >= BT[24] - .001) fl = Math.max(0, 1 - (t - BT[24]) / .3);
+  if (look === 'd' && i > 0 && CL[i][0] > BT[24]) fl = Math.max(fl, .35 * Math.max(0, 1 - lt / .12));
+  op('flash', fl);
+  // ----- end card -----
+  const ck = pr(t, BT[36], .35); op('card', ck > 0 ? eo(ck) : 0); $('card').style.transform = `scale(${.86 + .14 * eb(ck)})`;
+  const pk = pr(t, BT[38], .25); op('pill', eo(pk)); op('url', eo(pr(t, BT[38] + .1, .25)));
+  const press = Math.sin(pr(t, BT[39], .18) * Math.PI); $('pill').style.transform = `scale(${(.6 + .4 * eb(pk)) * (1 - .08 * press)})`;
+  const rk = pr(t, BT[39], .4); op('ripple', rk > 0 && rk < 1 ? 1 - rk : 0); $('ripple').style.transform = `scale(${.3 + 1.4 * rk})`;
+  // ----- 3D keywords -----
+  for (const [id, [, , , y, a, b]] of Object.entries(K)) {
+    const me = M3[id]; const on = t >= a && t < b; me.visible = on; if (!on) continue;
+    const k = pr(t, a, .3); const big = id[0] === 'n' && id.length === 2;
+    me.scale.setScalar(big ? .5 + .5 * eo(pr(t, a, .6)) + .25 * pr(t, a, .6) : .35 + .65 * eb(k));
+    me.rotation.set(-.12, (1 - eo(k)) * .9 - .12 + Math.sin(t * 1.3) * .06, 0); me.position.y = y + (1 - eo(k)) * -.6;
+  }
+  r.render(S, cam);
+  await Promise.all(waits);
+};
+</script></body></html>
