@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Higgsfield__sandbox_exec",
+      "mcp__Higgsfield__media_upload",
+      "mcp__Higgsfield__media_confirm",
+      "mcp__Higgsfield__media_import_url",
+      "mcp__Higgsfield__jobs_wait",
+      "mcp__Higgsfield__balance",
+      "mcp__Higgsfield__transactions",
+      "mcp__Higgsfield__get_preset_instructions",
+      "mcp__Higgsfield__get_presets",
+      "mcp__Higgsfield__get_workflow_instructions",
+      "mcp__Higgsfield__get_workflow_bundle_file",
+      "mcp__Higgsfield__models_explore",
+      "mcp__Higgsfield__get_katana_config",
+      "mcp__Higgsfield__show_result",
+      "mcp__Higgsfield__register_katana_result",
+      "mcp__Higgsfield__show_generations",
+      "mcp__Higgsfield__show_generation_by_ids",
+      "mcp__ElevenLabs__creative_list_voices",
+      "mcp__ElevenLabs__creative_get_flow_run_status",
+      "Bash(curl *)",
+      "Bash(ffmpeg *)",
+      "Bash(ffprobe *)",
+      "Bash(python3 *)",
+      "Bash(node *)",
+      "Bash(npx hyperframes *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git status *)"
+    ],
+    "ask": [
+      "mcp__Higgsfield__generate_image",
+      "mcp__Higgsfield__generate_video",
+      "mcp__Higgsfield__generate_image_batch",
+      "mcp__Higgsfield__generate_video_batch",
+      "mcp__Higgsfield__generate_audio",
+      "mcp__Higgsfield__execute_preset",
+      "mcp__ElevenLabs__creative_generate_speech",
+      "mcp__ElevenLabs__creative_generate_video",
+      "mcp__ElevenLabs__creative_generate_image"
+    ]
+  }
+}
