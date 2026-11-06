@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:IB;src:url(../../mvd/assets/fonts/Inter-Black.otf)}
+*{margin:0;padding:0;box-sizing:border-box}body{width:1080px;height:1920px;overflow:hidden;background:#000;font-family:IB}
+#bg{position:absolute;inset:0;background-size:cover;background-position:center}
+#dim{position:absolute;inset:0}
+.t{position:absolute;left:0;right:0;text-align:center;color:#fff;letter-spacing:-.02em;line-height:1;
+ text-shadow:0 2px 0 #9fb3c8,0 4px 0 #8aa0b6,0 6px 0 #6f869c,0 8px 0 #556b80,0 10px 0 #3c5063,0 18px 30px rgba(0,0,0,.6)}
+.t em{font-style:normal;color:#00c9a7;text-shadow:0 2px 0 #00a88b,0 4px 0 #008f77,0 6px 0 #007a66,0 8px 0 #006555,0 10px 0 #004f43,0 18px 30px rgba(0,0,0,.6)}
+.chip{position:absolute;left:70px;bottom:520px;background:rgba(15,23,42,.88);border:4px solid #00c9a7;border-radius:28px;padding:22px 34px;color:#fff;font-size:62px}
+.chip b{color:#00c9a7}
+.tag{position:absolute;left:40px;top:40px;background:#ff2d55;color:#fff;font:700 34px sans-serif;padding:8px 18px;border-radius:12px}
+#card{position:absolute;left:120px;right:120px;top:520px;background:rgba(15,23,42,.92);border-radius:48px;padding:60px 40px;text-align:center;border:4px solid #00c9a7}
+#card img{width:520px;background:#fff;border-radius:28px;padding:24px 40px}
+</style></head><body><div id="bg"></div><div id="dim"></div><div id="ov"></div><div class="tag" id="lbl"></div>
+<script>
+const P={
+ '1a':{c:'c01',f:8,txt:'<div class="t" style="top:300px;font-size:120px">YOU DON\'T<br>NEED THIS.</div>',z:1.12,l:'1 · 0.4s · beat cut + punch zoom'},
+ '1b':{c:'c03',f:14,txt:'<div class="t" style="top:300px;font-size:120px">YOU DON\'T<br>NEED THIS.</div>',z:1.0,l:'1 · 1.9s · next beat'},
+ '2a':{c:'c04',f:12,txt:'<div class="t" style="top:300px;font-size:140px">…YOU<br><em>WANT</em> IT.</div>',z:1.05,l:'2 · 3.0s · whip cut'},
+ '2b':{c:'c06',f:12,txt:'<div class="chip">Butter Squishy <b>$19.99</b></div>',z:1.0,l:'2 · 4.6s · product + price'},
+ '3a':{c:'c13',f:10,txt:'<div class="t" style="top:760px;font-size:200px">WAIT.</div>',z:1.15,dim:.45,l:'3 · 10.2s · slow push, dark'},
+ '3b':{c:'c18',f:10,txt:'<div class="t" style="top:600px;font-size:640px">2</div>',z:1.1,dim:.5,l:'3 · 13.1s · countdown 1 per beat'},
+ '4a':{c:'c21',f:6,txt:'<div class="t" style="top:300px;font-size:150px">HAS THEM<br><em>ALL</em></div>',z:1.18,flash:1,l:'4 · 14.3s · DROP flash + shake'},
+ '4b':{c:'c24',f:12,txt:'<div class="t" style="top:320px;font-size:180px">FROM<br><em>$9.99</em></div>',z:1.06,l:'4 · 17.3s · fast beat cuts'},
+ '4c':{c:'c27',f:12,txt:'<div class="t" style="top:300px;font-size:130px"><em>FREE</em> US<br>SHIPPING</div>',z:1.04,l:'4 · 19.1s · fast beat cuts'},
+ '5a':{c:'c30',f:16,txt:'<div id="card"><img src="../assets/logo.png"><div class="t" style="position:static;margin-top:50px;font-size:110px">YOU <em>WANT</em> IT.</div><div style="margin-top:44px;color:#fff;font-size:64px">buyrshop.com</div></div>',z:1.1,blur:14,dim:.35,l:'5 · 22s · end card over blurred clip'},
+};
+const k=location.hash.slice(1), p=P[k];
+document.getElementById('bg').style.backgroundImage=`url(../assets/frames/${p.c}/${String(p.f).padStart(3,'0')}.jpg)`;
+document.getElementById('bg').style.transform=`scale(${p.z})`; if(p.blur) document.getElementById('bg').style.filter=`blur(${p.blur}px)`;
+document.getElementById('dim').style.background=p.flash?'rgba(255,255,255,.18)':`rgba(0,0,0,${p.dim||.12})`;
+document.getElementById('ov').innerHTML=p.txt; document.getElementById('lbl').textContent='Scene '+p.l;
+</script></body></html>
