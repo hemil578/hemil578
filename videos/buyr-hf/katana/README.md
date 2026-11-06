@@ -2,6 +2,8 @@
 
 **Final:** `../buyr-ad-you-want-it-katana.mp4` (24.64 s, 1080x1920, 30 fps, -14.2 LUFS, passes Reels check).
 
+**v2 (fast motion, motion-design skill "Energetic"):** whip cuts with motion blur + snap zoom + camera roll on every beat, 3D letter flips, half-beat invert/flash/punch micro-cuts, shake bursts on hits, scrolling patterns, beat-cut end card.
+
 Same script, beat-grid timing and soundtrack as `buyr-ad-you-want-it.mp4`, restyled in the Katana
 preset `/katana/kinetic-graphic-photo-edit`: video in framed panels on bold colours, price pills,
 stacked WAIT—/WHAT—/LOL, a polaroid stack, one-number-per-beat 3·2·1, numbered list on the drop
