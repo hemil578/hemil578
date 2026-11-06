@@ -1,0 +1,29 @@
+{
+  "_skills": "creative-director (concept) -> motion-graphics agents/director.md (this IR) -> video role-modes Editor mode (beat sheet) -> hyperframes build -> ffmpeg-skill export/check",
+  "concept": "Every screen says yes: your phone tries to stop you buying, and every screen ends up agreeing you want it.",
+  "insight": "Scrollers want a small fun buy, but the 'you don't need this' voice stops them, because novelty gadgets feel useless on paper.",
+  "category": "kinetic-type + lower-thirds + stat + maps + logo-reveal (multi-screen)",
+  "duration_s": 24.63,
+  "fps": 30,
+  "canvas": { "w": 1080, "h": 1920, "aspect": "9:16" },
+  "style": "Bold flat UI screens, one different interface per section, hard cuts on the 100 BPM grid",
+  "palette": ["#00c9a7", "#0f172a", "#ffffff", "#ffd84d", "#c8a26b"],
+  "font": "Inter",
+  "beat_grid": "0.075 + 0.6k s, drop 14.475",
+  "export": "mp4",
+  "asset_needs": [],
+  "content": {
+    "scenes": [
+      { "id": "s1-dialog",  "start": 0,      "end": 2.475,  "screen": "System warning dialog",   "text": "YOU DON'T NEED THIS. / ...YOU WANT IT.", "clips": ["c01","c02","c03","c04"], "motion": "scale_punch in, shake on 0.675, strike-through, cursor clicks BUY ANYWAY" },
+      { "id": "s2-grid",    "start": 2.475,  "end": 4.275,  "screen": "Shop search grid",        "text": "HAS THEM ALL", "clips": ["c05","c11","c12"], "motion": "rows pop per beat, live centre tile" },
+      { "id": "s3-receipt", "start": 4.275,  "end": 9.075,  "screen": "Checkout scanner + printing receipt", "text": "Butter Squishy $19.99 / Flower Pot $49.99 / Dog Raincoat $26.99 / Prism Glasses $24.99", "clips": ["c06","c06b","c07b","c07","c08b","c09b","c09","c08"], "motion": "receipt line prints per product beat, scan flash" },
+      { "id": "s4-chat",    "start": 9.075,  "end": 11.475, "screen": "Group chat",              "text": "WAIT— / WHAT— / LOL", "clips": ["c10","c13","c14","c15"], "motion": "bubble pop per beat, typing dots" },
+      { "id": "s5-mosaic",  "start": 11.475, "end": 12.675, "screen": "Split-screen mosaic",     "text": "", "clips": ["c16","c17"], "motion": "1 -> 4 -> 9 tiles on beats" },
+      { "id": "s6-timer",   "start": 12.675, "end": 14.475, "screen": "Circular countdown timer", "text": "3 / 2 / 1", "clips": ["c18","c19","c20"], "motion": "ring drains one third per beat, number slams" },
+      { "id": "s7-label",   "start": 14.475, "end": 16.875, "screen": "Shipping label",          "text": "FREE US SHIPPING / ON EVERY ORDER", "clips": ["c21","c22","c23","c24"], "motion": "flash on drop, two stamps slam, barcode scan" },
+      { "id": "s8-tag",     "start": 16.875, "end": 18.075, "screen": "Swinging price tag",      "text": "FROM $9.99", "clips": ["c25","c26"], "motion": "pendulum swing, settle" },
+      { "id": "s9-map",     "start": 18.075, "end": 19.875, "screen": "Tracking map",            "text": "TRACKED DELIVERY", "clips": ["c27","c28","c29"], "motion": "route draws, pins drop, steps tick per beat" },
+      { "id": "s10-browser","start": 19.875, "end": 24.63,  "screen": "Browser end card",        "text": "buyrshop.com / YOU WANT IT. / SHOP NOW / Free US shipping · From $9.99", "clips": ["c30"], "motion": "URL types, page builds, cursor clicks SHOP NOW" }
+    ]
+  }
+}

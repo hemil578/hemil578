@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0f172a; }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; color: #0f172a; }
+.sec { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+.h { opacity: 0; }
+em { font-style: normal; background: #00c9a7; color: #0f172a; border-radius: 14px; padding: 0 16px; }
+video.vfill, .vfill { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+img { display: block; }
+
+/* S1 system dialog */
+#s1 { background: radial-gradient(circle at 50% 35%, #1e3a5f 0%, #0f172a 70%); }
+.desk { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.08) 2px, transparent 2px); background-size: 40px 40px; }
+#dlg { position: absolute; left: 70px; top: 250px; width: 940px; border-radius: 34px; overflow: hidden; background: #fff; box-shadow: 0 40px 90px rgba(0,0,0,.55); }
+.tbar { height: 92px; background: #e2e8f0; display: flex; align-items: center; padding: 0 30px; gap: 16px; }
+.tbar i, .bbar i { width: 26px; height: 26px; border-radius: 50%; display: block; }
+.tbar span { margin-left: 22px; font-weight: 800; font-size: 40px; color: #334155; }
+.dbody { padding: 36px 40px 40px; }
+.prev { position: relative; width: 860px; height: 660px; border-radius: 22px; overflow: hidden; background: #000; }
+.dl1 { position: relative; margin-top: 34px; font-weight: 900; font-size: 74px; white-space: nowrap; letter-spacing: -0.02em; line-height: 1; display: inline-block; }
+#strike { position: absolute; left: -6px; right: -6px; top: 44%; height: 12px; background: #ef4444; border-radius: 6px; transform: scaleX(0); transform-origin: left center; }
+.dl2 { margin-top: 22px; font-weight: 900; font-size: 96px; letter-spacing: -0.02em; line-height: 1.05; }
+.btns { margin-top: 36px; display: flex; gap: 24px; }
+.bt { flex: 1; height: 120px; border-radius: 26px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 46px; }
+.bt.gray { background: #e2e8f0; color: #64748b; }
+.bt.teal { background: #00c9a7; color: #0f172a; }
+
+/* S2 shop grid */
+#s2 { background: #fff; }
+#iris { position: absolute; inset: 0; background: #0f172a; }
+.s2logo { position: absolute; left: 340px; top: 140px; width: 400px; }
+.s2logo img { width: 100%; }
+.s2h { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font-weight: 900; font-size: 116px; letter-spacing: -0.03em; line-height: 1; }
+.tile { position: absolute; width: 300px; height: 376px; border-radius: 26px; overflow: hidden; background: #e2e8f0; box-shadow: 0 10px 0 #0f172a; border: 5px solid #0f172a; }
+.tile img { width: 100%; height: 100%; object-fit: cover; }
+.tile.live { border-color: #00c9a7; box-shadow: 0 10px 0 #00c9a7; }
+.hot { position: absolute; left: 14px; top: 14px; background: #ff3b5c; color: #fff; font-weight: 900; font-size: 30px; padding: 4px 14px; border-radius: 10px; }
+
+/* S3 scanner + receipt */
+#s3 { background: #00c9a7; }
+#scanner { position: absolute; left: 200px; top: 110px; width: 680px; height: 800px; background: #0f172a; border-radius: 46px; padding: 22px; }
+.scr { position: relative; width: 636px; height: 690px; border-radius: 28px; overflow: hidden; background: #000; }
+#laser { position: absolute; left: 0; right: 0; top: 0; height: 10px; background: #ff3b5c; box-shadow: 0 0 30px 8px rgba(255,59,92,.7); }
+.scan-lbl { margin-top: 20px; text-align: center; color: #00c9a7; font-weight: 900; font-size: 34px; letter-spacing: .2em; }
+#slot { position: absolute; left: 100px; top: 950px; width: 880px; height: 34px; border-radius: 17px; background: #0f172a; }
+#paper { position: absolute; left: 90px; top: 966px; width: 900px; height: 0; overflow: hidden; background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 18px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 36px 18px repeat-x; }
+.ph { position: absolute; left: 0; right: 0; top: 0; height: 150px; padding-top: 36px; }
+.ph img { width: 220px; margin: 0 auto; }
+.dash { position: absolute; left: 40px; right: 40px; bottom: 6px; border-top: 5px dashed #94a3b8; }
+.row { position: absolute; left: 44px; right: 44px; height: 104px; display: flex; align-items: center; justify-content: space-between; font-family: "DejaVu Sans Mono", monospace; font-size: 52px; font-weight: 700; }
+.row b { color: #007a6d; font-size: 56px; }
+
+/* S4 group chat */
+#s4 { background: #000; }
+.chead { position: absolute; left: 0; right: 0; top: 0; height: 270px; padding: 120px 50px 0; display: flex; gap: 26px; align-items: center; background: #111; border-bottom: 2px solid #222; }
+.av { width: 110px; height: 110px; border-radius: 50%; background: #00c9a7; color: #0f172a; font-weight: 900; font-size: 60px; display: flex; align-items: center; justify-content: center; }
+.chead b { display: block; color: #fff; font-size: 50px; font-weight: 800; }
+.chead span { color: #8e8e93; font-size: 34px; }
+#vbub { position: absolute; left: 50px; top: 320px; width: 560px; height: 780px; border-radius: 44px; overflow: hidden; background: #222; }
+.tb { position: absolute; right: 50px; padding: 18px 46px 26px; border-radius: 60px 60px 14px 60px; background: #00c9a7; color: #0f172a; font-weight: 900; font-size: 116px; letter-spacing: -0.02em; line-height: 1; }
+.typing { position: absolute; left: 50px; top: 1700px; width: 200px; height: 100px; border-radius: 50px; background: #2c2c2e; display: flex; align-items: center; justify-content: center; gap: 16px; }
+.typing i { width: 24px; height: 24px; border-radius: 50%; background: #8e8e93; display: block; }
+.react { position: absolute; left: 470px; top: 290px; padding: 14px 26px; border-radius: 40px; background: #fff; color: #0f172a; font-weight: 900; font-size: 40px; box-shadow: 0 6px 0 #00c9a7; }
+
+/* S5 mosaic */
+#s5 { background: #000; }
+.mt { position: absolute; overflow: hidden; }
+.mt img { width: 100%; height: 100%; object-fit: cover; }
+
+/* S6 timer */
+#s6 { background: radial-gradient(circle at 50% 46%, #134e4a 0%, #0f172a 65%); }
+#tcirc { position: absolute; left: 150px; top: 490px; width: 780px; height: 780px; border-radius: 50%; overflow: hidden; }
+#ring { position: absolute; left: 0; top: 0; }
+.num { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font-weight: 900; font-size: 560px; line-height: 1; color: #fff; -webkit-text-stroke: 18px #0f172a; paint-order: stroke fill; }
+
+/* S7 shipping label */
+#s7 { background: #c8a26b; background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.035) 0 6px, transparent 6px 18px); }
+#label { position: absolute; left: 90px; top: 260px; width: 900px; height: 1260px; background: #fff; border-radius: 10px; padding: 44px; transform: rotate(-2deg); box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+.lrow { display: flex; justify-content: space-between; align-items: flex-end; }
+.lrow small, .lmeta small { display: block; font-weight: 800; font-size: 30px; color: #64748b; letter-spacing: .12em; }
+.llogo { width: 260px; margin-top: 10px; }
+.lr { text-align: right; }
+.lr b { font-weight: 900; font-size: 110px; line-height: 1; }
+.lrule { height: 12px; background: #0f172a; margin: 30px 0; }
+.lmid { display: flex; gap: 40px; }
+.lphoto { position: relative; width: 400px; height: 520px; overflow: hidden; border: 6px solid #0f172a; }
+.lmeta b { display: block; font-weight: 900; font-size: 58px; line-height: 1.05; margin-bottom: 30px; }
+#barcode { position: relative; height: 210px; overflow: hidden; }
+#barcode i { position: absolute; top: 0; bottom: 0; background: #0f172a; display: block; }
+#scanline { position: absolute; top: -20px; bottom: -20px; left: 0; width: 10px; background: #ff3b5c; box-shadow: 0 0 26px 8px rgba(255,59,92,.6); opacity: 0; }
+.ltrk { margin-top: 18px; text-align: center; font-family: "DejaVu Sans Mono", monospace; font-weight: 700; font-size: 40px; letter-spacing: .3em; }
+.stamp { position: absolute; left: 90px; top: 690px; width: 900px; text-align: center; font-weight: 900; font-size: 104px; letter-spacing: -0.01em; line-height: 1; color: #007a6d; border: 14px solid #007a6d; border-radius: 22px; padding: 24px 10px 30px; background: #fff; transform: rotate(-9deg); }
+.stamp.st2 { top: 1440px; left: 150px; width: 780px; font-size: 92px; color: #0f172a; border-color: #0f172a; transform: rotate(5deg); background: #ffd84d; }
+
+/* S8 price tag */
+#s8 { background: #ffd84d; }
+#pcirc { position: absolute; left: 260px; top: 150px; width: 560px; height: 560px; border-radius: 50%; overflow: hidden; border: 14px solid #0f172a; }
+#swing { position: absolute; left: 0; top: 780px; width: 1080px; height: 1000px; transform-origin: 540px 0px; }
+.pin { position: absolute; left: 520px; top: 760px; width: 40px; height: 40px; border-radius: 50%; background: #0f172a; }
+.string { position: absolute; left: 536px; top: 0; width: 8px; height: 180px; background: #0f172a; }
+.ptag { position: absolute; left: 210px; top: 170px; width: 660px; height: 660px; background: #fff; border: 12px solid #0f172a; border-radius: 60px; box-shadow: 18px 18px 0 #0f172a; text-align: center; padding-top: 120px; }
+.hole { position: absolute; left: 300px; top: 30px; width: 48px; height: 48px; border-radius: 50%; border: 10px solid #0f172a; background: #ffd84d; }
+.ptag small { display: block; font-weight: 900; font-size: 90px; color: #64748b; letter-spacing: .08em; }
+.ptag b { display: block; font-weight: 900; font-size: 210px; letter-spacing: -0.04em; line-height: 1.05; color: #007a6d; }
+
+/* S9 map */
+#s9 { background: #0b1324; }
+#mapw { position: absolute; inset: 0; background-color: #0b1324;
+  background-image: repeating-linear-gradient(0deg, rgba(148,163,184,.13) 0 6px, transparent 6px 150px), repeating-linear-gradient(90deg, rgba(148,163,184,.13) 0 6px, transparent 6px 170px); transform-origin: 540px 900px; }
+.blk { position: absolute; background: #13213b; border-radius: 12px; }
+.wh { position: absolute; width: 100px; height: 100px; border-radius: 20px; background: #ffd84d; border: 8px solid #0f172a; }
+.hpin { position: absolute; width: 80px; height: 80px; border-radius: 50% 50% 50% 0; background: #ff3b5c; transform: rotate(-45deg); border: 8px solid #fff; }
+.mtitle { position: absolute; left: 0; right: 0; top: 190px; text-align: center; }
+.mtitle span { display: inline-block; background: #0f172a; color: #fff; font-weight: 900; font-size: 96px; letter-spacing: -0.02em; padding: 18px 30px 24px; border-radius: 24px; border: 4px solid #00c9a7; }
+#tcard { position: absolute; left: 60px; top: 1330px; width: 960px; height: 270px; background: #fff; border-radius: 34px; display: flex; gap: 34px; padding: 22px; }
+.tthumb { position: relative; width: 170px; height: 226px; border-radius: 20px; overflow: hidden; }
+.steps { position: relative; flex: 1; }
+.step { position: absolute; left: 0; display: flex; gap: 22px; align-items: center; font-weight: 800; font-size: 46px; }
+.ck { width: 48px; height: 48px; border-radius: 50%; background: #00c9a7; display: block; position: relative; }
+.ck::after { content: ""; position: absolute; left: 14px; top: 8px; width: 12px; height: 22px; border: solid #0f172a; border-width: 0 7px 7px 0; transform: rotate(45deg); }
+
+/* S10 browser */
+#s10 { background: #00c9a7; }
+#bwin { position: absolute; left: 60px; top: 190px; width: 960px; height: 1400px; background: #fff; border-radius: 34px; overflow: hidden; box-shadow: 18px 18px 0 #0f172a; border: 6px solid #0f172a; }
+.bbar { height: 120px; background: #e2e8f0; display: flex; align-items: center; gap: 14px; padding: 0 28px; }
+.url { margin-left: 18px; flex: 1; height: 76px; border-radius: 38px; background: #fff; display: flex; align-items: center; padding: 0 30px; font-weight: 700; font-size: 44px; color: #0f172a; }
+#caret { display: inline-block; width: 5px; height: 48px; background: #0f172a; margin-left: 3px; }
+.page { position: relative; height: 1280px; }
+.plogo { position: absolute; left: 250px; top: 80px; width: 460px; }
+.pline { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font-weight: 900; font-size: 124px; letter-spacing: -0.03em; line-height: 1; }
+.pstrip { position: absolute; left: 50px; right: 50px; top: 580px; height: 340px; display: flex; gap: 22px; }
+.pstrip > div { position: relative; flex: 1; border-radius: 24px; overflow: hidden; border: 5px solid #0f172a; }
+.pstrip img { width: 100%; height: 100%; object-fit: cover; }
+.pstrip .under { position: absolute; inset: 0; }
+.pstrip video { z-index: 2; }
+.pbtn { position: absolute; left: 0; right: 0; top: 980px; text-align: center; }
+.pbtn span { display: inline-block; padding: 34px 90px; border-radius: 999px; background: #0f172a; color: #fff; font-weight: 900; font-size: 84px; }
+.psmall { position: absolute; left: 0; right: 0; top: 1170px; text-align: center; font-weight: 700; font-size: 44px; color: #334155; }
+
+#cursor { position: absolute; left: 0; top: 0; z-index: 900; }
+#ripple { position: absolute; left: 0; top: 0; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 50%; border: 10px solid #fff; z-index: 899; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; z-index: 950; pointer-events: none; }
+</style>
+</head>
+<body>
+<!-- "Every screen says yes". Generated by build.py. Cuts on the beat grid 0.075 + 0.6k s, drop 14.475. -->
+<div id="root" data-composition-id="main" data-start="0" data-duration="24.63" data-fps="30" data-width="1080" data-height="1920">
+
+<section id="s1" class="sec">
+  <div class="desk"></div>
+  <div id="dlg">
+    <div class="tbar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>&#9888; System Warning</span></div>
+    <div class="dbody">
+      <div class="prev">
+        <img src="assets/posters/c04.jpg" class="vfill" alt="">
+        <img id="v1" class="vclip vfill" data-clip="c01" data-n="25" data-start="0" data-duration="0.675" alt="">
+        <img id="v2" class="vclip vfill" data-clip="c02" data-n="22" data-start="0.675" data-duration="0.6" alt="">
+        <img id="v3" class="vclip vfill" data-clip="c03" data-n="22" data-start="1.275" data-duration="0.6" alt="">
+        <img id="v4" class="vclip vfill" data-clip="c04" data-n="35" data-start="1.875" data-duration="0.6" alt="">
+      </div>
+      <div class="dl1"><span id="dl1">YOU DON'T NEED THIS.</span><b id="strike"></b></div>
+      <div class="dl2 h" id="dl2">&hellip;YOU <em>WANT</em> IT.</div>
+      <div class="btns"><div class="bt gray">Cancel</div><div class="bt teal" id="buy">BUY ANYWAY</div></div>
+    </div>
+  </div>
+</section>
+<section id="s2" class="sec">
+  <div id="iris"></div>
+  <div class="s2logo"><img src="assets/logo.png"></div>
+  <div class="s2h" id="s2h">HAS THEM <em>ALL</em></div>
+  <div class="tile h r0" style="left:66px;top:560px"><img src="assets/posters/c16.jpg"></div><div class="tile h r0 live" style="left:390px;top:560px"><img id="v5" class="vclip vfill" data-clip="c05" data-n="23" data-start="2.475" data-duration="0.6" alt="">
+<img id="v6" class="vclip vfill" data-clip="c11" data-n="22" data-start="3.075" data-duration="0.6" alt="">
+<img id="v7" class="vclip vfill" data-clip="c12" data-n="22" data-start="3.675" data-duration="0.6" alt=""><span class="hot">HOT</span></div><div class="tile h r0" style="left:714px;top:560px"><img src="assets/posters/c17.jpg"></div><div class="tile h r1" style="left:66px;top:960px"><img src="assets/posters/c18.jpg"></div><div class="tile h r1" style="left:390px;top:960px"><img src="assets/posters/c19.jpg"></div><div class="tile h r1" style="left:714px;top:960px"><img src="assets/posters/c20.jpg"></div><div class="tile h r2" style="left:66px;top:1360px"><img src="assets/posters/c21.jpg"></div><div class="tile h r2" style="left:390px;top:1360px"><img src="assets/posters/c22.jpg"></div><div class="tile h r2" style="left:714px;top:1360px"><img src="assets/posters/c23.jpg"></div>
+</section>
+<section id="s3" class="sec">
+  <div id="scanner"><div class="scr"><img id="v8" class="vclip vfill" data-clip="c06" data-n="23" data-start="4.275" data-duration="0.6" alt="">
+<img id="v9" class="vclip vfill" data-clip="c06b" data-n="23" data-start="4.875" data-duration="0.6" alt="">
+<img id="v10" class="vclip vfill" data-clip="c07b" data-n="23" data-start="5.475" data-duration="0.6" alt="">
+<img id="v11" class="vclip vfill" data-clip="c07" data-n="23" data-start="6.075" data-duration="0.6" alt="">
+<img id="v12" class="vclip vfill" data-clip="c08b" data-n="23" data-start="6.675" data-duration="0.6" alt="">
+<img id="v13" class="vclip vfill" data-clip="c09b" data-n="23" data-start="7.275" data-duration="0.6" alt="">
+<img id="v14" class="vclip vfill" data-clip="c09" data-n="23" data-start="7.875" data-duration="0.6" alt="">
+<img id="v15" class="vclip vfill" data-clip="c08" data-n="23" data-start="8.475" data-duration="0.6" alt=""><div id="laser"></div></div><div class="scan-lbl">SCAN &bull; SCAN &bull; SCAN</div></div>
+  <div id="slot"></div>
+  <div id="paper"><div class="ph"><img src="assets/logo.png"><div class="dash"></div></div><div class="row h" id="row0" style="top:150px"><span>Butter Squishy</span><b>$19.99</b></div><div class="row h" id="row1" style="top:254px"><span>Flower Pot</span><b>$49.99</b></div><div class="row h" id="row2" style="top:358px"><span>Dog Raincoat</span><b>$26.99</b></div><div class="row h" id="row3" style="top:462px"><span>Prism Glasses</span><b>$24.99</b></div></div>
+</section>
+<section id="s4" class="sec">
+  <div class="chead"><div class="av">B</div><div><b>the group chat</b><span>3 people</span></div></div>
+  <div id="vbub"><img id="v16" class="vclip vfill" data-clip="c10" data-n="23" data-start="9.075" data-duration="0.6" alt="">
+<img id="v17" class="vclip vfill" data-clip="c13" data-n="22" data-start="9.675" data-duration="0.6" alt="">
+<img id="v18" class="vclip vfill" data-clip="c14" data-n="22" data-start="10.275" data-duration="0.6" alt="">
+<img id="v19" class="vclip vfill" data-clip="c15" data-n="22" data-start="10.875" data-duration="0.6" alt=""></div>
+  <div class="tb h" id="tb0" style="top:1150px">WAIT&mdash;</div>
+  <div class="tb h" id="tb1" style="top:1320px">WHAT&mdash;</div>
+  <div class="tb h" id="tb2" style="top:1490px">LOL</div>
+  <div class="typing h" id="typing"><i></i><i></i><i></i></div>
+  <div class="react h" id="react">HA HA</div>
+</section>
+<section id="s5" class="sec"><div class="mt m4 h" style="left:0px;top:0px;width:537px;height:957px"><img src="assets/posters/c16.jpg"><img id="v20" class="vclip vfill" data-clip="c16" data-n="22" data-start="11.475" data-duration="0.6" alt=""></div><div class="mt m4 h" style="left:543px;top:0px;width:537px;height:957px"><img src="assets/posters/c24.jpg"></div><div class="mt m4 h" style="left:0px;top:963px;width:537px;height:957px"><img src="assets/posters/c25.jpg"></div><div class="mt m4 h" style="left:543px;top:963px;width:537px;height:957px"><img src="assets/posters/c26.jpg"></div><div class="mt m9 h" style="left:0px;top:0px;width:356px;height:636px"><img src="assets/posters/c27.jpg"></div><div class="mt m9 h" style="left:362px;top:0px;width:356px;height:636px"><img src="assets/posters/c28.jpg"></div><div class="mt m9 h" style="left:724px;top:0px;width:356px;height:636px"><img src="assets/posters/c29.jpg"></div><div class="mt m9 h" style="left:0px;top:642px;width:356px;height:636px"><img src="assets/posters/c30.jpg"></div><div class="mt m9 h" style="left:362px;top:642px;width:356px;height:636px"><img src="assets/posters/c17.jpg"><img id="v21" class="vclip vfill" data-clip="c17" data-n="24" data-start="12.075" data-duration="0.6" alt=""></div><div class="mt m9 h" style="left:724px;top:642px;width:356px;height:636px"><img src="assets/posters/c01.jpg"></div><div class="mt m9 h" style="left:0px;top:1284px;width:356px;height:636px"><img src="assets/posters/c02.jpg"></div><div class="mt m9 h" style="left:362px;top:1284px;width:356px;height:636px"><img src="assets/posters/c03.jpg"></div><div class="mt m9 h" style="left:724px;top:1284px;width:356px;height:636px"><img src="assets/posters/c04.jpg"></div></section>
+<section id="s6" class="sec">
+  <div id="tcirc"><img id="v22" class="vclip vfill" data-clip="c18" data-n="23" data-start="12.675" data-duration="0.6" alt="">
+<img id="v23" class="vclip vfill" data-clip="c19" data-n="13" data-start="13.275" data-duration="0.6" alt="">
+<img id="v24" class="vclip vfill" data-clip="c20" data-n="23" data-start="13.875" data-duration="0.6" alt=""></div>
+  <svg id="ring" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <circle cx="540" cy="880" r="430" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="36"/>
+    <circle id="rarc" cx="540" cy="880" r="430" fill="none" stroke="#00c9a7" stroke-width="36" stroke-linecap="round"
+      stroke-dasharray="2701.77" stroke-dashoffset="0" transform="rotate(-90 540 880)"/>
+  </svg>
+  <div class="num h" id="n3">3</div><div class="num h" id="n2">2</div><div class="num h" id="n1">1</div>
+</section>
+<section id="s7" class="sec">
+  <div id="label">
+    <div class="lrow"><div><small>FROM</small><img src="assets/logo.png" class="llogo"></div><div class="lr"><small>SHIP TO</small><b>YOU</b></div></div>
+    <div class="lrule"></div>
+    <div class="lmid"><div class="lphoto"><img id="v25" class="vclip vfill" data-clip="c21" data-n="23" data-start="14.475" data-duration="0.6" alt="">
+<img id="v26" class="vclip vfill" data-clip="c22" data-n="23" data-start="15.075" data-duration="0.6" alt="">
+<img id="v27" class="vclip vfill" data-clip="c23" data-n="22" data-start="15.675" data-duration="0.6" alt="">
+<img id="v28" class="vclip vfill" data-clip="c24" data-n="23" data-start="16.275" data-duration="0.6" alt=""></div>
+      <div class="lmeta"><small>PKG</small><b>1 / 1</b><small>CONTENTS</small><b>A THING<br>YOU WANT</b></div></div>
+    <div class="lrule"></div>
+    <div id="barcode"><i style="left:0px;width:18px"></i><i style="left:24px;width:12px"></i><i style="left:42px;width:24px"></i><i style="left:72px;width:6px"></i><i style="left:90px;width:18px"></i><i style="left:114px;width:12px"></i><i style="left:138px;width:6px"></i><i style="left:162px;width:6px"></i><i style="left:174px;width:24px"></i><i style="left:210px;width:6px"></i><i style="left:228px;width:18px"></i><i style="left:252px;width:6px"></i><i style="left:270px;width:12px"></i><i style="left:288px;width:18px"></i><i style="left:318px;width:6px"></i><i style="left:330px;width:12px"></i><i style="left:366px;width:6px"></i><i style="left:384px;width:6px"></i><i style="left:408px;width:6px"></i><i style="left:426px;width:12px"></i><i style="left:444px;width:18px"></i><i style="left:468px;width:12px"></i><i style="left:486px;width:24px"></i><i style="left:516px;width:6px"></i><i style="left:534px;width:18px"></i><i style="left:558px;width:12px"></i><i style="left:582px;width:6px"></i><i style="left:606px;width:6px"></i><i style="left:618px;width:24px"></i><i style="left:654px;width:6px"></i><i style="left:672px;width:18px"></i><i style="left:696px;width:6px"></i><i style="left:714px;width:12px"></i><i style="left:732px;width:18px"></i><i style="left:762px;width:6px"></i><i style="left:774px;width:12px"></i><div id="scanline"></div></div>
+    <div class="ltrk">BUYRSHOP.COM</div>
+  </div>
+  <div class="stamp h" id="st1">FREE US SHIPPING</div>
+  <div class="stamp st2 h" id="st2">ON EVERY ORDER</div>
+</section>
+<section id="s8" class="sec">
+  <div id="pcirc"><img id="v29" class="vclip vfill" data-clip="c25" data-n="22" data-start="16.875" data-duration="0.6" alt="">
+<img id="v30" class="vclip vfill" data-clip="c26" data-n="22" data-start="17.475" data-duration="0.6" alt=""></div>
+  <div id="swing"><div class="string"></div><div class="ptag"><div class="hole"></div><small>FROM</small><b>$9.99</b></div></div>
+  <div class="pin"></div>
+</section>
+<section id="s9" class="sec">
+  <div id="mapw">
+    <div class="blk" style="left:90px;top:620px;width:260px;height:180px"></div>
+    <div class="blk" style="left:420px;top:560px;width:200px;height:260px"></div>
+    <div class="blk" style="left:690px;top:760px;width:300px;height:170px"></div>
+    <div class="blk" style="left:150px;top:900px;width:330px;height:150px"></div>
+    <div class="blk" style="left:560px;top:1000px;width:240px;height:200px"></div>
+    <svg width="1080" height="1920" viewBox="0 0 1080 1920" style="position:absolute;left:0;top:0">
+      <path d="M -40 1130 C 200 1080 300 1240 520 1150 S 900 980 1120 1040" stroke="#16325c" stroke-width="70" fill="none"/>
+      <path id="route" d="M 190 1210 C 300 1000 420 1060 520 900 S 700 640 870 600" stroke="#00c9a7" stroke-width="18"
+        stroke-linecap="round" fill="none" stroke-dasharray="1100" stroke-dashoffset="1100"/>
+    </svg>
+    <div class="wh" style="left:140px;top:1160px"></div>
+    <div class="hpin h" id="hpin" style="left:830px;top:500px"></div>
+  </div>
+  <div class="mtitle" id="mtitle"><span><em>TRACKED</em> DELIVERY</span></div>
+  <div id="tcard"><div class="tthumb"><img id="v31" class="vclip vfill" data-clip="c27" data-n="23" data-start="18.075" data-duration="0.6" alt="">
+<img id="v32" class="vclip vfill" data-clip="c28" data-n="22" data-start="18.675" data-duration="0.6" alt="">
+<img id="v33" class="vclip vfill" data-clip="c29" data-n="22" data-start="19.275" data-duration="0.6" alt=""></div><div class="steps"><div class="step" style="top:30px"><i class="ck h" id="ck0"></i><span>Ordered</span></div><div class="step" style="top:96px"><i class="ck h" id="ck1"></i><span>Shipped</span></div><div class="step" style="top:162px"><i class="ck h" id="ck2"></i><span>Tracking live</span></div></div></div>
+</section>
+<section id="s10" class="sec">
+  <div id="bwin">
+    <div class="bbar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+      <div class="url"><span class="ch h" id="ch0">b</span><span class="ch h" id="ch1">u</span><span class="ch h" id="ch2">y</span><span class="ch h" id="ch3">r</span><span class="ch h" id="ch4">s</span><span class="ch h" id="ch5">h</span><span class="ch h" id="ch6">o</span><span class="ch h" id="ch7">p</span><span class="ch h" id="ch8">.</span><span class="ch h" id="ch9">c</span><span class="ch h" id="ch10">o</span><span class="ch h" id="ch11">m</span><b id="caret"></b></div></div>
+    <div class="page">
+      <img src="assets/logo.png" class="plogo h" id="plogo">
+      <div class="pline h" id="pline">YOU <em>WANT</em> IT.</div>
+      <div class="pstrip h" id="pstrip"><div><img src="assets/posters/c06.jpg"></div><div><img id="v34" class="vclip vfill" data-clip="c30" data-n="40" data-start="21.675" data-duration="0.6" alt=""><img src="assets/posters/c30.jpg" class="under"></div><div><img src="assets/posters/c09.jpg"></div></div>
+      <div class="pbtn h" id="pbtn"><span>SHOP NOW</span></div>
+      <div class="psmall h" id="psmall">Free US shipping &middot; From $9.99</div>
+    </div>
+  </div>
+</section>
+<svg id="cursor" class="h" width="90" height="120" viewBox="0 0 30 40"><path d="M2 2 L2 32 L10 25 L15 37 L20 35 L15 23 L26 23 Z" fill="#fff" stroke="#0f172a" stroke-width="2.4" stroke-linejoin="round"/></svg>
+<div id="ripple" class="h"></div>
+<div id="flash"></div>
+<audio id="music" class="clip" src="assets/track.mp3" data-start="0" data-duration="24.63" data-volume="1" data-fade-out="0.6" data-track-index="2"></audio>
+<audio id="a0" class="clip" src="assets/sfx/pop.wav" data-start="0.075" data-duration="0.18" data-volume="0.6" data-track-index="3"></audio>
+<audio id="a1" class="clip" src="assets/sfx/thud.wav" data-start="0.675" data-duration="0.35" data-volume="0.7" data-track-index="4"></audio>
+<audio id="a2" class="clip" src="assets/sfx/tap.wav" data-start="2.3" data-duration="0.04" data-volume="0.9" data-track-index="5"></audio>
+<audio id="a3" class="clip" src="assets/sfx/whoosh.wav" data-start="2.475" data-duration="0.7" data-volume="0.4" data-track-index="6"></audio>
+<audio id="a4" class="clip" src="assets/sfx/tap.wav" data-start="3.075" data-duration="0.04" data-volume="0.7" data-track-index="7"></audio>
+<audio id="a5" class="clip" src="assets/sfx/tap.wav" data-start="3.675" data-duration="0.04" data-volume="0.7" data-track-index="8"></audio>
+<audio id="a6" class="clip" src="assets/sfx/tap.wav" data-start="4.275" data-duration="0.04" data-volume="0.8" data-track-index="3"></audio>
+<audio id="a7" class="clip" src="assets/sfx/tap.wav" data-start="5.475" data-duration="0.04" data-volume="0.8" data-track-index="4"></audio>
+<audio id="a8" class="clip" src="assets/sfx/tap.wav" data-start="6.675" data-duration="0.04" data-volume="0.8" data-track-index="5"></audio>
+<audio id="a9" class="clip" src="assets/sfx/tap.wav" data-start="7.275" data-duration="0.04" data-volume="0.8" data-track-index="6"></audio>
+<audio id="a10" class="clip" src="assets/sfx/pop.wav" data-start="4.275" data-duration="0.18" data-volume="0.4" data-track-index="7"></audio>
+<audio id="a11" class="clip" src="assets/sfx/pop.wav" data-start="9.075" data-duration="0.18" data-volume="0.7" data-track-index="8"></audio>
+<audio id="a12" class="clip" src="assets/sfx/pop.wav" data-start="9.675" data-duration="0.18" data-volume="0.7" data-track-index="3"></audio>
+<audio id="a13" class="clip" src="assets/sfx/pop.wav" data-start="10.275" data-duration="0.18" data-volume="0.7" data-track-index="4"></audio>
+<audio id="a14" class="clip" src="assets/sfx/tap.wav" data-start="10.875" data-duration="0.04" data-volume="0.6" data-track-index="5"></audio>
+<audio id="a15" class="clip" src="assets/sfx/tap.wav" data-start="11.475" data-duration="0.04" data-volume="0.8" data-track-index="6"></audio>
+<audio id="a16" class="clip" src="assets/sfx/tap.wav" data-start="12.075" data-duration="0.04" data-volume="0.8" data-track-index="7"></audio>
+<audio id="a17" class="clip" src="assets/sfx/tap.wav" data-start="12.675" data-duration="0.04" data-volume="1.0" data-track-index="8"></audio>
+<audio id="a18" class="clip" src="assets/sfx/tap.wav" data-start="13.275" data-duration="0.04" data-volume="1.0" data-track-index="3"></audio>
+<audio id="a19" class="clip" src="assets/sfx/tap.wav" data-start="13.875" data-duration="0.04" data-volume="1.0" data-track-index="4"></audio>
+<audio id="a20" class="clip" src="assets/sfx/riser.wav" data-start="13.275" data-duration="1.2" data-volume="0.25" data-track-index="5"></audio>
+<audio id="a21" class="clip" src="assets/sfx/boom.wav" data-start="14.475" data-duration="1.4" data-volume="0.8" data-track-index="12"></audio>
+<audio id="a22" class="clip" src="assets/sfx/thud.wav" data-start="14.475" data-duration="0.35" data-volume="0.9" data-track-index="7"></audio>
+<audio id="a23" class="clip" src="assets/sfx/thud.wav" data-start="15.075" data-duration="0.35" data-volume="0.9" data-track-index="8"></audio>
+<audio id="a24" class="clip" src="assets/sfx/tap.wav" data-start="15.675" data-duration="0.04" data-volume="0.6" data-track-index="3"></audio>
+<audio id="a25" class="clip" src="assets/sfx/tap.wav" data-start="16.275" data-duration="0.04" data-volume="0.6" data-track-index="4"></audio>
+<audio id="a26" class="clip" src="assets/sfx/sparkle.wav" data-start="16.875" data-duration="0.9" data-volume="0.6" data-track-index="5"></audio>
+<audio id="a27" class="clip" src="assets/sfx/whoosh.wav" data-start="16.875" data-duration="0.7" data-volume="0.3" data-track-index="6"></audio>
+<audio id="a28" class="clip" src="assets/sfx/whoosh.wav" data-start="18.075" data-duration="0.7" data-volume="0.4" data-track-index="7"></audio>
+<audio id="a29" class="clip" src="assets/sfx/tap.wav" data-start="18.675" data-duration="0.04" data-volume="0.7" data-track-index="8"></audio>
+<audio id="a30" class="clip" src="assets/sfx/pop.wav" data-start="18.675" data-duration="0.18" data-volume="0.5" data-track-index="3"></audio>
+<audio id="a31" class="clip" src="assets/sfx/tap.wav" data-start="19.275" data-duration="0.04" data-volume="0.7" data-track-index="4"></audio>
+<audio id="a32" class="clip" src="assets/sfx/tap.wav" data-start="19.975" data-duration="0.04" data-volume="0.35" data-track-index="5"></audio>
+<audio id="a33" class="clip" src="assets/sfx/tap.wav" data-start="20.045" data-duration="0.04" data-volume="0.35" data-track-index="6"></audio>
+<audio id="a34" class="clip" src="assets/sfx/tap.wav" data-start="20.115" data-duration="0.04" data-volume="0.35" data-track-index="7"></audio>
+<audio id="a35" class="clip" src="assets/sfx/tap.wav" data-start="20.185" data-duration="0.04" data-volume="0.35" data-track-index="8"></audio>
+<audio id="a36" class="clip" src="assets/sfx/tap.wav" data-start="20.255" data-duration="0.04" data-volume="0.35" data-track-index="3"></audio>
+<audio id="a37" class="clip" src="assets/sfx/tap.wav" data-start="20.325" data-duration="0.04" data-volume="0.35" data-track-index="4"></audio>
+<audio id="a38" class="clip" src="assets/sfx/tap.wav" data-start="20.395" data-duration="0.04" data-volume="0.35" data-track-index="5"></audio>
+<audio id="a39" class="clip" src="assets/sfx/tap.wav" data-start="20.465" data-duration="0.04" data-volume="0.35" data-track-index="6"></audio>
+<audio id="a40" class="clip" src="assets/sfx/tap.wav" data-start="20.535" data-duration="0.04" data-volume="0.35" data-track-index="7"></audio>
+<audio id="a41" class="clip" src="assets/sfx/tap.wav" data-start="20.605" data-duration="0.04" data-volume="0.35" data-track-index="8"></audio>
+<audio id="a42" class="clip" src="assets/sfx/tap.wav" data-start="20.675" data-duration="0.04" data-volume="0.35" data-track-index="3"></audio>
+<audio id="a43" class="clip" src="assets/sfx/tap.wav" data-start="20.745" data-duration="0.04" data-volume="0.35" data-track-index="4"></audio>
+<audio id="a44" class="clip" src="assets/sfx/pop.wav" data-start="20.475" data-duration="0.18" data-volume="0.5" data-track-index="5"></audio>
+<audio id="a45" class="clip" src="assets/sfx/thud.wav" data-start="21.075" data-duration="0.35" data-volume="0.6" data-track-index="6"></audio>
+<audio id="a46" class="clip" src="assets/sfx/pop.wav" data-start="22.275" data-duration="0.18" data-volume="0.5" data-track-index="7"></audio>
+<audio id="a47" class="clip" src="assets/sfx/tap.wav" data-start="23.075" data-duration="0.04" data-volume="1.0" data-track-index="8"></audio>
+<audio id="a48" class="clip" src="assets/sfx/sparkle.wav" data-start="23.075" data-duration="0.9" data-volume="0.5" data-track-index="3"></audio>
+</div>
+<script>window.__timelines = window.__timelines || {};
+const DUR = 24.63;
+const tl = gsap.timeline({ paused: true });
+const F = (sel, from, to, t) => tl.fromTo(sel, from, Object.assign({ immediateRender: false }, to), t);
+const B = (k) => +(0.075 + 0.6 * k).toFixed(3);
+
+// section windows (hard cuts on the beat grid)
+const win = { s1: [0, 2.875], s2: [2.475, 4.275], s3: [4.275, 9.075], s4: [9.075, 11.475], s5: [11.475, 12.675],
+  s6: [12.675, 14.475], s7: [14.475, 16.875], s8: [16.875, 18.075], s9: [18.075, 19.875], s10: [19.875, DUR + 1] };
+gsap.set('#s1', { visibility: 'visible' });
+gsap.set('#iris', { display: 'none' });
+for (const [id, [a, b]] of Object.entries(win)) {
+  if (a > 0) tl.set('#' + id, { visibility: 'visible' }, a);
+  if (b < DUR) tl.set('#' + id, { visibility: 'hidden' }, b);
+}
+const ripple = (x, y, t) => F('#ripple', { opacity: 1, scale: 0.2, x: x, y: y }, { opacity: 0, scale: 1.6, duration: 0.35, ease: 'power2.out' }, t);
+
+// S1 system warning dialog
+F('#dlg', { scale: 0.86, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 0);
+tl.to('#dlg', { scale: 1.04, duration: 2.1, ease: 'none' }, 0.35);
+tl.to('#dlg', { keyframes: { x: [-20, 18, -12, 7, 0] }, duration: 0.3, ease: 'none' }, 0.675);
+F('#strike', { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: 'power2.out' }, 0.675);
+tl.to('#dl1', { color: '#94a3b8', duration: 0.2 }, 0.675);
+F('#dl2', { opacity: 0, scale: 1.5, transformOrigin: 'left center' }, { opacity: 1, scale: 1, duration: 0.28, ease: 'back.out(2.2)' }, 0.675);
+F('#cursor', { opacity: 0, x: 1000, y: 1800 }, { opacity: 1, x: 755, y: 1365, duration: 0.4, ease: 'power3.out' }, 1.875);
+tl.to('#buy', { scale: 0.9, duration: 0.08, yoyo: true, repeat: 1 }, 2.28);
+ripple(761, 1371, 2.3);
+tl.set('#cursor', { opacity: 0 }, 2.475);
+
+// S2 shop grid: circle reveal from the click point
+F('#s2', { clipPath: 'circle(0px at 761px 1371px)' }, { clipPath: 'circle(2300px at 761px 1371px)', duration: 0.4, ease: 'power2.in' }, 2.475);
+F('.s2logo', { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 2.475);
+F('#s2h', { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 2.475);
+[2.475, 3.075, 3.675].forEach((t, r) => F('#s2 .r' + r, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2.4)', stagger: 0.05 }, t));
+
+// S3 scanner + receipt
+F('#s3', { filter: 'blur(24px)', scale: 1.12 }, { filter: 'blur(0px)', scale: 1, duration: 0.3, ease: 'power2.out' }, 4.275);
+for (let i = 0; i < 8; i++) {
+  const t = B(7 + i);
+  F('#laser', { top: 0 }, { top: 680, duration: 0.5, ease: 'sine.inOut' }, t);
+  tl.to('#scanner', { scale: 1.03, duration: 0.08, yoyo: true, repeat: 1 }, t);
+}
+const rowT = [4.275, 5.475, 6.675, 7.275];
+rowT.forEach((t, i) => {
+  F('#paper', { height: i === 0 ? 0 : 150 + i * 104 + 40 }, { height: 150 + (i + 1) * 104 + 40, duration: 0.25, ease: 'power2.out' }, t);
+  F('#row' + i, { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, t);
+});
+
+// S4 group chat
+F('#vbub', { scale: 0.6, opacity: 0, transformOrigin: 'left top' }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 9.075);
+[9.075, 9.675, 10.275].forEach((t, i) => F('#tb' + i, { scale: 0.3, opacity: 0, transformOrigin: 'right bottom' }, { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(2.6)' }, t + (i === 0 ? 0.1 : 0)));
+tl.to('#s4', { keyframes: { x: [-12, 10, -6, 0] }, duration: 0.2, ease: 'none' }, 10.275);
+F('#typing', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.2, ease: 'back.out(2)' }, 10.875);
+tl.to('#typing i', { keyframes: { y: [0, -16, 0] }, duration: 0.3, stagger: 0.1, ease: 'sine.inOut' }, 10.95);
+F('#react', { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(3)' }, 10.875);
+
+// S5 mosaic split 1 -> 4 -> 9
+F('#s5 .m4', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.22, ease: 'power3.out', stagger: 0.04 }, 11.475);
+F('#s5 .m9', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.22, ease: 'power3.out', stagger: 0.03 }, 12.075);
+
+// S6 countdown timer
+F('#tcirc', { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(1.8)' }, 12.675);
+const C = 2701.77;
+[12.675, 13.275, 13.875].forEach((t, i) => {
+  F('#rarc', { strokeDashoffset: (C * i) / 3 }, { strokeDashoffset: (C * (i + 1)) / 3, duration: 0.6, ease: 'none' }, t);
+  const n = '#n' + (3 - i);
+  F(n, { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.18, ease: 'power4.out' }, t);
+  tl.set(n, { opacity: 0 }, t + 0.6);
+  if (i) tl.to('#tcirc', { scale: 1.05, duration: 0.08, yoyo: true, repeat: 1 }, t);
+});
+
+// S7 shipping label (the drop)
+F('#flash', { opacity: 1 }, { opacity: 0, duration: 0.3, ease: 'power2.out' }, 14.475);
+F('#label', { scale: 1.25, rotation: -8 }, { scale: 1, rotation: -2, duration: 0.3, ease: 'power3.out' }, 14.475);
+[['#st1', 14.475], ['#st2', 15.075]].forEach(([s, t]) => {
+  F(s, { scale: 2.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.16, ease: 'power4.in' }, t);
+  tl.to('#s7', { keyframes: { x: [-16, 14, -7, 0], y: [8, -6, 3, 0] }, duration: 0.22, ease: 'none' }, t + 0.16);
+});
+[15.675, 16.275].forEach((t) => F('#scanline', { opacity: 1, left: 0 }, { left: 790, duration: 0.45, ease: 'sine.inOut' }, t));
+tl.set('#scanline', { opacity: 0 }, 16.75);
+
+// S8 swinging price tag
+F('#pcirc', { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' }, 16.875);
+F('#swing', { rotation: -32 }, { rotation: 0, duration: 1.15, ease: 'elastic.out(1, 0.3)' }, 16.875);
+
+// S9 tracking map
+F('#mapw', { scale: 1.5 }, { scale: 1, duration: 0.5, ease: 'power3.out' }, 18.075);
+F('#route', { strokeDashoffset: 1100 }, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 18.075);
+F('#mtitle', { scale: 1.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(2)' }, 18.075);
+F('#tcard', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: 'back.out(2)' }, 18.075);
+F('#hpin', { opacity: 0, y: -220 }, { opacity: 1, y: 0, duration: 0.45, ease: 'bounce.out' }, 18.675);
+[18.2, 18.675, 19.275].forEach((t, i) => F('#ck' + i, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.22, ease: 'back.out(3)' }, t));
+
+// S10 browser end card
+F('#bwin', { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 19.875);
+for (let i = 0; i < 12; i++) tl.set('#ch' + i, { opacity: 1 }, +(19.975 + i * 0.07).toFixed(3));
+F('#plogo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 20.475);
+F('#pline', { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: 'power4.out' }, 21.075);
+tl.to('#bwin', { keyframes: { x: [-12, 10, -5, 0] }, duration: 0.2, ease: 'none' }, 21.275);
+F('#pstrip', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(2)' }, 21.675);
+F('#pbtn', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(2.4)' }, 22.275);
+F('#psmall', { opacity: 0 }, { opacity: 1, duration: 0.25 }, 22.475);
+F('#cursor', { opacity: 0, x: 960, y: 1820 }, { opacity: 1, x: 534, y: 1374, duration: 0.5, ease: 'power3.out' }, 22.5);
+tl.to('#pbtn span', { scale: 0.9, duration: 0.08, yoyo: true, repeat: 1 }, 23.055);
+ripple(540, 1380, 23.075);
+[23.475, 24.075].forEach((t) => tl.to('#pbtn span', { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: 'sine.inOut' }, t));
+tl.to('#caret', { opacity: 0, duration: 0.01, repeat: 7, yoyo: true, repeatDelay: 0.29 }, 21.0);
+
+tl.set({}, {}, DUR);
+window.__timelines['main'] = tl;
+tl.seek(0);
+
+// Frame-accurate renderer hook (snap.js): clip frames are pre-extracted JPEG sequences.
+const vclips = [...document.querySelectorAll('img.vclip')];
+window.seek = async (t) => {
+  tl.seek(t, false);
+  const waits = [];
+  for (const im of vclips) {
+    const s = +im.dataset.start, d = +im.dataset.duration;
+    if (t >= s && t < s + d) {
+      const n = Math.min(+im.dataset.n, Math.floor((t - s) * 30) + 1);
+      const src = 'assets/frames/' + im.dataset.clip + '/' + String(n).padStart(3, '0') + '.jpg';
+      if (!im.src.endsWith(src)) { im.src = src; }
+      im.style.visibility = 'visible';
+      waits.push(im.decode().catch(() => {}));
+    } else im.style.visibility = 'hidden';
+  }
+  await Promise.all(waits);
+};
+window.ready = () => true;
+</script>
+</body>
+</html>
