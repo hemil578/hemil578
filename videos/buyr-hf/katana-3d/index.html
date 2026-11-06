@@ -1,0 +1,342 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@600;800&family=Fredoka:wght@700&family=Playfair+Display:ital,wght@0,900;1,700&family=Space+Mono:wght@700&family=Permanent+Marker&display=block" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:absolute;inset:0;overflow:hidden;background:#000}
+#cam{position:absolute;inset:0;transform-origin:50% 50%}
+.sc{position:absolute;inset:0;overflow:hidden;visibility:hidden}
+.kl{display:inline-block}
+.A{font-family:Anton,sans-serif;text-transform:uppercase;line-height:.9}
+.I{font-family:Inter,sans-serif}
+.fr{position:absolute;overflow:hidden;background:#000}
+.fr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.full{inset:0}
+.chip{position:absolute;left:70px;top:1180px;padding:20px 34px;border-radius:24px;background:#111;color:#fff;font:800 60px Inter,sans-serif;visibility:hidden;box-shadow:10px 10px 0 rgba(0,0,0,.25)}
+.chip span{color:#ffd23f}
+.grain{position:absolute;inset:-50px;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.75) 100%)}
+.lbT,.lbB{position:absolute;left:0;width:1080px;background:#000}
+/* 1 kinetic typography */
+#s1{background:#0b0b0b}
+#s1 .fr{left:140px;top:650px;width:800px;height:1100px;border:4px solid #fff;border-radius:14px}
+#t1{position:absolute;left:90px;top:170px;font-size:150px;color:#fff;width:920px}
+#t2{position:absolute;left:90px;top:470px;font-size:120px;color:#fff}
+#t2 b{background:#ff2d2d;color:#fff;font-weight:400;padding:0 14px}
+/* 2 candy pop */
+#s2{background:linear-gradient(160deg,#bfe6ff,#ffd6f0)}
+#s2 .fr{left:140px;top:620px;width:800px;height:1120px;border:16px solid #fff;border-radius:60px;box-shadow:0 0 0 10px #ff9fd0}
+#s2 .stk{position:absolute;border-radius:30px;border:8px solid #fff}
+#clogo{position:absolute;left:330px;top:150px;width:420px;background:#fff;border-radius:40px;padding:12px 24px;box-shadow:0 0 0 8px #ff9fd0}
+#hta{position:absolute;left:0;right:0;top:420px;text-align:center;font:700 130px Fredoka,sans-serif;color:#ff4fa3;-webkit-text-stroke:10px #fff;paint-order:stroke fill}
+/* 3 pop art */
+#s3{background:#fff;background-image:radial-gradient(#cfcfcf 6px,transparent 7px);background-size:30px 30px}
+#s3 .sun{position:absolute;left:-460px;top:-100px;width:2000px;height:2000px;border-radius:50%;background:repeating-conic-gradient(#ff7a00 0 8deg,#ffd23f 8deg 16deg);opacity:.9}
+#s3 .fr{left:150px;top:420px;width:780px;height:1180px;border:12px solid #fff;box-shadow:22px 22px 0 #ff2a2a,-12px -12px 0 #111}
+/* 4 collage */
+#s4{background:linear-gradient(#5db8ff,#c7ecff)}
+#s4 .cl{position:absolute;background:#fff;border-radius:200px;opacity:.95}
+#s4 .fr{left:150px;top:420px;width:780px;height:1180px;border:18px solid #fff;border-radius:30px;box-shadow:0 30px 60px rgba(0,40,90,.35)}
+/* 5 lookbook */
+#s5{background:#f2f0ea}
+#s5 .fr{left:140px;top:420px;width:800px;height:800px;border-radius:50%}
+#s5 .lk{position:absolute;left:80px;top:180px;font:italic 700 80px 'Playfair Display',serif;color:#111}
+#s5 .lk2{position:absolute;right:80px;top:300px;font:700 36px 'Space Mono',monospace;color:#111}
+/* 6 aura */
+#s6{background:#050505}
+#s6 .fr img{filter:contrast(1.2) saturate(1.2)}
+#s6 .star{position:absolute;left:700px;top:1250px;width:220px;height:220px;background:#fff;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);filter:drop-shadow(0 0 30px #fff)}
+/* 7 mono */
+#s7 .fr img{filter:grayscale(1) contrast(1.8) brightness(1.15)}
+#s7 .spot{position:absolute;inset:0;background:radial-gradient(circle at 50% 55%,transparent 30%,#000 75%)}
+/* 8 comic */
+#s8{background:repeating-conic-gradient(from 0deg at 50% 50%,#ffd400 0 10deg,#111 10deg 20deg)}
+#s8 .fr{left:150px;top:520px;width:780px;height:1100px;border:16px solid #111;outline:10px solid #fff;transform:rotate(3deg)}
+/* 9 track day */
+#s9 .fr img{filter:sepia(.25) saturate(1.4) contrast(1.1)}
+#s9 .tw{position:absolute;left:0;right:0;top:760px;text-align:center;font-size:330px;color:#ff6a1a;text-shadow:6px 6px 0 #a33a00,12px 12px 0 #6b2600,18px 18px 30px rgba(0,0,0,.5)}
+/* 10 HUD */
+#s10{background:#0a0a0a}
+#s10 .fr{left:130px;top:360px;width:820px;height:1180px}
+.br{position:absolute;width:90px;height:90px;border:6px solid #c8ff3d}
+#tc{position:absolute;right:90px;top:220px;font:700 44px 'Space Mono',monospace;color:#c8ff3d}
+#rec{position:absolute;left:90px;top:220px;font:700 44px 'Space Mono',monospace;color:#ff3b3b}
+#laser{position:absolute;left:130px;width:820px;height:6px;background:#c8ff3d;box-shadow:0 0 30px 6px #c8ff3d}
+/* 11 chrome */
+#s11{background:#111}
+#s11 .fr{left:0;width:1080px;height:640px}
+#s11 .fr img{filter:grayscale(1) contrast(1.5);height:1920px;bottom:auto}
+/* 12 camera shots */
+#s12 .fr img{filter:sepia(.3) contrast(1.15)}
+#s12 .fence{position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 60px,rgba(30,30,30,.55) 60px 66px),repeating-linear-gradient(-45deg,transparent 0 60px,rgba(30,30,30,.55) 60px 66px)}
+#s12 .sig{position:absolute;right:80px;top:1220px;font:90px 'Permanent Marker',cursive;color:#fff;transform:rotate(-8deg)}
+/* 13 monolith */
+#s13{background:#000}
+#s13 .strip{position:absolute;left:150px;top:300px;width:780px;height:1300px;background:#111}
+#s13 .sp{position:absolute;top:0;width:60px;height:1300px;background:repeating-linear-gradient(#111 0 30px,#ddd 30px 60px,#111 60px 90px)}
+#s13 .fr{left:220px;top:340px;width:640px;height:1220px}
+#s13 .fr img{filter:contrast(1.3) saturate(.6)}
+#s13 .mt{position:absolute;left:0;right:0;top:120px;text-align:center;font-size:190px;color:#b8ff3a;text-shadow:0 0 20px #7dff00,0 0 60px #7dff00}
+#s13 .sf{position:absolute;left:230px;top:310px;font:700 24px 'Space Mono',monospace;color:#b8ff3a}
+/* 14 turbo */
+#s14 .fr img{filter:saturate(1.4) contrast(1.15)}
+#s14 .speed{position:absolute;left:-460px;top:-60px;width:2000px;height:2000px;background:repeating-conic-gradient(rgba(255,255,255,.55) 0 1.2deg,transparent 1.2deg 7deg);-webkit-mask:radial-gradient(circle,transparent 26%,#000 60%);mask:radial-gradient(circle,transparent 26%,#000 60%)}
+#s14 .heat{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(255,90,0,.45))}
+.num{position:absolute;left:0;right:0;top:560px;text-align:center;font-size:760px;color:#fff;text-shadow:0 0 50px #ff6a00,0 0 120px #ff3c00;visibility:hidden}
+/* 15 pop cutout */
+#s15{background:#e3221c}
+#s15 .bt{position:absolute;left:60px;top:170px;font-size:230px;color:#111;line-height:.86}
+#s15 .fr{left:200px;top:820px;width:680px;height:1000px;border:14px solid #fff;transform:rotate(-3deg);box-shadow:0 30px 60px rgba(0,0,0,.4)}
+/* 16 daytona */
+#s16 .fr img{filter:sepia(.35) saturate(1.3) contrast(1.1)}
+#s16 .dt{position:absolute;left:70px;top:1060px;font-size:170px;color:#fff;text-shadow:6px 6px 0 rgba(0,0,0,.4)}
+#s16 .dt b{color:#ff2d2d;font-weight:400}
+/* 17 kinetic graphic */
+#s17{background:#2fa84f}
+#s17 .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.5) 4px,transparent 5px);background-size:110px 110px}
+#s17 .big{position:absolute;left:60px;top:170px;font-size:420px;color:#fff}
+#s17 .pill{position:absolute;left:70px;top:610px;padding:14px 34px;border-radius:70px;background:#fff;color:#1f7e38;font-size:120px;line-height:1}
+#s17 .fr{left:200px;top:820px;width:680px;height:980px;border:12px solid #fff;border-radius:34px}
+/* 18 swole cinema */
+#s18 .fr img{filter:sepia(.35) contrast(1.1) brightness(.9)}
+#s18 .sub{position:absolute;left:0;right:0;top:1120px;padding:30px 0;text-align:center;font:italic 900 130px 'Playfair Display',serif;color:#fff;letter-spacing:4px;background:linear-gradient(transparent,rgba(0,0,0,.75) 25%,rgba(0,0,0,.75) 75%,transparent);text-shadow:0 4px 20px #000}
+/* 19 noir cover */
+#s19{background:#f1efe9}
+#s19 .mast{position:absolute;left:0;right:0;top:120px;text-align:center;font:900 330px 'Playfair Display',serif;color:#d4001a;line-height:1}
+#s19 .fr{left:150px;top:520px;width:780px;height:1000px}
+#s19 .fr img{filter:grayscale(1) contrast(1.2)}
+#s19 .cv{position:absolute;left:150px;top:1060px;padding:10px 24px;font:900 150px 'Playfair Display',serif;color:#fff;background:rgba(0,0,0,.72);line-height:.95}
+#s19 .iss{position:absolute;left:100px;top:470px;font:700 30px 'Space Mono',monospace;color:#111}
+#s19 .tag{position:absolute;right:120px;top:1390px;background:#d4001a;color:#fff;font:800 40px Inter,sans-serif;padding:8px 18px}
+/* 20 tech */
+#s20{background:#120018}
+#s20 .row{position:absolute;left:-40px;white-space:nowrap;font-size:150px;color:transparent;-webkit-text-stroke:3px #a35cff}
+#s20 .row.on{color:#fff;-webkit-text-stroke:0;text-shadow:0 0 30px #a35cff}
+#s20 .fr{left:290px;top:150px;width:500px;height:560px;border:4px solid #a35cff}
+#s20 .fr img{filter:invert(1) hue-rotate(200deg) saturate(1.5)}
+#s20 .url{position:absolute;left:160px;top:1230px;width:760px;height:130px;border-radius:80px;background:#a35cff;color:#fff;font:800 78px Inter,sans-serif;text-align:center;line-height:130px}
+/* overlay words */
+.ow{position:absolute;left:70px;font-size:200px;color:#fff;visibility:hidden;-webkit-text-stroke:8px #111;paint-order:stroke fill}
+#w1{top:170px}#w2{top:360px}#w3{top:550px;color:#ffd23f}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+
+#t1,#t2,#hta,.ow,.num,#o1,#o2,#o3a,#o4,#ywi,#s13 .mt,#s20 .row.on,.chip{visibility:hidden!important}
+#gl{position:absolute;left:0;top:0;width:1080px;height:1920px;pointer-events:none}
+#trk{position:absolute;inset:0;pointer-events:none}
+#trk svg{position:absolute;inset:0}
+.tg{position:absolute;white-space:nowrap;font:800 54px Inter,sans-serif;color:#fff;background:#111;padding:14px 26px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.tg span{color:#ffd23f}
+.tg.big{font:400 110px Anton,sans-serif;background:#ffd23f;color:#111;padding:6px 28px}
+.lk{position:absolute;font:700 30px 'Space Mono',monospace;color:#c8ff3d;text-shadow:0 0 10px rgba(0,0,0,.8)}
+</style></head><body><div id="stage"><svg width="0" height="0" style="position:absolute"><filter id="mb" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbf" stdDeviation="0 0"/></filter></svg>
+<div id="cam" style="filter:url(#mb)">
+<div id="s1" class="sc"><div class="fr" id="f1"><img class="v"></div><div id="t1" class="A">YOU DON'T NEED THIS.</div><div id="t2" class="A">…YOU <b>WANT</b> IT.</div></div>
+<div id="s2" class="sc"><div class="stk" style="left:40px;top:700px;width:140px;height:140px;background:#ffe36e"></div><div class="stk" style="left:900px;top:1500px;width:150px;height:150px;background:#9be7c4"></div><div class="stk" style="left:880px;top:640px;width:120px;height:120px;background:#c9b5ff"></div>
+ <div class="fr" id="f2"><img class="v"></div><img id="clogo" src="img/logo.png"><div id="hta">HAS THEM ALL</div><div class="chip" id="ch1">Butter Squishy <span>$19.99</span></div></div>
+<div id="s3" class="sc"><div class="sun"></div><div class="fr" id="f3"><img class="v"></div><div class="chip" id="ch2">Flower Pot <span>$49.99</span></div></div>
+<div id="s4" class="sc"><div class="cl" style="left:-80px;top:180px;width:520px;height:170px"></div><div class="cl" style="left:620px;top:1650px;width:560px;height:180px"></div><div class="cl" style="left:700px;top:260px;width:380px;height:120px"></div>
+ <div class="fr" id="f4" style="transform:rotate(-4deg)"><img class="v"></div><div class="chip" id="ch3">Dog Raincoat <span>$26.99</span></div></div>
+<div id="s5" class="sc"><div class="lk">the lookbook</div><div class="fr" id="f5"><img class="v"></div><div class="lk2">LOOK 04 / 05</div><div class="chip" id="ch4">Prism Glasses <span>$24.99</span></div></div>
+<div id="s6" class="sc"><div class="fr full" id="f6"><img class="v"></div><div class="vig"></div><div class="star" id="star"></div></div>
+<div id="s7" class="sc"><div class="fr full" id="f7"><img class="v"></div><div class="spot"></div></div>
+<div id="s8" class="sc"><div class="fr" id="f8"><img class="v"></div></div>
+<div id="s9" class="sc"><div class="fr full" id="f9"><img class="v"></div><div class="lbT" style="top:0;height:200px"></div><div class="lbB" style="top:1720px;height:200px"></div></div>
+<div id="s10" class="sc"><div class="fr" id="f10"><img class="v"></div>
+ <div class="br" style="left:110px;top:340px;border-right:0;border-bottom:0"></div><div class="br" style="left:880px;top:340px;border-left:0;border-bottom:0"></div>
+ <div class="br" style="left:110px;top:1470px;border-right:0;border-top:0"></div><div class="br" style="left:880px;top:1470px;border-left:0;border-top:0"></div>
+ <div id="rec">● REC</div><div id="tc">00:00:10:12</div><div id="laser"></div></div>
+<div id="s11" class="sc"><div class="fr" id="f11a" style="top:0"><img class="v"></div><div class="fr" id="f11b" style="top:640px"><img class="v" style="top:-640px"></div><div class="fr" id="f11c" style="top:1280px"><img class="v" style="top:-1280px"></div></div>
+<div id="s12" class="sc"><div class="fr full" id="f12"><img class="v"></div><div class="fence"></div><div class="grain"></div><div class="vig"></div><div class="sig">buyr</div></div>
+<div id="s13" class="sc"><div class="strip"><div class="sp" style="left:0"></div><div class="sp" style="right:0"></div></div><div class="fr" id="f13"><img class="v"></div><div class="sf">▸ SAFETY FILM 400 ▸ 21A</div><div class="mt A">BUYR</div></div>
+<div id="s14" class="sc"><div class="fr full" id="f14"><img class="v"></div><div class="heat"></div><div class="speed" id="speed"></div><div class="num A" id="n3">3</div><div class="num A" id="n2">2</div><div class="num A" id="n1">1</div></div>
+<div id="s15" class="sc"><div class="bt A" id="o1">FREE US<br>SHIPPING</div><div class="fr" id="f15"><img class="v"></div></div>
+<div id="s16" class="sc"><div class="fr full" id="f16"><img class="v"></div><div class="lbT" style="top:0;height:260px"></div><div class="lbB" style="top:1660px;height:260px"></div><div class="dt A" id="o2">ON <b>EVERY</b><br>ORDER</div></div>
+<div id="s17" class="sc"><div class="dots"></div><div class="pill A" id="o3b" style="top:180px">FROM</div><div class="big A" id="o3a" style="top:330px">$9.99</div><div class="fr" id="f17"><img class="v"></div></div>
+<div id="s18" class="sc"><div class="fr full" id="f18"><img class="v"></div><div class="grain"></div><div class="vig"></div><div class="lbT" style="top:0;height:150px"></div><div class="lbB" style="top:1770px;height:150px"></div><div class="sub" id="o4">TRACKED DELIVERY</div></div>
+<div id="s19" class="sc"><div class="mast">BUYR</div><div class="iss">ISSUE 01 · NOV 2026</div><div class="fr" id="f19"><img class="v"></div><div class="cv" id="ywi">YOU WANT<br>IT.</div><div class="tag">FREE US SHIPPING</div></div>
+<div id="s20" class="sc"><div class="fr" id="f20"><img class="v"></div>
+ <div class="row A" style="top:780px">BUYRSHOP.COM BUYRSHOP.COM</div><div class="row A on" style="top:930px;left:60px">BUYRSHOP.COM</div><div class="row A" style="top:1080px">BUYRSHOP.COM BUYRSHOP.COM</div>
+ <div class="url" id="url">buyrshop.com</div></div>
+<div class="ow A" id="w1">WAIT—</div><div class="ow A" id="w2">WHAT—</div><div class="ow A" id="w3">LOL</div>
+<canvas id="gl" width="1080" height="1920"></canvas></div><div id="trk"><svg id="trksvg" width="1080" height="1920"></svg></div><div id="flash"></div></div>
+<script>
+const S=j=>j===0?0:+(0.075+0.6*j).toFixed(3), END=24.64;
+const N={c01:25,c02:22,c03:22,c04:35,c05:23,c06:23,c06b:23,c07:23,c07b:23,c08:23,c08b:23,c09:23,c09b:23,c10:23,c11:22,c12:22,c13:22,c14:22,c15:22,c16:22,c17:24,c18:23,c19:13,c20:23,c21:23,c22:23,c23:22,c24:23,c25:22,c26:22,c27:23,c28:22,c29:22,c30:40};
+const q=s=>document.querySelector(s);
+const sl=(sel,list,loop)=>({el:q(sel+' img'),list,loop});
+const SL=[sl('#f1',[['c01',S(0)],['c02',S(1)],['c03',S(2)],['c04',S(3)]]),sl('#f2',[['c05',S(4)],['c06',S(5)],['c06b',S(6)]]),sl('#f3',[['c07b',S(7)],['c07',S(8)]]),
+ sl('#f4',[['c08b',S(9)],['c08',S(10)]]),sl('#f5',[['c09b',S(11)],['c09',S(12)]]),sl('#f6',[['c10',S(13)]]),sl('#f7',[['c11',S(14)]]),sl('#f8',[['c12',S(15)]]),
+ sl('#f9',[['c13',S(16)]]),sl('#f10',[['c14',S(17)]]),sl('#f11a',[['c15',S(18)]]),sl('#f11b',[['c15',S(18)]]),sl('#f11c',[['c15',S(18)]]),sl('#f12',[['c16',S(19)]]),sl('#f13',[['c17',S(20)]]),
+ sl('#f14',[['c18',S(21)],['c20',S(22)],['c23',S(23)]]),sl('#f15',[['c24',S(24)],['c25',S(25)],['c26',S(26)]]),sl('#f16',[['c27',S(27)],['c28',S(28)],['c29',S(29)]]),
+ sl('#f17',[['c30',S(30)],['c21',S(31)]]),sl('#f18',[['c22',S(32)],['c19',S(33)],['c07',S(34)]]),sl('#f19',[['c08',S(35)]],1),sl('#f20',[['c17',S(38)]],1)];
+const tl=gsap.timeline({paused:true});
+const show=(id,a,b)=>{tl.set(id,{visibility:'hidden'},0);tl.set(id,{visibility:'visible'},a);if(b<END)tl.set(id,{visibility:'hidden'},b);};
+const slam=(sel,t,from)=>tl.fromTo(sel,Object.assign({opacity:0,scale:1.5,y:50},from||{}),{opacity:1,scale:1,y:0,x:0,rotation:0,duration:.2,ease:'back.out(2.2)'},t);
+const split=sel=>{const root=q(sel);const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();[...c.textContent].forEach(ch=>{const sp=document.createElement('span');sp.className='kl';sp.textContent=ch===' '?' ':ch;f.appendChild(sp);});c.replaceWith(f);}else if(c.nodeName!=='BR')walk(c);});};walk(root);return root.querySelectorAll('.kl');};
+const flip=(sel,t)=>tl.fromTo(split(sel),{rotationX:-110,y:60,opacity:0,transformPerspective:700,transformOrigin:'50% 100%'},{rotationX:0,y:0,opacity:1,duration:.24,ease:'back.out(2.2)',stagger:.018},t);
+const flash=(t,o)=>{tl.set('#flash',{opacity:o||1},t);tl.set('#flash',{opacity:0},t+0.067);};
+const punch=(sel,t)=>tl.fromTo(sel,{scale:1.1},{scale:1,duration:.25,ease:'expo.out',immediateRender:false},t);
+const chip=(c,a,b)=>{tl.set(c,{visibility:'visible'},a);tl.set(c,{visibility:'hidden'},b);tl.fromTo(c,{x:-700},{x:0,duration:.18,ease:'expo.out',immediateRender:false},a);};
+// sections
+const SEC=[['#s1',0,4],['#s2',4,7],['#s3',7,9],['#s4',9,11],['#s5',11,13],['#s6',13,14],['#s7',14,15],['#s8',15,16],['#s9',16,17],['#s10',17,18],['#s11',18,19],['#s12',19,20],['#s13',20,21],['#s14',21,24],['#s15',24,27],['#s16',27,30],['#s17',30,32],['#s18',32,35],['#s19',35,38],['#s20',38,99]];
+SEC.forEach(([id,a,b])=>show(id,S(a),b>=99?END:S(b)));
+// 1 kinetic typography
+flip('#t1',0.03); flip('#t2',S(1)); [1,2,3].forEach(j=>punch('#f1',S(j)));
+// 2 candy pop
+tl.fromTo('#clogo',{scale:1.6,rotation:-12,opacity:0},{scale:1,rotation:-4,opacity:1,duration:.22,ease:'back.out(2.5)'},S(4)); flip('#hta',S(4)+.1);
+tl.fromTo('#s2 .stk',{scale:0,rotation:-40},{scale:1,rotation:0,duration:.25,ease:'back.out(2)',stagger:.05},S(4)); chip('#ch1',S(5),S(7)); [5,6].forEach(j=>punch('#f2',S(j)));
+// 3 pop art
+tl.fromTo('#s3 .sun',{rotation:0},{rotation:60,duration:1.2,ease:'none'},S(7)); chip('#ch2',S(7),S(9)); punch('#f3',S(8));
+// 4 collage
+tl.fromTo('#s4 .cl',{x:-60},{x:60,duration:1.2,ease:'none'},S(9)); chip('#ch3',S(9),S(11)); punch('#f4',S(10));
+// 5 lookbook
+tl.fromTo('#f5',{scale:.6,rotation:-20},{scale:1,rotation:0,duration:.3,ease:'back.out(1.6)'},S(11)); chip('#ch4',S(11),S(13)); punch('#f5',S(12)); flip('#s5 .lk',S(11)+.05);
+// 6-8 reactions + overlay words
+tl.fromTo('#star',{scale:0,rotation:0},{scale:1.3,rotation:180,duration:.5,ease:'expo.out'},S(13)); tl.to('#star',{scale:0,duration:.1},S(13)+.5);
+tl.fromTo('#f7 img',{scale:1.25},{scale:1,duration:.4,ease:'expo.out',immediateRender:false},S(14));
+tl.fromTo('#s8',{backgroundPosition:'0 0'},{backgroundPosition:'0 0',duration:.01},S(15));
+[['#w1',13],['#w2',14],['#w3',15]].forEach(([w,j])=>{tl.set(w,{visibility:'visible'},S(j));tl.set(w,{visibility:'hidden'},S(16)+0.2);flip(w,S(j));});
+// 9 track day: big extruded word
+// 10 HUD
+tl.fromTo('#laser',{top:360},{top:1530,duration:.6,ease:'power1.inOut'},S(17));
+// 11 chrome slices
+tl.fromTo('#f11a',{x:-180},{x:0,duration:.3,ease:'expo.out'},S(18)); tl.fromTo('#f11b',{x:220},{x:0,duration:.3,ease:'expo.out'},S(18)+.05); tl.fromTo('#f11c',{x:-140},{x:0,duration:.3,ease:'expo.out'},S(18)+.1);
+tl.to('#f11b',{x:60,duration:.04,yoyo:true,repeat:3},S(18)+.4);
+// 12 camera shots
+tl.fromTo('#s12 .sig',{opacity:0,y:30},{opacity:1,y:0,duration:.2},S(19)+.1);
+// 13 monolith
+tl.fromTo('#s13 .strip,#f13',{y:300},{y:0,duration:.3,ease:'expo.out'},S(20)); flip('#s13 .mt',S(20)+.05);
+// 14 turbo countdown (one number per beat)
+[['#n3',21],['#n2',22],['#n1',23]].forEach(([n,j])=>{tl.set(n,{visibility:'visible'},S(j));tl.set(n,{visibility:'hidden'},S(j+1));slam(n,S(j),{scale:2.2,y:0});flash(S(j),.35);});
+tl.fromTo('#speed',{rotation:0},{rotation:40,duration:1.8,ease:'power2.in'},S(21)); tl.fromTo('#f14 img',{scale:1},{scale:1.25,duration:1.8,ease:'power2.in',immediateRender:false},S(21));
+// 15 pop cutout FREE US SHIPPING (1.8 s)
+flip('#o1',S(24)); tl.fromTo('#f15',{y:900,rotation:10},{y:0,rotation:-3,duration:.28,ease:'back.out(1.5)'},S(24)); [25,26].forEach(j=>punch('#f15',S(j)));
+// 16 daytona ON EVERY ORDER
+flip('#o2',S(27));
+// 17 kinetic graphic FROM $9.99
+tl.fromTo('#s17',{clipPath:'inset(0 0 0 0)'},{clipPath:'inset(0 0 0 0)',duration:.01},S(30)); slam('#o3a',S(30),{x:-400,scale:1.3,y:0}); tl.fromTo('#o3b',{x:-600},{x:0,duration:.2,ease:'expo.out'},S(30)+.12);
+tl.fromTo('#f17',{y:600,rotation:6},{y:0,rotation:-2,duration:.25,ease:'back.out(1.8)'},S(30)); punch('#f17',S(31));
+// 18 swole cinema TRACKED DELIVERY
+tl.fromTo('#o4',{opacity:0,letterSpacing:'40px'},{opacity:1,letterSpacing:'4px',duration:.35,ease:'expo.out'},S(32)); [33,34].forEach(j=>punch('#f18',S(j)));
+// 19 noir cover YOU WANT IT.
+tl.fromTo('#s19 .mast',{y:-300},{y:0,duration:.25,ease:'expo.out'},S(35)); tl.fromTo('#f19',{scale:1.2,opacity:0},{scale:1,opacity:1,duration:.25,ease:'expo.out'},S(35)); flip('#ywi',S(35)+.1);
+tl.fromTo('#s19 .tag',{x:400},{x:0,duration:.2,ease:'expo.out'},S(36));
+// 20 tech CTA
+tl.fromTo('#s20 .row:not(.on)',{x:0},{x:-600,duration:1.8,ease:'none'},S(38)); tl.fromTo('#s20 .row.on',{x:-300},{x:0,duration:.3,ease:'expo.out'},S(38));
+tl.fromTo('#url',{y:300,opacity:0},{y:0,opacity:1,duration:.22,ease:'back.out(1.8)'},S(38)+.1); [39,40].forEach(j=>tl.to('#url',{scale:1.07,duration:.1,yoyo:true,repeat:1},S(j)));
+// ===== camera layer: whip + blur + roll every beat, shakes, half-beat micro-cuts =====
+tl.set('#cam',{scale:1.04},0); tl.set('#mbf',{attr:{stdDeviation:'0 0'}},0);
+const VERT=new Set([4,9,16,20,24,30,35,38]);
+const whip=(t,d,vert)=>{tl.fromTo('#cam',vert?{scale:1.25,y:160*d,x:0,rotation:2*d}:{scale:1.25,x:120*d,y:0,rotation:2*d},{scale:1.04,x:0,y:0,rotation:0,duration:.22,ease:'expo.out',immediateRender:false},t);
+ tl.fromTo('#mbf',{attr:{stdDeviation:vert?'0 70':'70 0'}},{attr:{stdDeviation:'0 0'},duration:.15,ease:'expo.out',immediateRender:false},t);};
+for(let j=1;j<=40;j++) whip(S(j),j%2?1:-1,VERT.has(j));
+const shake=(t,dur,amp)=>{const n=Math.round(dur/0.034);for(let i=0;i<n;i++){const a=amp*(1-i/n);tl.to('#cam',{x:Math.sin(i*2.3+t)*a,y:Math.cos(i*1.7+t*3)*a,duration:.034,ease:'none'},t+.22+i*.034);}tl.to('#cam',{x:0,y:0,duration:.05},t+.22+n*.034);};
+[13,14,15].forEach(j=>shake(S(j),.25,14)); [21,22,23].forEach((j,k)=>shake(S(j),.3,8+k*5)); shake(S(24),.3,18); shake(S(35),.2,10);
+const micro=(t,k)=>{if(k%3===0){tl.set('#stage',{filter:'invert(1)'},t);tl.set('#stage',{filter:'none'},t+.067);}else if(k%3===1){flash(t,.55);}else{tl.fromTo('#cam',{scale:1.14},{scale:1.04,duration:.16,ease:'expo.out',immediateRender:false},t);}};
+let k=0; for(let j=16;j<40;j++){ if([20,23,35].includes(j)) continue; micro(S(j)+.3,k++); }
+flash(S(4),.7); flash(S(13)); flash(S(24)); flash(S(35));
+const VS=SL;
+const TR={"c01": [[0.33, 0.27], [0.3303, 0.2716], [0.3325, 0.2767], [0.3344, 0.2817], [0.3355, 0.2863], [0.3362, 0.2917], [0.336, 0.2993], [0.3359, 0.3061], [0.3338, 0.308], [0.3314, 0.3087], [0.3289, 0.3099], [0.3265, 0.3122], [0.3215, 0.3135], [0.315, 0.3167], [0.309, 0.3214], [0.3074, 0.3284], [0.307, 0.3321], [0.3082, 0.3353], [0.3118, 0.3389], [0.3186, 0.344], [0.324, 0.3473], [0.3411, 0.362], [0.3537, 0.3754], [0.3647, 0.3889], [0.3598, 0.3889]], "c02": [[0.55, 0.45], [0.5511, 0.458], [0.5516, 0.4651], [0.5514, 0.4705], [0.5511, 0.4707], [0.5503, 0.4738], [0.5499, 0.4758], [0.5494, 0.4804], [0.5493, 0.4808], [0.5487, 0.4804], [0.5479, 0.4772], [0.5469, 0.4698], [0.5456, 0.4613], [0.5449, 0.4542], [0.5445, 0.4511], [0.5446, 0.4498], [0.5449, 0.45], [0.5455, 0.4491], [0.5462, 0.4477], [0.5468, 0.4459], [0.5475, 0.4443], [0.5485, 0.4427]], "c03": [[0.6, 0.4], [0.5996, 0.4], [0.5994, 0.4001], [0.5996, 0.4003], [0.5997, 0.4003], [0.5999, 0.4002], [0.5999, 0.4002], [0.5999, 0.4007], [0.5986, 0.4009], [0.6023, 0.3978], [0.6061, 0.3942], [0.6112, 0.391], [0.6112, 0.3911], [0.6112, 0.391], [0.6112, 0.391], [0.6112, 0.391], [0.6112, 0.391], [0.6119, 0.3912], [0.6128, 0.3915], [0.6135, 0.3917], [0.6135, 0.3916], [0.6133, 0.3915]], "c04": [[0.55, 0.38], [0.5417, 0.3833], [0.5327, 0.3862], [0.5267, 0.3878], [0.5192, 0.39], [0.5124, 0.3922], [0.5039, 0.3945], [0.498, 0.3951], [0.4951, 0.3948], [0.4932, 0.3942], [0.4913, 0.3942], [0.4885, 0.3948], [0.4866, 0.3957], [0.4859, 0.3964], [0.4874, 0.3964], [0.4907, 0.396], [0.4968, 0.3949], [0.5058, 0.3933], [0.5127, 0.3919], [0.5221, 0.3901], [0.5316, 0.3878], [0.5457, 0.3843], [0.5605, 0.3806], [0.5711, 0.3782], [0.5832, 0.3759], [0.595, 0.3751], [0.6111, 0.3751], [0.6247, 0.3772], [0.6327, 0.3793], [0.6403, 0.3816], [0.6475, 0.3828], [0.6581, 0.3838], [0.665, 0.3837], [0.6685, 0.3835], [0.6685, 0.3835]], "c05": [[0.45, 0.55], [0.4507, 0.5509], [0.4512, 0.5516], [0.4513, 0.552], [0.4502, 0.5518], [0.4487, 0.5515], [0.4463, 0.5511], [0.4443, 0.5504], [0.4426, 0.5493], [0.4413, 0.548], [0.4412, 0.5478], [0.4406, 0.5483], [0.4405, 0.5482], [0.4332, 0.5415], [0.4433, 0.5286], [0.4559, 0.5162], [0.4759, 0.5075], [0.4804, 0.5039], [0.4832, 0.4991], [0.4841, 0.4963], [0.4828, 0.4947], [0.4806, 0.4943], [0.4791, 0.4931]], "c06": [[0.55, 0.45], [0.5438, 0.4509], [0.5152, 0.445], [0.4718, 0.4351], [0.4399, 0.4277], [0.4353, 0.4271], [0.4451, 0.4304], [0.4584, 0.4327], [0.4657, 0.4361], [0.4705, 0.4414], [0.4722, 0.4472], [0.4717, 0.4513], [0.47, 0.4526], [0.4721, 0.4575], [0.4802, 0.4659], [0.4933, 0.4779], [0.5069, 0.492], [0.5149, 0.5078], [0.5183, 0.5199], [0.5171, 0.5301], [0.5111, 0.5368], [0.5022, 0.5478], [0.4922, 0.5604]], "c06b": [[0.42, 0.45], [0.4327, 0.4656], [0.4454, 0.4835], [0.46, 0.5039], [0.4739, 0.5267], [0.485, 0.5513], [0.4876, 0.5788], [0.4832, 0.6064], [0.4745, 0.6311], [0.4647, 0.6497], [0.4577, 0.663], [0.4558, 0.6725], [0.4613, 0.6796], [0.4717, 0.6853], [0.4816, 0.69], [0.4871, 0.6934], [0.4859, 0.6956], [0.4824, 0.6966], [0.478, 0.6978], [0.4746, 0.6983], [0.4678, 0.6942], [0.4653, 0.6802], [0.4666, 0.6572]], "c07": [[0.58, 0.33], [0.5793, 0.3307], [0.5788, 0.3317], [0.5784, 0.3331], [0.5782, 0.3346], [0.5781, 0.336], [0.5781, 0.3371], [0.5786, 0.3382], [0.5795, 0.3391], [0.5807, 0.3399], [0.5819, 0.3408], [0.5827, 0.3419], [0.5834, 0.343], [0.5837, 0.3441], [0.5837, 0.3453], [0.5838, 0.3466], [0.5845, 0.3478], [0.5856, 0.3488], [0.587, 0.3496], [0.5884, 0.3504], [0.5901, 0.3509], [0.5916, 0.3513], [0.5929, 0.3517]], "c07b": [[0.45, 0.33], [0.4476, 0.3299], [0.4456, 0.3278], [0.4448, 0.326], [0.4445, 0.3243], [0.4456, 0.3251], [0.4475, 0.326], [0.4503, 0.3273], [0.4532, 0.3295], [0.4568, 0.3321], [0.4603, 0.3347], [0.4648, 0.3374], [0.4692, 0.3409], [0.4738, 0.3447], [0.4781, 0.3501], [0.4824, 0.3569], [0.4868, 0.3652], [0.4913, 0.3724], [0.4952, 0.3772], [0.4989, 0.3807], [0.5023, 0.3841], [0.5052, 0.3876], [0.5081, 0.3913]], "c08": [[0.5, 0.42], [0.4975, 0.4159], [0.4971, 0.4145], [0.4997, 0.4159], [0.504, 0.419], [0.5099, 0.4205], [0.5149, 0.4196], [0.519, 0.4157], [0.5194, 0.413], [0.5175, 0.4122], [0.5112, 0.4145], [0.5038, 0.4158], [0.4951, 0.4153], [0.4897, 0.4139], [0.486, 0.4129], [0.4863, 0.4154], [0.4885, 0.4188], [0.4927, 0.4209], [0.4943, 0.4177], [0.4941, 0.4143], [0.4919, 0.4124], [0.4888, 0.4149], [0.4841, 0.4182]], "c08b": [[0.5, 0.38], [0.4988, 0.3809], [0.4959, 0.3816], [0.4903, 0.3817], [0.485, 0.3807], [0.4818, 0.3793], [0.4817, 0.3779], [0.4818, 0.3775], [0.482, 0.3777], [0.4819, 0.3778], [0.4817, 0.3775], [0.4815, 0.3767], [0.4819, 0.3757], [0.4838, 0.3733], [0.487, 0.3703], [0.491, 0.3673], [0.4942, 0.3658], [0.4967, 0.3648], [0.5004, 0.3636], [0.5045, 0.3623], [0.5083, 0.3612], [0.5101, 0.3605], [0.5108, 0.36]], "c09": [[0.62, 0.3], [0.6183, 0.3046], [0.6161, 0.3105], [0.6139, 0.3168], [0.6118, 0.3235], [0.6096, 0.3308], [0.6073, 0.339], [0.604, 0.3493], [0.6006, 0.3593], [0.5966, 0.37], [0.5925, 0.3814], [0.5886, 0.3931], [0.5843, 0.4068], [0.5808, 0.419], [0.5773, 0.431], [0.574, 0.4418], [0.5701, 0.4515], [0.5651, 0.4604], [0.5605, 0.4665], [0.5565, 0.4715], [0.5541, 0.475], [0.553, 0.4775], [0.553, 0.4794]], "c09b": [[0.45, 0.6], [0.4425, 0.6008], [0.4353, 0.6015], [0.4285, 0.6023], [0.4219, 0.603], [0.4157, 0.6038], [0.41, 0.6047], [0.4044, 0.6063], [0.3988, 0.6086], [0.3932, 0.6117], [0.3877, 0.6157], [0.3822, 0.6206], [0.3764, 0.6264], [0.3699, 0.6335], [0.3629, 0.6419], [0.3556, 0.6529], [0.3488, 0.666], [0.3416, 0.6821], [0.3281, 0.6996], [0.3075, 0.7206], [0.2757, 0.7405], [0.2478, 0.7616], [0.224, 0.782]], "c10": [[0.38, 0.66], [0.3798, 0.66], [0.3788, 0.6601], [0.377, 0.6602], [0.3754, 0.6603], [0.3733, 0.6604], [0.3722, 0.6604], [0.371, 0.6606], [0.3717, 0.6607], [0.3724, 0.6607], [0.3736, 0.6607], [0.3742, 0.6607], [0.3745, 0.6606], [0.3732, 0.6602], [0.372, 0.6599], [0.3694, 0.6594], [0.3677, 0.6593], [0.366, 0.6591], [0.3657, 0.659], [0.3656, 0.659], [0.3692, 0.6776], [0.3728, 0.6963], [0.3764, 0.715]], "c11": [[0.5, 0.38], [0.4995, 0.3804], [0.4981, 0.3823], [0.4954, 0.3877], [0.4931, 0.3928], [0.4917, 0.3983], [0.4921, 0.4049], [0.4929, 0.4144], [0.4938, 0.4254], [0.4943, 0.4325], [0.4986, 0.4306], [0.5034, 0.4181], [0.5086, 0.3949], [0.5101, 0.3719], [0.512, 0.3478], [0.5137, 0.3313], [0.5153, 0.3177], [0.5157, 0.3123], [0.5788, 0.2836], [0.6418, 0.2582], [0.7047, 0.2328], [0.7048, 0.233]], "c12": [[0.5, 0.42], [0.5081, 0.4203], [0.5157, 0.4206], [0.5229, 0.4207], [0.5278, 0.4207], [0.5318, 0.4207], [0.535, 0.4208], [0.5383, 0.421], [0.5413, 0.4213], [0.5442, 0.4216], [0.5468, 0.422], [0.5505, 0.4228], [0.5547, 0.4234], [0.5599, 0.424], [0.5644, 0.4244], [0.5685, 0.4249], [0.5728, 0.4258], [0.5773, 0.4265], [0.582, 0.4272], [0.5866, 0.4275], [0.591, 0.4276], [0.5957, 0.4274]], "c13": [[0.55, 0.45], [0.5639, 0.4327], [0.5743, 0.4096], [0.5698, 0.382], [0.556, 0.3558], [0.5274, 0.3279], [0.5024, 0.317], [0.4825, 0.3087], [0.475, 0.3053], [0.4845, 0.2827], [0.5048, 0.2655], [0.5321, 0.2579], [0.548, 0.2633], [0.5463, 0.2642], [0.5549, 0.2682], [0.5738, 0.2749], [0.611, 0.2894], [0.629, 0.3021], [0.6542, 0.3135], [0.6887, 0.3285], [0.7316, 0.3461], [0.7631, 0.367]], "c14": [[0.7, 0.66], [0.6917, 0.6588], [0.6848, 0.6593], [0.6805, 0.6624], [0.6803, 0.6681], [0.6847, 0.6755], [0.6941, 0.6836], [0.7087, 0.6914], [0.7271, 0.698], [0.7462, 0.7025], [0.7625, 0.7041], [0.773, 0.7028], [0.7768, 0.6988], [0.7739, 0.6931], [0.7649, 0.6866], [0.7512, 0.6805], [0.7343, 0.6756], [0.7166, 0.6723], [0.7002, 0.6707], [0.6867, 0.6703], [0.6772, 0.6705], [0.6709, 0.6708]], "c15": [[0.5, 0.5], [0.5072, 0.4974], [0.5119, 0.496], [0.5126, 0.4957], [0.514, 0.4964], [0.5141, 0.4989], [0.5149, 0.5015], [0.5171, 0.5036], [0.5204, 0.5048], [0.5223, 0.5069], [0.5223, 0.5102], [0.5216, 0.5137], [0.5176, 0.5166], [0.5161, 0.5182], [0.5132, 0.5192], [0.5144, 0.5201], [0.5152, 0.5209], [0.5169, 0.5231], [0.5174, 0.5255], [0.5174, 0.5296], [0.5141, 0.5331], [0.5086, 0.5373]], "c16": [[0.5, 0.55], [0.4999, 0.5507], [0.4995, 0.5512], [0.4982, 0.5509], [0.4968, 0.5495], [0.4959, 0.5482], [0.4957, 0.5478], [0.4955, 0.5478], [0.4945, 0.5477], [0.4936, 0.548], [0.4931, 0.5488], [0.4933, 0.5499], [0.4934, 0.5515], [0.4936, 0.5533], [0.4937, 0.5549], [0.4942, 0.5564], [0.4964, 0.5586], [0.5003, 0.562], [0.5049, 0.5653], [0.5077, 0.5671], [0.5094, 0.5681], [0.5108, 0.569]], "c17": [[0.48, 0.42], [0.485, 0.4182], [0.4987, 0.4162], [0.5196, 0.4137], [0.5351, 0.4096], [0.5389, 0.4018], [0.5323, 0.3901], [0.5236, 0.3779], [0.5186, 0.3675], [0.5198, 0.3605], [0.5248, 0.3561], [0.5326, 0.3541], [0.5412, 0.3538], [0.5515, 0.3554], [0.5627, 0.3581], [0.5744, 0.362], [0.5835, 0.3659], [0.5888, 0.3695], [0.5914, 0.3727], [0.5919, 0.3754], [0.5911, 0.3774], [0.5867, 0.378], [0.5833, 0.3789], [0.5799, 0.3799]], "c18": [[0.5, 0.38], [0.5019, 0.3789], [0.5027, 0.3778], [0.5064, 0.3754], [0.5123, 0.3731], [0.5201, 0.3713], [0.5258, 0.371], [0.5315, 0.3694], [0.5337, 0.3676], [0.5322, 0.3658], [0.5277, 0.3655], [0.5212, 0.3649], [0.5121, 0.3647], [0.5012, 0.366], [0.4933, 0.3679], [0.4869, 0.371], [0.4807, 0.375], [0.477, 0.3789], [0.4802, 0.3796], [0.4859, 0.3774], [0.4908, 0.3742], [0.4922, 0.3712], [0.4945, 0.3675]], "c19": [[0.52, 0.38], [0.5234, 0.3787], [0.5256, 0.3775], [0.5265, 0.3767], [0.5262, 0.3767], [0.5253, 0.3772], [0.5241, 0.3781], [0.5236, 0.3788], [0.5237, 0.3794], [0.5238, 0.3798], [0.5234, 0.3802], [0.5227, 0.3804], [0.522, 0.3804]], "c20": [[0.5, 0.5], [0.5034, 0.4939], [0.5052, 0.4878], [0.5045, 0.4821], [0.5021, 0.4822], [0.5008, 0.4829], [0.5014, 0.4839], [0.5027, 0.485], [0.5029, 0.4857], [0.5024, 0.486], [0.5017, 0.4858], [0.5012, 0.4857], [0.5014, 0.4859], [0.5022, 0.4864], [0.503, 0.4871], [0.504, 0.4878], [0.5041, 0.4881], [0.5043, 0.4884], [0.5046, 0.4883], [0.506, 0.488], [0.5078, 0.4875], [0.5099, 0.487], [0.5116, 0.4865]], "c21": [[0.4, 0.6], [0.4, 0.6], [0.4001, 0.6], [0.4001, 0.6], [0.4001, 0.6002], [0.4002, 0.6005], [0.4002, 0.6007], [0.4003, 0.6009], [0.4002, 0.6009], [0.4002, 0.6008], [0.4002, 0.6009], [0.4004, 0.6012], [0.4006, 0.6014], [0.401, 0.6018], [0.4016, 0.6023], [0.4022, 0.603], [0.4025, 0.6037], [0.4025, 0.6041], [0.4028, 0.6043], [0.4043, 0.6044], [0.4065, 0.6044], [0.4083, 0.6043], [0.4089, 0.6042]], "c22": [[0.45, 0.42], [0.4499, 0.4199], [0.4497, 0.4198], [0.4495, 0.4196], [0.4492, 0.4192], [0.4489, 0.4189], [0.4487, 0.4186], [0.4486, 0.4185], [0.4486, 0.4184], [0.4486, 0.4183], [0.4488, 0.4183], [0.4492, 0.4183], [0.4496, 0.4183], [0.4501, 0.4184], [0.4506, 0.4185], [0.451, 0.4185], [0.4517, 0.4183], [0.4527, 0.4181], [0.454, 0.4179], [0.4554, 0.4178], [0.4568, 0.4178], [0.4581, 0.4179], [0.4594, 0.418]], "c23": [[0.5, 0.24], [0.4999, 0.2397], [0.502, 0.2376], [0.5075, 0.2339], [0.5131, 0.2299], [0.5166, 0.2278], [0.5169, 0.2275], [0.5175, 0.2279], [0.5185, 0.2287], [0.5181, 0.2303], [0.5174, 0.2326], [0.5162, 0.2339], [0.5166, 0.2334], [0.5181, 0.2285], [0.5197, 0.2231], [0.5208, 0.2188], [0.5209, 0.2189], [0.5205, 0.2216], [0.52, 0.225], [0.5195, 0.2275], [0.5197, 0.2276], [0.5201, 0.2261]], "c24": [[0.5, 0.45], [0.5047, 0.454], [0.5108, 0.4577], [0.5178, 0.4604], [0.5241, 0.4616], [0.5282, 0.4611], [0.53, 0.4596], [0.5292, 0.458], [0.5255, 0.457], [0.5209, 0.4568], [0.5165, 0.4571], [0.5131, 0.4583], [0.5088, 0.4608], [0.5041, 0.4651], [0.4987, 0.4709], [0.4944, 0.4776], [0.4918, 0.4848], [0.4908, 0.4921], [0.4906, 0.4991], [0.4905, 0.5057], [0.4901, 0.5115], [0.4892, 0.5166], [0.4876, 0.5214]], "c25": [[0.75, 0.5], [0.7467, 0.5], [0.7437, 0.5], [0.7408, 0.4998], [0.7386, 0.4994], [0.7362, 0.4986], [0.7335, 0.4971], [0.7306, 0.4949], [0.7274, 0.4908], [0.7244, 0.4864], [0.721, 0.4824], [0.7166, 0.4815], [0.7126, 0.4828], [0.7099, 0.4859], [0.7093, 0.4892], [0.709, 0.4914], [0.7075, 0.4915], [0.7042, 0.4901], [0.6997, 0.4888], [0.693, 0.4902], [0.6855, 0.4938], [0.6771, 0.4993]], "c26": [[0.5, 0.5], [0.5001, 0.5], [0.5002, 0.5], [0.5003, 0.5], [0.5004, 0.5], [0.5005, 0.5], [0.5005, 0.5001], [0.5006, 0.5001], [0.5006, 0.5001], [0.5006, 0.5001], [0.5005, 0.5001], [0.5003, 0.5002], [0.5, 0.5002], [0.4997, 0.5003], [0.4993, 0.5004], [0.499, 0.5004], [0.4985, 0.5005], [0.4981, 0.5007], [0.4978, 0.5007], [0.4976, 0.5008], [0.4975, 0.5008], [0.4974, 0.5008]], "c27": [[0.5, 0.45], [0.5022, 0.4474], [0.5067, 0.4417], [0.5133, 0.4322], [0.5191, 0.421], [0.5239, 0.4082], [0.5272, 0.3935], [0.528, 0.3762], [0.5253, 0.3557], [0.5204, 0.3308], [0.515, 0.3032], [0.5111, 0.2762], [0.5111, 0.2661], [0.5155, 0.2649], [0.5211, 0.2771], [0.5253, 0.2877], [0.5279, 0.2999], [0.5275, 0.3101], [0.5235, 0.3173], [0.5162, 0.3202], [0.508, 0.3218], [0.4992, 0.3211], [0.489, 0.3235]], "c28": [[0.5, 0.5], [0.5438, 0.5156], [0.5729, 0.5257], [0.6027, 0.5386], [0.6237, 0.5706], [0.651, 0.6152], [0.6673, 0.6618], [0.6837, 0.6834], [0.6937, 0.6924], [0.7063, 0.6863], [0.7088, 0.679], [0.7082, 0.6715], [0.6973, 0.6684], [0.6908, 0.6669], [0.6873, 0.6656], [0.6903, 0.6642], [0.7073, 0.6586], [0.731, 0.6505], [0.7583, 0.6418], [0.7799, 0.6319], [0.795, 0.6246], [0.8032, 0.6185]], "c29": [[0.5, 0.5], [0.5015, 0.501], [0.5023, 0.5033], [0.5028, 0.5041], [0.5041, 0.5031], [0.5064, 0.5009], [0.5082, 0.5], [0.5101, 0.5002], [0.5115, 0.5008], [0.5131, 0.5018], [0.5139, 0.5034], [0.5139, 0.5049], [0.5132, 0.5046], [0.5121, 0.5029], [0.5107, 0.5008], [0.5098, 0.5001], [0.5088, 0.4999], [0.508, 0.5022], [0.5072, 0.5048], [0.5067, 0.5071], [0.5063, 0.507], [0.5055, 0.5066]], "c30": [[0.4, 0.45], [0.3935, 0.4499], [0.3877, 0.4498], [0.3818, 0.45], [0.3769, 0.4503], [0.3716, 0.4509], [0.367, 0.4515], [0.3623, 0.4525], [0.3588, 0.4535], [0.3555, 0.4549], [0.353, 0.4561], [0.3499, 0.4574], [0.3472, 0.4586], [0.3443, 0.4596], [0.3413, 0.4601], [0.3357, 0.4603], [0.3285, 0.4602], [0.317, 0.46], [0.3034, 0.4597], [0.2899, 0.4594], [0.2809, 0.459], [0.2789, 0.4587], [0.2839, 0.4586], [0.2934, 0.4586], [0.3064, 0.4588], [0.3179, 0.4592], [0.3299, 0.4594], [0.3386, 0.4593], [0.3457, 0.4587], [0.3488, 0.4579], [0.3496, 0.4569], [0.3486, 0.4561], [0.347, 0.4555], [0.3451, 0.4552], [0.3424, 0.4552], [0.3401, 0.4554], [0.3387, 0.456], [0.3388, 0.4568], [0.3402, 0.4578], [0.3428, 0.4588]]};
+const q2=s=>document.querySelector(s);
+const SLOT=sel=>SL.find(x=>x.el===q2(sel+' img'));
+const clipAt=(slot,t)=>{let cur=null;for(const [seg,t0] of slot.list) if(t>=t0-1e-6) cur=[seg,t0]; if(!cur) cur=slot.list[0];
+ const n=N[cur[0]];let i=Math.floor((t-cur[1])*30+1e-6);i=slot.loop?(n-1-Math.abs((((i%(2*n-2))+(2*n-2))%(2*n-2))-(n-1))):Math.min(n-1,Math.max(0,i));return [cur[0],i];};
+const ptAt=(sel,t)=>{const slot=SLOT(sel); const [c,i]=clipAt(slot,t); const p=TR[c][Math.min(i,TR[c].length-1)]; const r=q2(sel).getBoundingClientRect();
+ const s=Math.max(r.width/720,r.height/1280),dw=720*s,dh=1280*s; return [r.left+(r.width-dw)/2+p[0]*dw, r.top+(r.height-dh)/2+p[1]*dh];};
+const CALL=[
+ {sel:'#f1',t0:0.1,t1:S(4),type:'tag',html:'THIS',big:1},
+ {sel:'#f2',t0:S(5),t1:S(7),type:'tag',html:'Butter Squishy <span>$19.99</span>'},
+ {sel:'#f3',t0:S(7),t1:S(9),type:'tag',html:'Light-Up Flower Pot <span>$49.99</span>'},
+ {sel:'#f4',t0:S(9),t1:S(11),type:'tag',html:'Dog Raincoat <span>$26.99</span>'},
+ {sel:'#f5',t0:S(11),t1:S(13),type:'tag',html:'Prism Glasses <span>$24.99</span>'},
+ ...[['#f6',13],['#f7',14],['#f8',15],['#f9',16],['#f10',17],['#f12',19],['#f13',20]].map(([sel,j])=>({sel,t0:S(j),t1:S(j+1),type:'lock'})),
+ {sel:'#f14',t0:S(21),t1:S(24),type:'lock'},{sel:'#f15',t0:S(24),t1:S(27),type:'lock'},{sel:'#f16',t0:S(27),t1:S(30),type:'lock'},
+ {sel:'#f17',t0:S(30),t1:S(32),type:'lock'},{sel:'#f18',t0:S(32),t1:S(35),type:'lock'}];
+const svg=q2('#trksvg'), layer=q2('#trk');
+CALL.forEach(c=>{if(c.type==='tag'){c.d=document.createElement('div');c.d.className='tg'+(c.big?' big':'');c.d.innerHTML=c.html;layer.appendChild(c.d);}
+ else{c.d=document.createElement('div');c.d.className='lk';c.d.textContent='● TRACKING';layer.appendChild(c.d);}});
+const eo=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3);
+window.drawTrack=t=>{let h='';
+ for(const c of CALL){const on=t>=c.t0&&t<c.t1; c.d.style.display=on?'block':'none'; if(!on) continue; const [x,y]=ptAt(c.sel,t); const lt=t-c.t0;
+  if(c.type==='tag'){const k=eo(lt/0.22); const r=46+8*Math.sin(lt*9); const right=x<540; const lw=c.d.offsetWidth, lh=c.d.offsetHeight;
+   let lx=right?x+150:x-150-lw; lx=Math.max(30,Math.min(1050-lw,lx)); let ly=Math.max(40,Math.min(1880-lh,y-210));
+   const ax=right?lx:lx+lw, ay=ly+lh/2; const ex=x+(ax-x)*k, ey=y+(ay-y)*k;
+   h+=`<circle cx="${x}" cy="${y}" r="${r*eo(lt/0.15)}" fill="rgba(255,210,63,.18)" stroke="#ffd23f" stroke-width="7"/><circle cx="${x}" cy="${y}" r="9" fill="#ffd23f"/>`;
+   h+=`<polyline points="${x},${y} ${ex},${ey}" fill="none" stroke="#ffd23f" stroke-width="6"/>`;
+   c.d.style.left=lx+'px'; c.d.style.top=ly+'px'; c.d.style.opacity=k; c.d.style.transform=`scale(${0.6+0.4*k})`;}
+  else{const s2=170-40*eo(lt/0.2), L=60, col='#c8ff3d';
+   for(const [sx,sy] of [[-1,-1],[1,-1],[-1,1],[1,1]]){const cx=x+sx*s2, cy=y+sy*s2; h+=`<polyline points="${cx},${cy-sy*-L} ${cx},${cy} ${cx-sx*L},${cy}" fill="none" stroke="${col}" stroke-width="9"/>`;}
+   h+=`<line x1="${x-22}" y1="${y}" x2="${x+22}" y2="${y}" stroke="${col}" stroke-width="4"/><line x1="${x}" y1="${y-22}" x2="${x}" y2="${y+22}" stroke="${col}" stroke-width="4"/>`;
+   h+=`<text x="${x+s2+14}" y="${y-s2+20}" font-family="Space Mono" font-size="26" font-weight="700" fill="${col}">X ${Math.round(x)} Y ${Math.round(y)}</text>`;
+   c.d.style.left=(x-s2)+'px'; c.d.style.top=(y-s2-50)+'px';}
+ }
+ svg.innerHTML=h;};
+
+window.seek=async t=>{tl.seek(t,false);if(window.update3D)window.update3D(t);
+ const f=Math.round(t*30); q('#tc').textContent='00:00:'+String(10+Math.floor(f/30)).padStart(2,'0')+':'+String(f%30).padStart(2,'0');
+ document.querySelectorAll('.grain').forEach(g=>g.style.backgroundPosition=((f*37)%300)+'px '+((f*53)%300)+'px');
+ await Promise.all(VS.map(s=>{let cur=null;for(const [seg,t0] of s.list) if(t>=t0-1e-6) cur=[seg,t0]; if(!cur) cur=s.list[0];
+ const n=N[cur[0]];let i=Math.floor((t-cur[1])*30+1e-6);i=s.loop?(n-1-Math.abs((((i%(2*n-2))+(2*n-2))%(2*n-2))-(n-1))):Math.min(n-1,Math.max(0,i));
+ const src='seg/'+cur[0]+'/'+String(i+1).padStart(3,'0')+'.jpg';if(s.el.getAttribute('src')===src)return 1;s.el.setAttribute('src',src);return s.el.decode().catch(()=>1);}));window.drawTrack(t);};
+window.ready=async()=>{await document.fonts.ready;await window.ready3D();await window.seek(0);};
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {FontLoader} from 'three/addons/loaders/FontLoader.js';
+import {TextGeometry} from 'three/addons/geometries/TextGeometry.js';
+const S=j=>j===0?0:+(0.075+0.6*j).toFixed(3);
+const R=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),alpha:true,antialias:true,preserveDrawingBuffer:true});
+R.setPixelRatio(1); R.setSize(1080,1920,false); R.setClearColor(0x000000,0);
+const scene=new THREE.Scene(); const D=960/Math.tan(15*Math.PI/180);
+const cam=new THREE.PerspectiveCamera(30,1080/1920,10,20000); cam.position.set(0,0,D);
+scene.add(new THREE.AmbientLight(0xffffff,1.1)); const dl=new THREE.DirectionalLight(0xffffff,2.6); dl.position.set(-900,1200,2200); scene.add(dl);
+const dl2=new THREE.DirectionalLight(0xffffff,0.8); dl2.position.set(900,-400,800); scene.add(dl2);
+// items: lines [[text,face,side,cx,cy,size]], t0,t1, kind
+const W='#ffffff',K='#111111',RD='#ff2d2d',YL='#ffd23f';
+const ITEMS=[
+ {t0:0.03,t1:S(4),lines:[['YOU DON\'T',W,RD,540,250,118],['NEED THIS.',W,RD,540,400,118]]},
+ {t0:S(1),t1:S(4),lines:[['YOU WANT IT.',RD,'#7a0000',540,560,104]]},
+ {t0:S(4)+.08,t1:S(7),lines:[['HAS THEM ALL',W,'#ff4fa3',540,520,96]]},
+ {t0:S(13),t1:S(16)+.2,lines:[['WAIT',W,K,330,250,150]]},
+ {t0:S(14),t1:S(16)+.2,lines:[['WHAT',W,K,330,440,150]]},
+ {t0:S(15),t1:S(16)+.2,lines:[['LOL',YL,K,280,630,150]]},
+ {t0:S(20),t1:S(21),lines:[['BUYR','#b8ff3a','#2a6b00',540,200,170]]},
+ {t0:S(21),t1:S(22),lines:[['3',W,'#ff5a00',540,960,560]],spin:1},
+ {t0:S(22),t1:S(23),lines:[['2',W,'#ff5a00',540,960,560]],spin:1},
+ {t0:S(23),t1:S(24),lines:[['1',W,'#ff5a00',540,960,560]],spin:1},
+ {t0:S(24),t1:S(27),lines:[['FREE US',W,K,540,270,170],['SHIPPING',W,K,540,470,170]]},
+ {t0:S(27),t1:S(30),lines:[['ON EVERY',W,RD,540,1110,150],['ORDER',W,RD,540,1290,150]]},
+ {t0:S(30)+.05,t1:S(32),lines:[['$9.99',W,'#0d5c24',540,470,250]]},
+ {t0:S(32),t1:S(35),lines:[['TRACKED',W,K,540,1130,140],['DELIVERY',W,K,540,1300,140]]},
+ {t0:S(35)+.1,t1:S(38),lines:[['YOU WANT IT.',W,'#d4001a',540,1170,86]]},
+ {t0:S(38),t1:99,lines:[['BUYRSHOP.COM',W,'#a35cff',540,990,92]]},
+];
+let ready=false; const groups=[];
+new FontLoader().load('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json',font=>{
+ const res=font.data.resolution;
+ ITEMS.forEach(it=>{const g=new THREE.Group(); g.visible=false; scene.add(g); it.letters=[];
+  it.lines.forEach(([txt,face,side,cx,cy,size],li)=>{
+   const sc=size/res; let w=0; for(const ch of txt){const gl=font.data.glyphs[ch]||font.data.glyphs['?']; w+=gl.ha*sc;}
+   let x=-w/2; const mf=new THREE.MeshStandardMaterial({color:face,roughness:.35,metalness:.15}), ms=new THREE.MeshStandardMaterial({color:side,roughness:.5,metalness:.1});
+   const line=new THREE.Group(); line.position.set(cx-540,960-cy,0); g.add(line);
+   for(const ch of txt){const gl=font.data.glyphs[ch]||font.data.glyphs['?']; const adv=gl.ha*sc;
+    if(ch!==' '){const geo=new TextGeometry(ch,{font,size:size*0.78,depth:size*0.5,curveSegments:6,bevelEnabled:true,bevelThickness:size*0.03,bevelSize:size*0.02,bevelSegments:2});
+     geo.computeBoundingBox(); const bb=geo.boundingBox; const ox=(bb.max.x+bb.min.x)/2, oy=(bb.max.y+bb.min.y)/2, oz=(bb.max.z+bb.min.z)/2; geo.translate(-ox,-oy,-oz);
+     const m=new THREE.Mesh(geo,[mf,ms]); m.userData.home=new THREE.Vector3(x+ox,-size*0.39+oy+size*0.39,0); m.position.copy(m.userData.home); line.add(m); it.letters.push(m);}
+    x+=adv;}
+  }); it.g=g; groups.push(it);});
+ ready=true;});
+const eob=(x,s=1.9)=>{x=Math.min(1,Math.max(0,x));const c=s+1;return 1+c*Math.pow(x-1,3)+s*Math.pow(x-1,2);};
+window.update3D=t=>{ if(!ready) return;
+ for(const it of groups){const on=t>=it.t0&&t<it.t1; it.g.visible=on; if(!on) continue; const lt=t-it.t0;
+  it.g.rotation.y=(-0.42+0.12*Math.sin(2.1*lt+it.t0))*(it.spin?0.5:1)*((Math.round(it.t0*10)%2)?1:-1); it.g.rotation.x=0.16+0.08*Math.sin(1.6*lt+1+it.t0);
+  it.letters.forEach((m,i)=>{const h=m.userData.home; const p=eob((lt-i*0.028)/0.42);
+   if(it.spin){const q=eob(lt/0.38,2.4); m.rotation.set(0,(1-q)*Math.PI*2,0); m.scale.setScalar(0.2+0.8*q); m.position.set(h.x,h.y,(1-q)*900); return;}
+   const out=Math.max(0,(lt-((it.t1-it.t0)-0.12))/0.12);
+   m.rotation.set((1-p)*-1.4+out*1.5,(1-p)*1.8,0); m.position.set(h.x,h.y-(1-p)*160,(1-p)*700-out*400); m.scale.setScalar(Math.max(0.001,(0.3+0.7*p)*(1-out*0.6)));});
+ }
+ R.render(scene,cam);};
+window.ready3D=()=>new Promise(r=>{const c=()=>ready?r():setTimeout(c,50);c();});
+</script></body></html>
