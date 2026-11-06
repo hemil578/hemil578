@@ -40,6 +40,7 @@ Installs Manim, MoviePy, faster-whisper, yt-dlp, Piper and Kokoro (free offline 
 | `launch-video`, `apple-launch-film`, `title-sequence-3d`, `motion-effects`, `reference-to-motion`, `reel-export` and 9 more | [charlie947/motion-graphics-skills](https://github.com/charlie947/motion-graphics-skills) (MIT) | Launch films, 3D title sequences, reels made in code |
 | `motion-design-pro`, `motion-design-critique`, `blender-motion`, `aftereffects-motion` | [lobzyjay/motion-design-with-claude](https://github.com/lobzyjay/motion-design-with-claude) (MIT) | Pro motion principles, critique, Blender and After Effects |
 | `threejs-world-generation`, `3d-asset-generation`, `motion-graphics`, `music-to-video`, `gsap-*`, `hyperframes-*` and more (40) | [calesthio/openmontage](https://github.com/calesthio/openmontage) (**GPL-3.0**) | 3D worlds for video, GSAP, music-synced edits, AI video model guides |
+| `creative-director`, `video`, `image` | [smixs/creative-director-skill](https://github.com/smixs/creative-director-skill), [smixs/visual-skills](https://github.com/smixs/visual-skills) by Serge Shima (CC-BY-4.0) | Creative director (concepts, scoring, refinement), video director (storyboards, shot lists, montage, camera direction), image prompts |
 
 Licences are in `.claude/skill-licenses/`.
 
