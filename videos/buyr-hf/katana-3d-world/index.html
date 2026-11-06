@@ -1,0 +1,166 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=block" rel="stylesheet">
+<style>*{margin:0;padding:0}html,body{width:1080px;height:1920px;overflow:hidden;background:#05050c}
+#c{position:absolute;left:0;top:0;width:1080px;height:1920px}#flash{position:absolute;inset:0;background:#fff;opacity:0}
+.pre{font:800 20px Inter;position:absolute;left:-999px}</style></head><body>
+<svg width="0" height="0" style="position:absolute"><filter id="mb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="mbf" stdDeviation="0 0"/></filter></svg>
+<canvas id="c" width="1080" height="1920" style="filter:url(#mb)"></canvas><div id="flash"></div><div class="pre">x</div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {FontLoader} from 'three/addons/loaders/FontLoader.js';
+import {TextGeometry} from 'three/addons/geometries/TextGeometry.js';
+const S=j=>j===0?0:+(0.075+0.6*j).toFixed(3), END=24.64, FL=0.32;
+const TR={"c01": [[0.33, 0.27], [0.3303, 0.2716], [0.3325, 0.2767], [0.3344, 0.2817], [0.3355, 0.2863], [0.3362, 0.2917], [0.336, 0.2993], [0.3359, 0.3061], [0.3338, 0.308], [0.3314, 0.3087], [0.3289, 0.3099], [0.3265, 0.3122], [0.3215, 0.3135], [0.315, 0.3167], [0.309, 0.3214], [0.3074, 0.3284], [0.307, 0.3321], [0.3082, 0.3353], [0.3118, 0.3389], [0.3186, 0.344], [0.324, 0.3473], [0.3411, 0.362], [0.3537, 0.3754], [0.3647, 0.3889], [0.3598, 0.3889]], "c02": [[0.55, 0.45], [0.5511, 0.458], [0.5516, 0.4651], [0.5514, 0.4705], [0.5511, 0.4707], [0.5503, 0.4738], [0.5499, 0.4758], [0.5494, 0.4804], [0.5493, 0.4808], [0.5487, 0.4804], [0.5479, 0.4772], [0.5469, 0.4698], [0.5456, 0.4613], [0.5449, 0.4542], [0.5445, 0.4511], [0.5446, 0.4498], [0.5449, 0.45], [0.5455, 0.4491], [0.5462, 0.4477], [0.5468, 0.4459], [0.5475, 0.4443], [0.5485, 0.4427]], "c03": [[0.6, 0.4], [0.5996, 0.4], [0.5994, 0.4001], [0.5996, 0.4003], [0.5997, 0.4003], [0.5999, 0.4002], [0.5999, 0.4002], [0.5999, 0.4007], [0.5986, 0.4009], [0.6023, 0.3978], [0.6061, 0.3942], [0.6112, 0.391], [0.6112, 0.3911], [0.6112, 0.391], [0.6112, 0.391], [0.6112, 0.391], [0.6112, 0.391], [0.6119, 0.3912], [0.6128, 0.3915], [0.6135, 0.3917], [0.6135, 0.3916], [0.6133, 0.3915]], "c04": [[0.55, 0.38], [0.5417, 0.3833], [0.5327, 0.3862], [0.5267, 0.3878], [0.5192, 0.39], [0.5124, 0.3922], [0.5039, 0.3945], [0.498, 0.3951], [0.4951, 0.3948], [0.4932, 0.3942], [0.4913, 0.3942], [0.4885, 0.3948], [0.4866, 0.3957], [0.4859, 0.3964], [0.4874, 0.3964], [0.4907, 0.396], [0.4968, 0.3949], [0.5058, 0.3933], [0.5127, 0.3919], [0.5221, 0.3901], [0.5316, 0.3878], [0.5457, 0.3843], [0.5605, 0.3806], [0.5711, 0.3782], [0.5832, 0.3759], [0.595, 0.3751], [0.6111, 0.3751], [0.6247, 0.3772], [0.6327, 0.3793], [0.6403, 0.3816], [0.6475, 0.3828], [0.6581, 0.3838], [0.665, 0.3837], [0.6685, 0.3835], [0.6685, 0.3835]], "c05": [[0.45, 0.55], [0.4507, 0.5509], [0.4512, 0.5516], [0.4513, 0.552], [0.4502, 0.5518], [0.4487, 0.5515], [0.4463, 0.5511], [0.4443, 0.5504], [0.4426, 0.5493], [0.4413, 0.548], [0.4412, 0.5478], [0.4406, 0.5483], [0.4405, 0.5482], [0.4332, 0.5415], [0.4433, 0.5286], [0.4559, 0.5162], [0.4759, 0.5075], [0.4804, 0.5039], [0.4832, 0.4991], [0.4841, 0.4963], [0.4828, 0.4947], [0.4806, 0.4943], [0.4791, 0.4931]], "c06": [[0.55, 0.45], [0.5438, 0.4509], [0.5152, 0.445], [0.4718, 0.4351], [0.4399, 0.4277], [0.4353, 0.4271], [0.4451, 0.4304], [0.4584, 0.4327], [0.4657, 0.4361], [0.4705, 0.4414], [0.4722, 0.4472], [0.4717, 0.4513], [0.47, 0.4526], [0.4721, 0.4575], [0.4802, 0.4659], [0.4933, 0.4779], [0.5069, 0.492], [0.5149, 0.5078], [0.5183, 0.5199], [0.5171, 0.5301], [0.5111, 0.5368], [0.5022, 0.5478], [0.4922, 0.5604]], "c06b": [[0.42, 0.45], [0.4327, 0.4656], [0.4454, 0.4835], [0.46, 0.5039], [0.4739, 0.5267], [0.485, 0.5513], [0.4876, 0.5788], [0.4832, 0.6064], [0.4745, 0.6311], [0.4647, 0.6497], [0.4577, 0.663], [0.4558, 0.6725], [0.4613, 0.6796], [0.4717, 0.6853], [0.4816, 0.69], [0.4871, 0.6934], [0.4859, 0.6956], [0.4824, 0.6966], [0.478, 0.6978], [0.4746, 0.6983], [0.4678, 0.6942], [0.4653, 0.6802], [0.4666, 0.6572]], "c07": [[0.58, 0.33], [0.5793, 0.3307], [0.5788, 0.3317], [0.5784, 0.3331], [0.5782, 0.3346], [0.5781, 0.336], [0.5781, 0.3371], [0.5786, 0.3382], [0.5795, 0.3391], [0.5807, 0.3399], [0.5819, 0.3408], [0.5827, 0.3419], [0.5834, 0.343], [0.5837, 0.3441], [0.5837, 0.3453], [0.5838, 0.3466], [0.5845, 0.3478], [0.5856, 0.3488], [0.587, 0.3496], [0.5884, 0.3504], [0.5901, 0.3509], [0.5916, 0.3513], [0.5929, 0.3517]], "c07b": [[0.45, 0.33], [0.4476, 0.3299], [0.4456, 0.3278], [0.4448, 0.326], [0.4445, 0.3243], [0.4456, 0.3251], [0.4475, 0.326], [0.4503, 0.3273], [0.4532, 0.3295], [0.4568, 0.3321], [0.4603, 0.3347], [0.4648, 0.3374], [0.4692, 0.3409], [0.4738, 0.3447], [0.4781, 0.3501], [0.4824, 0.3569], [0.4868, 0.3652], [0.4913, 0.3724], [0.4952, 0.3772], [0.4989, 0.3807], [0.5023, 0.3841], [0.5052, 0.3876], [0.5081, 0.3913]], "c08": [[0.5, 0.42], [0.4975, 0.4159], [0.4971, 0.4145], [0.4997, 0.4159], [0.504, 0.419], [0.5099, 0.4205], [0.5149, 0.4196], [0.519, 0.4157], [0.5194, 0.413], [0.5175, 0.4122], [0.5112, 0.4145], [0.5038, 0.4158], [0.4951, 0.4153], [0.4897, 0.4139], [0.486, 0.4129], [0.4863, 0.4154], [0.4885, 0.4188], [0.4927, 0.4209], [0.4943, 0.4177], [0.4941, 0.4143], [0.4919, 0.4124], [0.4888, 0.4149], [0.4841, 0.4182]], "c08b": [[0.5, 0.38], [0.4988, 0.3809], [0.4959, 0.3816], [0.4903, 0.3817], [0.485, 0.3807], [0.4818, 0.3793], [0.4817, 0.3779], [0.4818, 0.3775], [0.482, 0.3777], [0.4819, 0.3778], [0.4817, 0.3775], [0.4815, 0.3767], [0.4819, 0.3757], [0.4838, 0.3733], [0.487, 0.3703], [0.491, 0.3673], [0.4942, 0.3658], [0.4967, 0.3648], [0.5004, 0.3636], [0.5045, 0.3623], [0.5083, 0.3612], [0.5101, 0.3605], [0.5108, 0.36]], "c09": [[0.62, 0.3], [0.6183, 0.3046], [0.6161, 0.3105], [0.6139, 0.3168], [0.6118, 0.3235], [0.6096, 0.3308], [0.6073, 0.339], [0.604, 0.3493], [0.6006, 0.3593], [0.5966, 0.37], [0.5925, 0.3814], [0.5886, 0.3931], [0.5843, 0.4068], [0.5808, 0.419], [0.5773, 0.431], [0.574, 0.4418], [0.5701, 0.4515], [0.5651, 0.4604], [0.5605, 0.4665], [0.5565, 0.4715], [0.5541, 0.475], [0.553, 0.4775], [0.553, 0.4794]], "c09b": [[0.45, 0.6], [0.4425, 0.6008], [0.4353, 0.6015], [0.4285, 0.6023], [0.4219, 0.603], [0.4157, 0.6038], [0.41, 0.6047], [0.4044, 0.6063], [0.3988, 0.6086], [0.3932, 0.6117], [0.3877, 0.6157], [0.3822, 0.6206], [0.3764, 0.6264], [0.3699, 0.6335], [0.3629, 0.6419], [0.3556, 0.6529], [0.3488, 0.666], [0.3416, 0.6821], [0.3281, 0.6996], [0.3075, 0.7206], [0.2757, 0.7405], [0.2478, 0.7616], [0.224, 0.782]], "c10": [[0.38, 0.66], [0.3798, 0.66], [0.3788, 0.6601], [0.377, 0.6602], [0.3754, 0.6603], [0.3733, 0.6604], [0.3722, 0.6604], [0.371, 0.6606], [0.3717, 0.6607], [0.3724, 0.6607], [0.3736, 0.6607], [0.3742, 0.6607], [0.3745, 0.6606], [0.3732, 0.6602], [0.372, 0.6599], [0.3694, 0.6594], [0.3677, 0.6593], [0.366, 0.6591], [0.3657, 0.659], [0.3656, 0.659], [0.3692, 0.6776], [0.3728, 0.6963], [0.3764, 0.715]], "c11": [[0.5, 0.38], [0.4995, 0.3804], [0.4981, 0.3823], [0.4954, 0.3877], [0.4931, 0.3928], [0.4917, 0.3983], [0.4921, 0.4049], [0.4929, 0.4144], [0.4938, 0.4254], [0.4943, 0.4325], [0.4986, 0.4306], [0.5034, 0.4181], [0.5086, 0.3949], [0.5101, 0.3719], [0.512, 0.3478], [0.5137, 0.3313], [0.5153, 0.3177], [0.5157, 0.3123], [0.5788, 0.2836], [0.6418, 0.2582], [0.7047, 0.2328], [0.7048, 0.233]], "c12": [[0.5, 0.42], [0.5081, 0.4203], [0.5157, 0.4206], [0.5229, 0.4207], [0.5278, 0.4207], [0.5318, 0.4207], [0.535, 0.4208], [0.5383, 0.421], [0.5413, 0.4213], [0.5442, 0.4216], [0.5468, 0.422], [0.5505, 0.4228], [0.5547, 0.4234], [0.5599, 0.424], [0.5644, 0.4244], [0.5685, 0.4249], [0.5728, 0.4258], [0.5773, 0.4265], [0.582, 0.4272], [0.5866, 0.4275], [0.591, 0.4276], [0.5957, 0.4274]], "c13": [[0.55, 0.45], [0.5639, 0.4327], [0.5743, 0.4096], [0.5698, 0.382], [0.556, 0.3558], [0.5274, 0.3279], [0.5024, 0.317], [0.4825, 0.3087], [0.475, 0.3053], [0.4845, 0.2827], [0.5048, 0.2655], [0.5321, 0.2579], [0.548, 0.2633], [0.5463, 0.2642], [0.5549, 0.2682], [0.5738, 0.2749], [0.611, 0.2894], [0.629, 0.3021], [0.6542, 0.3135], [0.6887, 0.3285], [0.7316, 0.3461], [0.7631, 0.367]], "c14": [[0.7, 0.66], [0.6917, 0.6588], [0.6848, 0.6593], [0.6805, 0.6624], [0.6803, 0.6681], [0.6847, 0.6755], [0.6941, 0.6836], [0.7087, 0.6914], [0.7271, 0.698], [0.7462, 0.7025], [0.7625, 0.7041], [0.773, 0.7028], [0.7768, 0.6988], [0.7739, 0.6931], [0.7649, 0.6866], [0.7512, 0.6805], [0.7343, 0.6756], [0.7166, 0.6723], [0.7002, 0.6707], [0.6867, 0.6703], [0.6772, 0.6705], [0.6709, 0.6708]], "c15": [[0.5, 0.5], [0.5072, 0.4974], [0.5119, 0.496], [0.5126, 0.4957], [0.514, 0.4964], [0.5141, 0.4989], [0.5149, 0.5015], [0.5171, 0.5036], [0.5204, 0.5048], [0.5223, 0.5069], [0.5223, 0.5102], [0.5216, 0.5137], [0.5176, 0.5166], [0.5161, 0.5182], [0.5132, 0.5192], [0.5144, 0.5201], [0.5152, 0.5209], [0.5169, 0.5231], [0.5174, 0.5255], [0.5174, 0.5296], [0.5141, 0.5331], [0.5086, 0.5373]], "c16": [[0.5, 0.55], [0.4999, 0.5507], [0.4995, 0.5512], [0.4982, 0.5509], [0.4968, 0.5495], [0.4959, 0.5482], [0.4957, 0.5478], [0.4955, 0.5478], [0.4945, 0.5477], [0.4936, 0.548], [0.4931, 0.5488], [0.4933, 0.5499], [0.4934, 0.5515], [0.4936, 0.5533], [0.4937, 0.5549], [0.4942, 0.5564], [0.4964, 0.5586], [0.5003, 0.562], [0.5049, 0.5653], [0.5077, 0.5671], [0.5094, 0.5681], [0.5108, 0.569]], "c17": [[0.48, 0.42], [0.485, 0.4182], [0.4987, 0.4162], [0.5196, 0.4137], [0.5351, 0.4096], [0.5389, 0.4018], [0.5323, 0.3901], [0.5236, 0.3779], [0.5186, 0.3675], [0.5198, 0.3605], [0.5248, 0.3561], [0.5326, 0.3541], [0.5412, 0.3538], [0.5515, 0.3554], [0.5627, 0.3581], [0.5744, 0.362], [0.5835, 0.3659], [0.5888, 0.3695], [0.5914, 0.3727], [0.5919, 0.3754], [0.5911, 0.3774], [0.5867, 0.378], [0.5833, 0.3789], [0.5799, 0.3799]], "c18": [[0.5, 0.38], [0.5019, 0.3789], [0.5027, 0.3778], [0.5064, 0.3754], [0.5123, 0.3731], [0.5201, 0.3713], [0.5258, 0.371], [0.5315, 0.3694], [0.5337, 0.3676], [0.5322, 0.3658], [0.5277, 0.3655], [0.5212, 0.3649], [0.5121, 0.3647], [0.5012, 0.366], [0.4933, 0.3679], [0.4869, 0.371], [0.4807, 0.375], [0.477, 0.3789], [0.4802, 0.3796], [0.4859, 0.3774], [0.4908, 0.3742], [0.4922, 0.3712], [0.4945, 0.3675]], "c19": [[0.52, 0.38], [0.5234, 0.3787], [0.5256, 0.3775], [0.5265, 0.3767], [0.5262, 0.3767], [0.5253, 0.3772], [0.5241, 0.3781], [0.5236, 0.3788], [0.5237, 0.3794], [0.5238, 0.3798], [0.5234, 0.3802], [0.5227, 0.3804], [0.522, 0.3804]], "c20": [[0.5, 0.5], [0.5034, 0.4939], [0.5052, 0.4878], [0.5045, 0.4821], [0.5021, 0.4822], [0.5008, 0.4829], [0.5014, 0.4839], [0.5027, 0.485], [0.5029, 0.4857], [0.5024, 0.486], [0.5017, 0.4858], [0.5012, 0.4857], [0.5014, 0.4859], [0.5022, 0.4864], [0.503, 0.4871], [0.504, 0.4878], [0.5041, 0.4881], [0.5043, 0.4884], [0.5046, 0.4883], [0.506, 0.488], [0.5078, 0.4875], [0.5099, 0.487], [0.5116, 0.4865]], "c21": [[0.4, 0.6], [0.4, 0.6], [0.4001, 0.6], [0.4001, 0.6], [0.4001, 0.6002], [0.4002, 0.6005], [0.4002, 0.6007], [0.4003, 0.6009], [0.4002, 0.6009], [0.4002, 0.6008], [0.4002, 0.6009], [0.4004, 0.6012], [0.4006, 0.6014], [0.401, 0.6018], [0.4016, 0.6023], [0.4022, 0.603], [0.4025, 0.6037], [0.4025, 0.6041], [0.4028, 0.6043], [0.4043, 0.6044], [0.4065, 0.6044], [0.4083, 0.6043], [0.4089, 0.6042]], "c22": [[0.45, 0.42], [0.4499, 0.4199], [0.4497, 0.4198], [0.4495, 0.4196], [0.4492, 0.4192], [0.4489, 0.4189], [0.4487, 0.4186], [0.4486, 0.4185], [0.4486, 0.4184], [0.4486, 0.4183], [0.4488, 0.4183], [0.4492, 0.4183], [0.4496, 0.4183], [0.4501, 0.4184], [0.4506, 0.4185], [0.451, 0.4185], [0.4517, 0.4183], [0.4527, 0.4181], [0.454, 0.4179], [0.4554, 0.4178], [0.4568, 0.4178], [0.4581, 0.4179], [0.4594, 0.418]], "c23": [[0.5, 0.24], [0.4999, 0.2397], [0.502, 0.2376], [0.5075, 0.2339], [0.5131, 0.2299], [0.5166, 0.2278], [0.5169, 0.2275], [0.5175, 0.2279], [0.5185, 0.2287], [0.5181, 0.2303], [0.5174, 0.2326], [0.5162, 0.2339], [0.5166, 0.2334], [0.5181, 0.2285], [0.5197, 0.2231], [0.5208, 0.2188], [0.5209, 0.2189], [0.5205, 0.2216], [0.52, 0.225], [0.5195, 0.2275], [0.5197, 0.2276], [0.5201, 0.2261]], "c24": [[0.5, 0.45], [0.5047, 0.454], [0.5108, 0.4577], [0.5178, 0.4604], [0.5241, 0.4616], [0.5282, 0.4611], [0.53, 0.4596], [0.5292, 0.458], [0.5255, 0.457], [0.5209, 0.4568], [0.5165, 0.4571], [0.5131, 0.4583], [0.5088, 0.4608], [0.5041, 0.4651], [0.4987, 0.4709], [0.4944, 0.4776], [0.4918, 0.4848], [0.4908, 0.4921], [0.4906, 0.4991], [0.4905, 0.5057], [0.4901, 0.5115], [0.4892, 0.5166], [0.4876, 0.5214]], "c25": [[0.75, 0.5], [0.7467, 0.5], [0.7437, 0.5], [0.7408, 0.4998], [0.7386, 0.4994], [0.7362, 0.4986], [0.7335, 0.4971], [0.7306, 0.4949], [0.7274, 0.4908], [0.7244, 0.4864], [0.721, 0.4824], [0.7166, 0.4815], [0.7126, 0.4828], [0.7099, 0.4859], [0.7093, 0.4892], [0.709, 0.4914], [0.7075, 0.4915], [0.7042, 0.4901], [0.6997, 0.4888], [0.693, 0.4902], [0.6855, 0.4938], [0.6771, 0.4993]], "c26": [[0.5, 0.5], [0.5001, 0.5], [0.5002, 0.5], [0.5003, 0.5], [0.5004, 0.5], [0.5005, 0.5], [0.5005, 0.5001], [0.5006, 0.5001], [0.5006, 0.5001], [0.5006, 0.5001], [0.5005, 0.5001], [0.5003, 0.5002], [0.5, 0.5002], [0.4997, 0.5003], [0.4993, 0.5004], [0.499, 0.5004], [0.4985, 0.5005], [0.4981, 0.5007], [0.4978, 0.5007], [0.4976, 0.5008], [0.4975, 0.5008], [0.4974, 0.5008]], "c27": [[0.5, 0.45], [0.5022, 0.4474], [0.5067, 0.4417], [0.5133, 0.4322], [0.5191, 0.421], [0.5239, 0.4082], [0.5272, 0.3935], [0.528, 0.3762], [0.5253, 0.3557], [0.5204, 0.3308], [0.515, 0.3032], [0.5111, 0.2762], [0.5111, 0.2661], [0.5155, 0.2649], [0.5211, 0.2771], [0.5253, 0.2877], [0.5279, 0.2999], [0.5275, 0.3101], [0.5235, 0.3173], [0.5162, 0.3202], [0.508, 0.3218], [0.4992, 0.3211], [0.489, 0.3235]], "c28": [[0.5, 0.5], [0.5438, 0.5156], [0.5729, 0.5257], [0.6027, 0.5386], [0.6237, 0.5706], [0.651, 0.6152], [0.6673, 0.6618], [0.6837, 0.6834], [0.6937, 0.6924], [0.7063, 0.6863], [0.7088, 0.679], [0.7082, 0.6715], [0.6973, 0.6684], [0.6908, 0.6669], [0.6873, 0.6656], [0.6903, 0.6642], [0.7073, 0.6586], [0.731, 0.6505], [0.7583, 0.6418], [0.7799, 0.6319], [0.795, 0.6246], [0.8032, 0.6185]], "c29": [[0.5, 0.5], [0.5015, 0.501], [0.5023, 0.5033], [0.5028, 0.5041], [0.5041, 0.5031], [0.5064, 0.5009], [0.5082, 0.5], [0.5101, 0.5002], [0.5115, 0.5008], [0.5131, 0.5018], [0.5139, 0.5034], [0.5139, 0.5049], [0.5132, 0.5046], [0.5121, 0.5029], [0.5107, 0.5008], [0.5098, 0.5001], [0.5088, 0.4999], [0.508, 0.5022], [0.5072, 0.5048], [0.5067, 0.5071], [0.5063, 0.507], [0.5055, 0.5066]], "c30": [[0.4, 0.45], [0.3935, 0.4499], [0.3877, 0.4498], [0.3818, 0.45], [0.3769, 0.4503], [0.3716, 0.4509], [0.367, 0.4515], [0.3623, 0.4525], [0.3588, 0.4535], [0.3555, 0.4549], [0.353, 0.4561], [0.3499, 0.4574], [0.3472, 0.4586], [0.3443, 0.4596], [0.3413, 0.4601], [0.3357, 0.4603], [0.3285, 0.4602], [0.317, 0.46], [0.3034, 0.4597], [0.2899, 0.4594], [0.2809, 0.459], [0.2789, 0.4587], [0.2839, 0.4586], [0.2934, 0.4586], [0.3064, 0.4588], [0.3179, 0.4592], [0.3299, 0.4594], [0.3386, 0.4593], [0.3457, 0.4587], [0.3488, 0.4579], [0.3496, 0.4569], [0.3486, 0.4561], [0.347, 0.4555], [0.3451, 0.4552], [0.3424, 0.4552], [0.3401, 0.4554], [0.3387, 0.456], [0.3388, 0.4568], [0.3402, 0.4578], [0.3428, 0.4588]]};
+const N={c01:25,c02:22,c03:22,c04:35,c05:23,c06:23,c06b:23,c07:23,c07b:23,c08:23,c08b:23,c09:23,c09b:23,c10:23,c11:22,c12:22,c13:22,c14:22,c15:22,c16:22,c17:24,c18:23,c19:13,c20:23,c21:23,c22:23,c23:22,c24:23,c25:22,c26:22,c27:23,c28:22,c29:22,c30:40};
+const PW=600,PH=1067,R=2600,DIST=2037,UP=280;
+const PAL=['#ff2d55','#ffd23f','#00e5ff','#7c4dff','#39ff88','#ff8a1f'];
+// panels: clips [[clip,beat]], beat range, callout
+const P=[
+ {c:[['c01',0]],b:[0,1],call:'THIS'},{c:[['c02',1]],b:[1,2],call:'THIS'},{c:[['c03',2]],b:[2,3],call:'THIS'},{c:[['c04',3]],b:[3,4],call:'THIS'},
+ {c:[['c05',4]],b:[4,5],call:0},{c:[['c06',5],['c06b',6]],b:[5,7],call:['Butter Squishy','$19.99']},
+ {c:[['c07b',7],['c07',8]],b:[7,9],call:['Light-Up Flower Pot','$49.99']},{c:[['c08b',9],['c08',10]],b:[9,11],call:['Dog Raincoat','$26.99']},
+ {c:[['c09b',11],['c09',12]],b:[11,13],call:['Prism Glasses','$24.99']},
+ {c:[['c10',13]],b:[13,14],call:0},{c:[['c11',14]],b:[14,15],call:0},{c:[['c12',15]],b:[15,16],call:0},
+ {c:[['c13',16]],b:[16,17],call:0},{c:[['c14',17]],b:[17,18],call:0},{c:[['c15',18]],b:[18,19],call:0},{c:[['c16',19]],b:[19,20],call:0},{c:[['c17',20]],b:[20,21],call:0},
+ {c:[['c18',21]],b:[21,22],call:0},{c:[['c20',22]],b:[22,23],call:0},{c:[['c23',23]],b:[23,24],call:0},
+ {c:[['c24',24],['c25',25],['c26',26]],b:[24,27],call:0},{c:[['c27',27],['c28',28],['c29',29]],b:[27,30],call:0},
+ {c:[['c30',30],['c21',31]],b:[30,32],call:0},{c:[['c22',32],['c19',33],['c07',34]],b:[32,35],call:0}];
+const W='#ffffff',K='#111111',RD='#ff2d55',YL='#ffd23f';
+// text items: hud (camera child) or panel-attached
+const TX=[
+ {hud:1,z:-DIST,t0:.03,t1:S(4),lines:[["YOU DON'T",W,RD,0,770,112],['NEED THIS.',W,RD,0,630,112]]},
+ {hud:1,z:-DIST,t0:S(1),t1:S(4),lines:[['YOU WANT IT.',RD,'#5a0010',0,490,96]]},
+ {hud:1,z:-DIST,t0:S(4)+.06,t1:S(7),lines:[['HAS THEM ALL',W,'#ff4fa3',0,760,100]]},
+ {p:9,t0:S(13),t1:S(16)+.4,lines:[['WAIT',W,K,0,700,150]]},{p:10,t0:S(14),t1:S(16)+.4,lines:[['WHAT',W,K,0,700,150]]},{p:11,t0:S(15),t1:S(16)+.4,lines:[['LOL',YL,K,0,700,170]]},
+ {p:17,t0:S(21),t1:S(22),lines:[['3',W,'#ff5a00',0,0,560]],spin:1,z:300},{p:18,t0:S(22),t1:S(23),lines:[['2',W,'#ff5a00',0,0,560]],spin:1,z:300},{p:19,t0:S(23),t1:S(24),lines:[['1',W,'#ff5a00',0,0,560]],spin:1,z:300},
+ {p:20,t0:S(24),t1:S(27)+.3,lines:[['FREE US',W,K,0,850,130],['SHIPPING',W,K,0,690,130]]},
+ {p:21,t0:S(27),t1:S(30)+.3,lines:[['ON EVERY',W,RD,0,850,130],['ORDER',W,RD,0,690,130]]},
+ {p:22,t0:S(30),t1:S(32)+.3,lines:[['FROM $9.99',W,'#0d7a30',0,740,105]]},
+ {p:23,t0:S(32),t1:S(35)+.3,lines:[['TRACKED',W,K,0,850,125],['DELIVERY',W,K,0,690,125]]},
+ {hud:1,z:-3000,t0:S(35)+.15,t1:99,lines:[['YOU WANT IT.',W,RD,0,560,150]],fin:1},
+ {hud:1,z:-3000,t0:S(38),t1:99,lines:[['BUYRSHOP.COM',W,'#7c4dff',0,-860,118]],fin:1},
+];
+const ren=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true,preserveDrawingBuffer:true});
+ren.setPixelRatio(1);ren.setSize(1080,1920,false);ren.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();scene.background=new THREE.Color('#05050c');scene.fog=new THREE.Fog('#05050c',4000,30000);
+const cam=new THREE.PerspectiveCamera(50,1080/1920,10,60000);scene.add(cam);
+scene.add(new THREE.AmbientLight(0xffffff,1.0));const dl=new THREE.DirectionalLight(0xffffff,2.4);dl.position.set(-1,1.4,2);scene.add(dl);
+const cl=new THREE.DirectionalLight(0xffffff,2.0);cl.position.set(-.6,.8,1);cam.add(cl);
+let seed=7;const rnd=()=>((seed=(seed*16807)%2147483647)/2147483647);
+// particles
+{const g=new THREE.BufferGeometry(),n=3000,a=new Float32Array(n*3);for(let i=0;i<n;i++){a[i*3]=(rnd()-.5)*16000;a[i*3+1]=1500-rnd()*13500;a[i*3+2]=(rnd()-.5)*16000;}
+ g.setAttribute('position',new THREE.BufferAttribute(a,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:7,transparent:true,opacity:.55})));}
+// glow texture
+const gc=document.createElement('canvas');gc.width=gc.height=256;{const x=gc.getContext('2d'),gr=x.createRadialGradient(128,128,10,128,128,128);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.55,'rgba(255,255,255,.35)');gr.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=gr;x.fillRect(0,0,256,256);}
+const glowTex=new THREE.CanvasTexture(gc);
+const label=(a,b,big)=>{const c=document.createElement('canvas');c.width=1024;c.height=240;const x=c.getContext('2d');
+ x.font=big?'900 170px Inter':'800 74px Inter';const tw=x.measureText(a+(b?'  '+b:'')).width;const w=Math.min(1000,tw+90);
+ x.fillStyle=big?YL:'#111';x.beginPath();x.roundRect((1024-w)/2,big?10:50,w,big?220:140,big?30:70);x.fill();
+ x.textBaseline='middle';x.fillStyle=big?'#111':'#fff';let sx=(1024-tw)/2;x.fillText(a,sx,120);if(b){sx+=x.measureText(a+'  ').width;x.fillStyle=YL;x.fillText(b,sx,120);}
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return {t,w:w/1024};};
+const cyl=()=>new THREE.Mesh(new THREE.CylinderGeometry(6,6,1,10),new THREE.MeshBasicMaterial({color:YL}));
+const setCyl=(m,a,b)=>{const d=b.clone().sub(a),L=d.length();m.position.copy(a).addScaledVector(d,.5);m.scale.set(1,Math.max(.001,L),1);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());};
+// panels
+const panels=[];
+P.forEach((p,i)=>{const g=new THREE.Group();const a=i*0.5;g.position.set(R*Math.sin(a),-i*430,R*Math.cos(a));g.rotation.set(((i*13)%7-3)*0.015,a+((i*29)%9-4)*0.03,((i*37)%11-5)*0.018);
+ g.userData.base=g.position.clone();g.userData.rot=g.rotation.clone();scene.add(g);
+ const img=new Image();const tex=new THREE.Texture(img);tex.colorSpace=THREE.SRGBColorSpace;
+ const white=new THREE.MeshBasicMaterial({color:'#ffffff'});const back=new THREE.MeshBasicMaterial({color:'#15151f'});
+ const front=new THREE.MeshBasicMaterial({map:tex});
+ const box=new THREE.Mesh(new THREE.BoxGeometry(PW+28,PH+28,24),[white,white,white,white,white,back]);g.add(box);
+ const scr=new THREE.Mesh(new THREE.PlaneGeometry(PW,PH),front);scr.position.z=12.5;g.add(scr);
+ const col=PAL[i%PAL.length];const glow=new THREE.Mesh(new THREE.PlaneGeometry(PW*2.1,PH*1.7),new THREE.MeshBasicMaterial({map:glowTex,color:col,transparent:true,opacity:.55,blending:THREE.AdditiveBlending,depthWrite:false}));glow.position.z=-40;g.add(glow);
+ const o={g,img,tex,p,i,src:''};
+ if(p.call!==undefined){const ring=new THREE.Mesh(new THREE.TorusGeometry(48,7,10,40),new THREE.MeshBasicMaterial({color:p.call?YL:'#39ff88'}));g.add(ring);o.ring=ring;
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(10,12,12),new THREE.MeshBasicMaterial({color:p.call?YL:'#39ff88'}));g.add(dot);o.dot=dot;
+  if(p.call){const L=p.call==='THIS'?label('THIS',null,1):label(p.call[0],p.call[1]);const w=L.w*560,h=w*240/1024/L.w*1/1;
+   const lab=new THREE.Mesh(new THREE.PlaneGeometry(560,560*240/1024),new THREE.MeshBasicMaterial({map:L.t,transparent:true}));g.add(lab);o.lab=lab;o.labw=560*L.w;}
+  const ar=cyl();ar.material=ar.material.clone();ar.material.color.set(p.call?YL:'#39ff88');g.add(ar);o.ar=ar;
+  const cone=new THREE.Mesh(new THREE.ConeGeometry(20,52,16),new THREE.MeshBasicMaterial({color:p.call?YL:'#39ff88'}));g.add(cone);o.cone=cone;
+  if(!p.call){o.br=[];for(let k=0;k<4;k++){const b=new THREE.Group();const m=new THREE.MeshBasicMaterial({color:'#39ff88'});const h1=new THREE.Mesh(new THREE.BoxGeometry(60,9,9),m),v1=new THREE.Mesh(new THREE.BoxGeometry(9,60,9),m);
+   const sx=k%2?1:-1,sy=k<2?1:-1;h1.position.set(-sx*26,0,0);v1.position.set(0,-sy*26,0);b.add(h1,v1);b.userData.s=[sx,sy];g.add(b);o.br.push(b);}}}
+ panels.push(o);});
+// path tube + traveler
+const pts=panels.map(o=>{o.g.updateMatrixWorld();return o.g.localToWorld(new THREE.Vector3(0,-PH/2-90,60));});
+const curve=new THREE.CatmullRomCurve3(pts);
+const tube1=new THREE.Mesh(new THREE.TubeGeometry(curve,600,7,8,false),new THREE.MeshBasicMaterial({color:'#00e5ff',transparent:true,opacity:.75}));scene.add(tube1);
+const tube2=new THREE.Mesh(new THREE.TubeGeometry(curve,600,22,8,false),new THREE.MeshBasicMaterial({color:'#00e5ff',transparent:true,opacity:.12,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(tube2);
+const shade=new THREE.Mesh(new THREE.PlaneGeometry(2600,4200),new THREE.MeshBasicMaterial({color:'#05050c',transparent:true,opacity:0,depthWrite:false,fog:false}));shade.position.set(0,0,-3400);cam.add(shade);
+const trav=new THREE.Mesh(new THREE.ConeGeometry(34,110,18),new THREE.MeshBasicMaterial({color:'#ffffff'}));scene.add(trav);
+const travGlow=new THREE.Mesh(new THREE.PlaneGeometry(420,420),new THREE.MeshBasicMaterial({map:glowTex,color:'#00e5ff',transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(travGlow);
+// logo for finale
+const lt=new THREE.TextureLoader().load('logo.png');lt.colorSpace=THREE.SRGBColorSpace;
+const logo=new THREE.Mesh(new THREE.PlaneGeometry(900,507),new THREE.MeshBasicMaterial({map:lt,transparent:true}));logo.position.set(0,1180,-3000);cam.add(logo);logo.visible=false;
+const logoBg=new THREE.Mesh(new THREE.PlaneGeometry(980,560),new THREE.MeshBasicMaterial({color:'#ffffff'}));logoBg.position.set(0,1180,-3005);cam.add(logoBg);logoBg.visible=false;
+// text
+let fontReady=false;const items=[];
+new FontLoader().load('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json',font=>{const res=font.data.resolution;
+ TX.forEach(it=>{const g=new THREE.Group();g.visible=false;it.letters=[];
+  if(it.hud){g.position.set(0,0,it.z);cam.add(g);}else{g.position.set(0,0,it.z||40);panels[it.p].g.add(g);}
+  it.lines.forEach(([txt,face,side,cx,cy,size])=>{const sc=size/res;let w=0;for(const ch of txt){w+=(font.data.glyphs[ch]||font.data.glyphs['?']).ha*sc;}
+   let x=-w/2;const mf=new THREE.MeshStandardMaterial({color:face,roughness:.3,metalness:.2,fog:!it.hud}),ms=new THREE.MeshStandardMaterial({color:side,roughness:.5,fog:!it.hud});
+   const ln=new THREE.Group();ln.position.set(cx,cy,0);g.add(ln);
+   for(const ch of txt){const gl=font.data.glyphs[ch]||font.data.glyphs['?'];
+    if(ch!==' '){const geo=new TextGeometry(ch,{font,size:size*.78,depth:size*.5,curveSegments:5,bevelEnabled:true,bevelThickness:size*.03,bevelSize:size*.02,bevelSegments:2});
+     geo.computeBoundingBox();const bb=geo.boundingBox,ox=(bb.max.x+bb.min.x)/2,oy=(bb.max.y+bb.min.y)/2,oz=(bb.max.z+bb.min.z)/2;geo.translate(-ox,-oy,-oz);
+     const m=new THREE.Mesh(geo,[mf,ms]);m.userData.home=new THREE.Vector3(x+ox,oy-size*.39,0);ln.add(m);it.letters.push(m);}
+    x+=gl.ha*sc;}});
+  it.g=g;items.push(it);});fontReady=true;});
+const eob=(x,s=1.9)=>{x=Math.min(1,Math.max(0,x));const c=s+1;return 1+c*Math.pow(x-1,3)+s*Math.pow(x-1,2);};
+const eio=x=>{x=Math.min(1,Math.max(0,x));return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
+const eo=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3);
+const curIdx=t=>{let c=0;P.forEach((p,i)=>{if(t>=S(p.b[0])-1e-6)c=i;});return c;};
+const frameFor=(o,t)=>{const p=o.p;let cur=p.c[0];for(const c of p.c) if(t>=S(c[1])-1e-6) cur=c;const n=N[cur[0]];let k=Math.floor((t-S(cur[1]))*30+1e-6);
+ if(k<0)k=0; if(k>=n){const m=2*n-2;k=((k%m)+m)%m;if(k>=n)k=m-k;}return [cur[0],k];};
+const pose=(i,t)=>{const o=panels[i],p=o.p,t0=S(p.b[0])+FL,t1=S(p.b[1]);const u=Math.max(0,t-t0),H=Math.max(.3,t1-t0);
+ const d=DIST-230*eo(u/H),ox=90*Math.sin(1.3*u+i),oy=40*Math.sin(.9*u);o.g.updateMatrixWorld();
+ return {pos:o.g.localToWorld(new THREE.Vector3(ox,UP+oy,d)),tg:o.g.localToWorld(new THREE.Vector3(0,UP,0))};};
+const yMid=-(P.length-1)*430/2;
+const finPose=t=>{const u=t-S(35),a=-.18+.06*u,r=8600-260*u;return {pos:new THREE.Vector3(r*Math.sin(a),yMid+300,r*Math.cos(a)),tg:new THREE.Vector3(0,yMid,0)};};
+const shakeAt=t=>{let s=0;for(const j of [13,14,15,21,22,23,24,35]){const d=t-S(j)-0.05;if(d>0&&d<.35)s=Math.max(s,(j>=21&&j<=24?(j-19)*5:14)*(1-d/.35));}return s;};
+const flashAt=t=>{for(const j of [4,13,24,35]){const d=t-S(j);if(d>=0&&d<.067)return 1;}for(const j of [21,22,23]){const d=t-S(j);if(d>=0&&d<.067)return .4;}return 0;};
+window.seek=async t=>{
+ const ci=curIdx(t);const fin=t>=S(35);
+ // panels bob + textures
+ const loads=[];
+ const fk=fin?eio((t-S(35)-.25-0)/1.1):0;panels.forEach((o,i)=>{const b=o.g.userData.base,r=o.g.userData.rot;o.g.position.set(b.x,b.y+22*Math.sin(t*1.4+i),b.z);o.g.rotation.set(r.x+.02*Math.sin(t*1.1+i),r.y+.03*Math.sin(t*.8+i*2),r.z);
+  if(fk>0){const dk=eio(Math.min(1,Math.max(0,(t-S(35)-.25-((i*7)%24)*.018)/1.0)));const col=i%5,row=Math.floor(i/5);const gx=(col-2)*760,gy=yMid+(2-row)*1230+18*Math.sin(t*2+i),gz=-200+((i*13)%5)*60;o.g.position.lerp(new THREE.Vector3(gx,gy,gz),dk);
+   const qa=new THREE.Quaternion().setFromEuler(o.g.rotation),qb=new THREE.Quaternion().setFromEuler(new THREE.Euler(0,.04*Math.sin(t+i),.02*Math.sin(t*1.3+i)));qa.slerp(qb,dk);o.g.quaternion.copy(qa);}
+  const near=fin||Math.abs(i-ci)<=4;const [clip,k]=near?frameFor(o,t):frameFor(o,Math.min(t,S(o.p.b[0])));
+  const src='s5/'+clip+'/'+String(k+1).padStart(3,'0')+'.jpg';if(src!==o.src&&(near||!o.src)){o.src=src;o.img.src=src;loads.push(o.img.decode().then(()=>{o.tex.needsUpdate=true;}).catch(()=>{}));}
+  // callouts
+  if(o.ring){const on=!fin&&t>=S(o.p.b[0])-.05&&t<S(o.p.b[1])+.25;[o.ring,o.dot,o.ar,o.cone,o.lab,...(o.br||[])].forEach(m=>{if(m)m.visible=on;});
+   if(on){const [clip,k]=frameFor(o,t);const tr=TR[clip][Math.min(k,TR[clip].length-1)];const px=(tr[0]-.5)*PW,py=(.5-tr[1])*PH;const pt=new THREE.Vector3(px,py,16);
+    const lt0=t-S(o.p.b[0]);const g=eo((lt0-.08)/.25);o.ring.position.copy(pt);o.ring.scale.setScalar((.4+.6*eo(lt0/.2))*(1+.12*Math.sin(t*10)));o.dot.position.copy(pt);
+    let from;if(o.lab){const side=tr[0]<.5?1:-1;const lx=Math.max(-PW/2+o.labw/2-60,Math.min(PW/2-o.labw/2+60,px+side*230));const ly=Math.min(PH/2-40,py+300);
+     o.lab.position.set(lx,ly,160);o.lab.scale.setScalar(Math.max(.01,eob(lt0/.3)));from=new THREE.Vector3(lx,ly-60,150);}
+    else{from=new THREE.Vector3(px+230,py+230,170);const s2=110-25*eo(lt0/.2);o.br.forEach(b=>{b.position.set(px+b.userData.s[0]*s2,py+b.userData.s[1]*s2,18);});}
+    const end=from.clone().lerp(pt.clone().setZ(30),Math.max(.001,g));setCyl(o.ar,from,end);const dir=end.clone().sub(from).normalize();o.cone.position.copy(end);o.cone.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir);o.cone.visible=on&&g>.05;}}
+ });
+ // camera
+ let pos,tg,roll=0,blur=0;
+ if(!fin){const t0=S(P[ci].b[0]);const k=(t-t0)/FL;
+  if(ci>0&&k<1){const A=pose(ci-1,t0),B=pose(ci,t0);const e=eio(k);pos=A.pos.clone().lerp(B.pos,e);tg=A.tg.clone().lerp(B.tg,e);
+   const out=pos.clone().setY(0).normalize();pos.addScaledVector(out,1100*Math.sin(Math.PI*e));pos.y+=250*Math.sin(Math.PI*e);roll=.28*Math.sin(Math.PI*e)*(ci%2?1:-1);blur=24*Math.sin(Math.PI*Math.min(1,k));}
+  else{const B=pose(ci,t);pos=B.pos;tg=B.tg;}
+  const tk=Math.max(0,Math.min(1,(t-t0)/FL));const u=(ci-1+tk)/(P.length-1);const up=Math.max(0,Math.min(1,ci===0?0:u));
+  trav.position.copy(curve.getPointAt(up));trav.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),curve.getTangentAt(up));travGlow.position.copy(trav.position);travGlow.lookAt(cam.position);
+ } else {const A=pose(P.length-1,S(35)),B=finPose(t);const e=eio((t-S(35))/1.4);pos=A.pos.clone().lerp(B.pos,e);tg=A.tg.clone().lerp(B.tg,e);if(e<1){roll=.35*Math.sin(Math.PI*e);blur=18*Math.sin(Math.PI*e);}
+  const u=((t-S(35))*0.25)%1;trav.position.copy(curve.getPointAt(u));trav.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),curve.getTangentAt(u));travGlow.position.copy(trav.position);travGlow.lookAt(cam.position);}
+ tube1.material.opacity=.75*(1-fk);tube2.material.opacity=.12*(1-fk);trav.visible=travGlow.visible=fk<.5;shade.material.opacity=.55*fk;
+ const sh=shakeAt(t);cam.position.copy(pos).add(new THREE.Vector3(Math.sin(t*91)*sh,Math.cos(t*77)*sh,0));cam.up.set(0,1,0);cam.lookAt(tg);cam.rotateZ(roll);
+ document.getElementById('mbf').setAttribute('stdDeviation',(blur).toFixed(1)+' '+(blur*.25).toFixed(1));
+ document.getElementById('flash').style.opacity=flashAt(t);
+ logo.visible=logoBg.visible=t>=S(35)+.6;if(logo.visible){const s=eob((t-S(35)-.6)/.35);logo.scale.setScalar(Math.max(.01,s));logoBg.scale.setScalar(Math.max(.01,s));}
+ // text anim
+ if(fontReady)for(const it of items){const on=t>=it.t0&&t<it.t1;it.g.visible=on;if(!on)continue;const lt=t-it.t0;
+  it.g.rotation.y=(it.spin?.25:.4)*Math.sin(1.7*lt+it.t0)*(it.fin?.5:1);it.g.rotation.x=.12+.07*Math.sin(1.3*lt+1);
+  it.letters.forEach((m,i)=>{const h=m.userData.home;
+   if(it.spin){const q=eob(lt/.38,2.4);m.rotation.set(0,(1-q)*Math.PI*2,0);m.scale.setScalar(.2+.8*q);m.position.set(h.x,h.y,(1-q)*900);return;}
+   const p=eob((lt-i*.03)/.42);m.rotation.set((1-p)*-1.5,(1-p)*2,0);m.position.set(h.x,h.y-(1-p)*200,(1-p)*800);m.scale.setScalar(Math.max(.001,.3+.7*p));});}
+ cam.updateMatrixWorld(true);
+ await Promise.all(loads);ren.render(scene,cam);};
+window.ready=()=>new Promise(r=>{const c=async()=>{if(fontReady&&document.fonts){await document.fonts.load('800 74px Inter');await document.fonts.load('900 170px Inter');
+ panels.forEach(o=>{if(o.lab){}});r();}else setTimeout(c,50);};c();});
+</script></body></html>
