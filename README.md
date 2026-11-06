@@ -32,6 +32,17 @@ Installs Manim, MoviePy, faster-whisper, yt-dlp, Piper and Kokoro (free offline 
 | `motion-design` | [LottieFiles/motion-design-skill](https://github.com/LottieFiles/motion-design-skill) (MIT) | Timing, easing, choreography and animation principles |
 | `gsap-web`, `lottie-animation`, `svg-animation` | [iart-ai/web-animation-skills](https://github.com/iart-ai/web-animation-skills) (MIT) | GSAP timelines, Lottie playback, SVG draw-on, morphing and motion paths |
 
+### 3D and motion graphics (added later)
+
+| Skill | Source | What it does |
+|---|---|---|
+| `threejs-*` (13) | [CloudAI-X/threejs-skills](https://github.com/CloudAI-X/threejs-skills) (MIT) | Three.js 3D: scenes, cameras, lighting, materials, post-processing, shaders, animation, R3F |
+| `launch-video`, `apple-launch-film`, `title-sequence-3d`, `motion-effects`, `reference-to-motion`, `reel-export` and 9 more | [charlie947/motion-graphics-skills](https://github.com/charlie947/motion-graphics-skills) (MIT) | Launch films, 3D title sequences, reels made in code |
+| `motion-design-pro`, `motion-design-critique`, `blender-motion`, `aftereffects-motion` | [lobzyjay/motion-design-with-claude](https://github.com/lobzyjay/motion-design-with-claude) (MIT) | Pro motion principles, critique, Blender and After Effects |
+| `threejs-world-generation`, `3d-asset-generation`, `motion-graphics`, `music-to-video`, `gsap-*`, `hyperframes-*` and more (40) | [calesthio/openmontage](https://github.com/calesthio/openmontage) (**GPL-3.0**) | 3D worlds for video, GSAP, music-synced edits, AI video model guides |
+
+Licences are in `.claude/skill-licenses/`.
+
 HyperFrames cloud features (HeyGen) are optional and need a key; everything above renders locally for free. Telemetry is disabled with `DO_NOT_TRACK=1`.
 
 Remotion is free for individuals and small teams; larger companies need a license (see `remotion-license`).
