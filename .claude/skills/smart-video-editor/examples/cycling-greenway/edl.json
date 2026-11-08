@@ -1,0 +1,59 @@
+{
+  "output": "output/cycling-greenway.mp4",
+  "aspect": "9:16",
+  "fps": 30,
+  "look": "fresh",
+  "fill_mode": "crop",
+  "transition": {
+    "type": "cut"
+  },
+  "keep_original_audio": false,
+  "bgm": {
+    "path": "assets/bgm/lofi-chill-vlog.mp3",
+    "volume": 0.9,
+    "start": 0,
+    "fade_in": 0.8,
+    "fade_out": 1.8
+  },
+  "title": {
+    "ass": "examples/cycling-greenway/title.ass",
+    "fonts_dir": "~/.cola/assets/fonts  (see docs/FONTS.md)"
+  },
+  "segments": [
+    {
+      "src": "raw/IMG_8075.mov",
+      "in": 0.3,
+      "out": 3.2
+    },
+    {
+      "src": "raw/IMG_8071.mov",
+      "in": 1.8,
+      "out": 4.62
+    },
+    {
+      "src": "raw/IMG_8072.mov",
+      "in": 4.5,
+      "out": 5.64
+    },
+    {
+      "src": "raw/IMG_8075.mov",
+      "in": 8.5,
+      "out": 11.7
+    },
+    {
+      "src": "raw/IMG_8075.mov",
+      "in": 12.6,
+      "out": 15.4
+    },
+    {
+      "src": "raw/IMG_8076.mov",
+      "in": 1.4,
+      "out": 3.68
+    },
+    {
+      "src": "raw/IMG_8074.mov",
+      "in": 3.4,
+      "out": 7.1
+    }
+  ]
+}

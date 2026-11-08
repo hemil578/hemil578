@@ -1,0 +1,16 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Smiley Sans Oblique,142,&H00E0F3FF&,&H00E0F3FF&,&H000C1F3D&,&H5A000000&,0,0,0,0,100,100,4.0,0,1,1.7,3.5,5,40,40,40,1
+Style: Sub,Smiley Sans Oblique,59,&H00E0F3FF&,&H00E0F3FF&,&H000C1F3D&,&H5A000000&,0,0,0,0,100,100,4.0,0,1,1.02,3.5,5,40,40,40,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.40,0:00:03.60,Title,,0,0,0,,{\move(540,770,540,710,0,550)\fad(550,850)}城市里的绿色缝隙
