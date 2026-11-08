@@ -1,0 +1,92 @@
+{
+ "version": "demo_v1",
+ "mode": "short_video",
+ "idea": "Guess what it is (creative-director concept #1)",
+ "canvas": "1080x1920",
+ "fps": 30,
+ "duration_target_sec": 6.15,
+ "assumptions": [
+  "Demo of the first 6 s only.",
+  "Slots are 1.2 s; clips are ~0.8 s, so play at ~0.67x.",
+  "Prices only where buyrshop.com lists them."
+ ],
+ "timeline": [
+  {
+   "t": 0,
+   "dur": 1.347,
+   "source_id": "c01",
+   "role": "mystery",
+   "crop_zoom": 4.0,
+   "focus": [
+    0.42,
+    0.62
+   ],
+   "text": "what is this??",
+   "audio": "pop + short riser",
+   "visual_intent": "extreme close-up, can't tell what it is, spotlight vignette, floating ? marks"
+  },
+  {
+   "t": 1.347,
+   "dur": 1.207,
+   "source_id": "c01",
+   "role": "reveal",
+   "crop_zoom": 1.0,
+   "focus": [
+    0.33,
+    0.3
+   ],
+   "text": "Crying Face Stress Ball",
+   "audio": "whoosh + ding",
+   "visual_intent": "whip zoom-out reveal with motion blur, name pill with check mark"
+  },
+  {
+   "t": 2.554,
+   "dur": 1.184,
+   "source_id": "c06",
+   "role": "mystery",
+   "crop_zoom": 2.6,
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "text": "and this??",
+   "audio": "pop + short riser",
+   "visual_intent": "extreme close-up, can't tell what it is, spotlight vignette, floating ? marks"
+  },
+  {
+   "t": 3.738,
+   "dur": 1.208,
+   "source_id": "c06",
+   "role": "reveal",
+   "crop_zoom": 1.0,
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "text": "Slow-Rise Butter Squishy \u00b7 $19.99",
+   "audio": "whoosh + ding",
+   "visual_intent": "whip zoom-out reveal with motion blur, name pill with check mark"
+  },
+  {
+   "t": 4.946,
+   "dur": 1.207,
+   "source_id": "c09b",
+   "role": "mystery",
+   "crop_zoom": 2.6,
+   "focus": [
+    0.55,
+    0.55
+   ],
+   "text": "ok\u2026 this one??",
+   "audio": "pop + short riser",
+   "visual_intent": "extreme close-up, can't tell what it is, spotlight vignette, floating ? marks"
+  }
+ ],
+ "audio_plan": {
+  "bgm": "bgm.mp3 0-6.15 s",
+  "target_lufs": -14
+ },
+ "text_plan": {
+  "min_on_screen": "1.2 s per line"
+ }
+}
