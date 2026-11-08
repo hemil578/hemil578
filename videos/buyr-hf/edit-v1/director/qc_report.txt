@@ -1,0 +1,2 @@
+PRELIMINARY: no final video has been rendered yet. Waiting for approval of edit_plan.json.
+Targets: see beat_sheet.md "QC Plan".
